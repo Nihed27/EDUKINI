@@ -1,0 +1,449 @@
+<div class="layout">
+
+  <!-- ===== SIDEBAR — identique à etudiants ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-title">Edukini</div>
+      <div class="logo-sub">Administration</div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+        </svg>
+        Dashboard
+      </div>
+      <div class="nav-item" routerLink="/ecoles" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M3 21h18M9 21V7l6-4v18"/>
+        </svg>
+        Écoles
+      </div>
+      <div class="nav-item" routerLink="/filieres" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        Filières
+      </div>
+      <div class="nav-item" routerLink="/specialites" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="8" r="4" stroke-width="2"/>
+          <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Spécialités
+      </div>
+      <div class="nav-item" routerLink="/etudiants" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4" stroke-width="2"/>
+          <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Etudiants
+      </div>
+      <div class="nav-item" routerLink="/demandes" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 12h6M9 16h6M5 8h14M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
+        </svg>
+        Demandes administratives
+      </div>
+      <div class="nav-item" routerLink="/statistiques" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M18 20V10M12 20V4M6 20v-6"/>
+        </svg>
+        Statistiques
+      </div>
+      <div class="nav-item" routerLink="/parametres" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="3" stroke-width="2"/>
+          <path stroke-width="2" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Paramètres
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar-row">
+        <div class="avatar-circle">MBA</div>
+        <div>
+          <div class="avatar-name">Mehdi Ben Ali</div>
+          <div class="avatar-role">Admin système</div>
+        </div>
+      </div>
+      <button class="logout-btn">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+        Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main">
+    <div class="page-header">
+      <h1 class="page-title">Filières</h1>
+    </div>
+
+    <div class="page-body">
+
+      <!-- Message succès -->
+      <div *ngIf="successMessage" class="alert-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        {{ successMessage }}
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ filieres.length }}</span>
+            <span class="stat-label">Filières totales</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ totalEtudiants }}</span>
+            <span class="stat-label">Étudiants inscrits</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ totalCapacite }}</span>
+            <span class="stat-label">Capacité totale</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">3 ans</span>
+            <span class="stat-label">Durée formation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="search-wrapper">
+          <span class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+            </svg>
+          </span>
+          <input type="text" class="search-input" placeholder="Rechercher une filière..."
+                 [(ngModel)]="searchQuery" />
+        </div>
+        <div class="filter-group">
+          <button class="filter-btn" [class.active]="filterActif==='tous'"    (click)="filterActif='tous'">Toutes</button>
+          <button class="filter-btn" [class.active]="filterActif==='actif'"   (click)="filterActif='actif'">Actives</button>
+          <button class="filter-btn" [class.active]="filterActif==='inactif'" (click)="filterActif='inactif'">Inactives</button>
+        </div>
+        <button class="btn-add" (click)="openModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Ajouter une filière
+        </button>
+      </div>
+
+      <!-- ===== VUE CARTES ===== -->
+      <div class="cards-grid">
+        <div *ngFor="let f of filieresFiltrees" class="filiere-card"
+             [style.border-top]="'4px solid ' + f.couleur">
+
+          <div class="card-header">
+            <div class="card-icon-wrap" [style.background]="f.couleurBg">
+              <span class="card-icon">{{ f.icon }}</span>
+            </div>
+            <div class="card-title-block">
+              <h3 class="card-nom">{{ f.nom }}</h3>
+              <span class="card-code" [style.color]="f.couleur" [style.background]="f.couleurBg">{{ f.code }}</span>
+            </div>
+            <span [class]="f.actif ? 'badge-actif' : 'badge-inactif'">
+              {{ f.actif ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+
+          <p class="card-desc">{{ f.description }}</p>
+
+          <div class="card-tags">
+            <span *ngFor="let c of f.competences.slice(0,3)" class="tag"
+                  [style.color]="f.couleur" [style.background]="f.couleurBg">{{ c }}</span>
+            <span *ngIf="f.competences.length > 3" class="tag tag-more">+{{ f.competences.length - 3 }}</span>
+          </div>
+
+          <div class="card-stats">
+            <div class="cs-item">
+              <span class="cs-val">{{ f.nbEtudiants }}/{{ f.capacite }}</span>
+              <span class="cs-lbl">Étudiants</span>
+            </div>
+            <div class="cs-item">
+              <span class="cs-val">{{ f.scoreMin }}/100</span>
+              <span class="cs-lbl">Score min</span>
+            </div>
+            <div class="cs-item">
+              <span class="cs-val">{{ f.duree }}</span>
+              <span class="cs-lbl">Durée</span>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill"
+                   [style.width]="getTauxRemplissage(f) + '%'"
+                   [style.background]="f.couleur"></div>
+            </div>
+            <span class="progress-pct">{{ getTauxRemplissage(f) }}%</span>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-edit" (click)="openDetail(f)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              Détails
+            </button>
+            <button class="btn-edit" (click)="openModal(f)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              Modifier
+            </button>
+            <button class="btn-delete" (click)="confirmDelete(f)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              </svg>
+              Supprimer
+            </button>
+          </div>
+        </div>
+
+        <!-- Carte ajouter -->
+        <div class="filiere-card card-add" (click)="openModal()">
+          <div class="add-content">
+            <div class="add-icon">+</div>
+            <p class="add-label">Ajouter une filière</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-body -->
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+
+<!-- ===== MODAL AJOUTER / MODIFIER ===== -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ editingFiliere ? 'Modifier la filière' : 'Ajouter une filière' }}</h2>
+      <button class="modal-close" (click)="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="filiereForm">
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Nom <span style="color:red">*</span></label>
+            <input type="text" formControlName="nom" placeholder="ex: Génie Informatique" />
+          </div>
+          <div class="form-group">
+            <label>Code <span style="color:red">*</span></label>
+            <input type="text" formControlName="code" placeholder="ex: GI" />
+          </div>
+        </div>
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Icône (emoji)</label>
+            <input type="text" formControlName="icon" placeholder="💻" />
+          </div>
+          <div class="form-group">
+            <label>Couleur</label>
+            <input type="color" formControlName="couleur" style="height:38px;width:100%;border-radius:8px;border:1px solid #d1d5db;cursor:pointer;" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Description <span style="color:red">*</span></label>
+            <textarea formControlName="description" rows="3" placeholder="Décrivez la filière..." style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:8px;font-size:0.875rem;resize:vertical;"></textarea>
+          </div>
+        </div>
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Capacité <span style="color:red">*</span></label>
+            <input type="number" formControlName="capacite" min="1" />
+          </div>
+          <div class="form-group">
+            <label>Score minimum <span style="color:red">*</span></label>
+            <input type="number" formControlName="scoreMin" min="0" max="100" step="0.5" />
+          </div>
+        </div>
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Durée</label>
+            <select formControlName="duree">
+              <option>3 ans</option>
+              <option>2 ans</option>
+              <option>5 ans</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Statut</label>
+            <select formControlName="actif">
+              <option [ngValue]="true">Active</option>
+              <option [ngValue]="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Débouchés professionnels</label>
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+              <input type="text" [(ngModel)]="newDebouche" [ngModelOptions]="{standalone:true}"
+                     placeholder="Ajouter un débouché..." (keyup.enter)="addDebouche()" style="flex:1" />
+              <button type="button" class="btn-save" style="padding:0.4rem 0.75rem" (click)="addDebouche()">+</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
+              <span *ngFor="let d of debouchesList; let i=index"
+                    style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#eff6ff;color:#1a73e8;border-radius:20px;font-size:0.8rem;">
+                {{ d }}
+                <button type="button" (click)="removeDebouche(i)" style="background:none;border:none;cursor:pointer;color:#1a73e8;font-size:1rem;line-height:1;">×</button>
+              </span>
+              <span *ngIf="debouchesList.length===0" style="font-size:0.8rem;color:#9ca3af;font-style:italic;">Aucun débouché ajouté</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Compétences clés</label>
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+              <input type="text" [(ngModel)]="newCompetence" [ngModelOptions]="{standalone:true}"
+                     placeholder="Ajouter une compétence..." (keyup.enter)="addCompetence()" style="flex:1" />
+              <button type="button" class="btn-save" style="padding:0.4rem 0.75rem" (click)="addCompetence()">+</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
+              <span *ngFor="let c of competencesList; let i=index"
+                    style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#f5f3ff;color:#7c3aed;border-radius:20px;font-size:0.8rem;">
+                {{ c }}
+                <button type="button" (click)="removeCompetence(i)" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:1rem;line-height:1;">×</button>
+              </span>
+              <span *ngIf="competencesList.length===0" style="font-size:0.8rem;color:#9ca3af;font-style:italic;">Aucune compétence ajoutée</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+      <button class="btn-save" (click)="saveFiliere()" [disabled]="filiereForm.invalid">
+        {{ editingFiliere ? 'Enregistrer les modifications' : 'Ajouter' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL DÉTAIL ===== -->
+<div class="modal-overlay" *ngIf="showDetailModal && selectedFiliere" (click)="closeDetail()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header" [style.border-bottom]="'3px solid ' + selectedFiliere.couleur">
+      <h2 [style.color]="selectedFiliere.couleur">
+        {{ selectedFiliere.icon }} {{ selectedFiliere.nom }}
+      </h2>
+      <button class="modal-close" (click)="closeDetail()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:#374151;line-height:1.6;margin-bottom:1rem">{{ selectedFiliere.description }}</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem">
+        <div style="text-align:center;padding:0.75rem;border:2px solid;border-radius:8px;" [style.border-color]="selectedFiliere.couleur">
+          <div style="font-size:1.25rem;font-weight:700;" [style.color]="selectedFiliere.couleur">{{ selectedFiliere.nbEtudiants }}/{{ selectedFiliere.capacite }}</div>
+          <div style="font-size:0.75rem;color:#6b7280">Étudiants</div>
+        </div>
+        <div style="text-align:center;padding:0.75rem;border:2px solid;border-radius:8px;" [style.border-color]="selectedFiliere.couleur">
+          <div style="font-size:1.25rem;font-weight:700;" [style.color]="selectedFiliere.couleur">{{ selectedFiliere.scoreMin }}/100</div>
+          <div style="font-size:0.75rem;color:#6b7280">Score min</div>
+        </div>
+        <div style="text-align:center;padding:0.75rem;border:2px solid;border-radius:8px;" [style.border-color]="selectedFiliere.couleur">
+          <div style="font-size:1.25rem;font-weight:700;" [style.color]="selectedFiliere.couleur">{{ getTauxRemplissage(selectedFiliere) }}%</div>
+          <div style="font-size:0.75rem;color:#6b7280">Remplissage</div>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;font-weight:700;color:#9ca3af;text-transform:uppercase;margin-bottom:0.5rem">Débouchés</p>
+      <div *ngFor="let d of selectedFiliere.debouches"
+           style="padding:0.5rem 0.75rem;background:#f9fafb;border-radius:6px;border-left:3px solid;margin-bottom:0.375rem;font-size:0.875rem"
+           [style.border-left-color]="selectedFiliere.couleur">{{ d }}</div>
+      <p style="font-size:0.75rem;font-weight:700;color:#9ca3af;text-transform:uppercase;margin:0.75rem 0 0.5rem">Compétences</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.375rem">
+        <span *ngFor="let c of selectedFiliere.competences"
+              style="padding:0.2rem 0.6rem;border-radius:20px;font-size:0.8rem;font-weight:600"
+              [style.color]="selectedFiliere.couleur" [style.background]="selectedFiliere.couleurBg">{{ c }}</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeDetail()">Fermer</button>
+      <button class="btn-save" (click)="closeDetail(); openModal(selectedFiliere)">Modifier</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL SUPPRESSION ===== -->
+<div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+  <div class="modal-box modal-small" (click)="$event.stopPropagation()">
+    <div class="modal-header danger">
+      <h2>Confirmer la suppression</h2>
+      <button class="modal-close" (click)="cancelDelete()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="delete-warning">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="#ef4444">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+        <p>Voulez-vous vraiment supprimer<br/>
+          <strong *ngIf="deletingFiliere">« {{ deletingFiliere.nom }} »</strong> ?
+        </p>
+        <p class="delete-note">Cette action est irréversible.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+      <button class="btn-danger" (click)="executeDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
