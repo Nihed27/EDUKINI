@@ -1,0 +1,551 @@
+<div class="layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-title">Edukini</div>
+      <div class="logo-sub">Administration</div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item" routerLink="/ecoles" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M3 21h18M9 21V7l6-4v18"/>
+        </svg>
+        Écoles
+      </a>
+      <a class="nav-item" routerLink="/filieres" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        Filières
+      </a>
+      <a class="nav-item active" routerLink="/specialites" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="8" r="4" stroke-width="2"/>
+          <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Spécialités
+      </a>
+      <a class="nav-item" routerLink="/etudiants" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4" stroke-width="2"/>
+          <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Etudiants
+      </a>
+      <a class="nav-item" routerLink="/demandes" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 12h6M9 16h6M5 8h14M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
+        </svg>
+        Demandes administratives
+      </a>
+      <a class="nav-item" routerLink="/statistiques" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M18 20V10M12 20V4M6 20v-6"/>
+        </svg>
+        Statistiques
+      </a>
+      <a class="nav-item" routerLink="/parametres" routerLinkActive="active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="3" stroke-width="2"/>
+          <path stroke-width="2" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Paramètres
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar-row">
+        <div class="avatar-circle">MBA</div>
+        <div>
+          <div class="avatar-name">Mehdi Ben Ali</div>
+          <div class="avatar-role">Admin système</div>
+        </div>
+      </div>
+      <button class="logout-btn">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+        Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+    <div class="page-header">
+      <h1 class="page-title">Spécialités</h1>
+    </div>
+
+    <div class="page-body">
+
+      <!-- Succès -->
+      <div *ngIf="successMessage" class="alert-success">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        {{ successMessage }}
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ specialites.length }}</span>
+            <span class="stat-label">Spécialités totales</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ totalEtudiants }}</span>
+            <span class="stat-label">Étudiants inscrits</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ nbActives }}</span>
+            <span class="stat-label">Spécialités actives</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ filieres.length }}</span>
+            <span class="stat-label">Filières couvertes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="search-wrapper">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+          </svg>
+          <input type="text" class="search-input"
+                 placeholder="Rechercher une spécialité..."
+                 [(ngModel)]="searchQuery" />
+        </div>
+
+        <!-- Filtre par filière -->
+        <div class="filter-group">
+          <button class="filter-btn" [class.active]="filterFiliere==='toutes'"
+                  (click)="filterFiliere='toutes'">Toutes</button>
+          <button *ngFor="let f of filieres" class="filter-btn"
+                  [class.active]="filterFiliere===f.id.toString()"
+                  (click)="filterFiliere=f.id.toString()">{{ f.code }}</button>
+        </div>
+
+        <!-- Filtre par statut -->
+        <div class="filter-group">
+          <button class="filter-btn" [class.active]="filterActif==='tous'"
+                  (click)="filterActif='tous'">Toutes</button>
+          <button class="filter-btn" [class.active]="filterActif==='actif'"
+                  (click)="filterActif='actif'">Actives</button>
+          <button class="filter-btn" [class.active]="filterActif==='inactif'"
+                  (click)="filterActif='inactif'">Inactives</button>
+        </div>
+
+        <button class="btn-add" (click)="openModal()">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Ajouter une spécialité
+        </button>
+      </div>
+
+      <!-- ===== GROUPES PAR FILIÈRE ===== -->
+      <div *ngFor="let group of specsByFiliere" class="filiere-group">
+
+        <div class="group-header" [style.border-left-color]="group.filiere.couleur">
+          <div class="group-icon-wrap" [style.background]="group.filiere.couleurBg">
+            <span [style.color]="group.filiere.couleur"
+                  style="font-weight:800;font-size:0.8rem">{{ group.filiere.code }}</span>
+          </div>
+          <div>
+            <h2 class="group-nom">{{ group.filiere.nom }}</h2>
+            <span class="group-count">
+              {{ group.specs.length }} spécialité{{ group.specs.length > 1 ? 's' : '' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="cards-grid">
+          <div *ngFor="let s of group.specs" class="spec-card"
+               [style.border-top]="'4px solid ' + s.filiereCouleur">
+
+            <div class="card-header">
+              <div class="card-icon-wrap" [style.background]="s.filiereCouleurBg">
+                <span class="card-icon">{{ s.icon }}</span>
+              </div>
+              <div class="card-title-block">
+                <h3 class="card-nom">{{ s.nom }}</h3>
+                <span class="card-code"
+                      [style.color]="s.filiereCouleur"
+                      [style.background]="s.filiereCouleurBg">{{ s.code }}</span>
+              </div>
+              <span [class]="s.actif ? 'badge-actif' : 'badge-inactif'">
+                {{ s.actif ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+
+            <p class="card-desc">{{ s.description }}</p>
+
+            <div class="card-tags">
+              <span *ngFor="let c of s.competences.slice(0,3)" class="tag"
+                    [style.color]="s.filiereCouleur"
+                    [style.background]="s.filiereCouleurBg">{{ c }}</span>
+              <span *ngIf="s.competences.length > 3" class="tag-more">
+                +{{ s.competences.length - 3 }}
+              </span>
+            </div>
+
+            <div class="card-stats">
+              <div class="cs-item">
+                <span class="cs-val">{{ s.nbEtudiants }}/{{ s.capacite }}</span>
+                <span class="cs-lbl">Étudiants</span>
+              </div>
+              <div class="cs-item">
+                <span class="cs-val" [style.color]="s.filiereCouleur">{{ getTaux(s) }}%</span>
+                <span class="cs-lbl">Remplissage</span>
+              </div>
+              <div class="cs-item">
+                <span class="cs-val">{{ s.annee }}</span>
+                <span class="cs-lbl">Année</span>
+              </div>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-fill"
+                     [style.width]="getTaux(s) + '%'"
+                     [style.background]="s.filiereCouleur"></div>
+              </div>
+              <span class="progress-pct">{{ getTaux(s) }}%</span>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn-edit" (click)="openDetail(s)">
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                Détails
+              </button>
+              <button class="btn-edit" (click)="openModal(s)">
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Modifier
+              </button>
+              <button class="btn-delete" (click)="confirmDelete(s)">
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                </svg>
+                Supprimer
+              </button>
+            </div>
+          </div>
+
+          <!-- Carte ajouter -->
+          <div class="spec-card card-add" (click)="openModal()">
+            <div class="add-content">
+              <div class="add-icon"
+                   [style.background]="group.filiere.couleurBg"
+                   [style.color]="group.filiere.couleur">+</div>
+              <p class="add-label" [style.color]="group.filiere.couleur">
+                Ajouter une spécialité
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="specsByFiliere.length === 0" class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <p class="empty-title">Aucune spécialité trouvée</p>
+        <p class="empty-sub">Modifiez vos critères ou ajoutez une nouvelle spécialité.</p>
+        <button class="btn-add" (click)="openModal()" style="margin-top:1rem">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Ajouter une spécialité
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== MODAL AJOUTER / MODIFIER ===== -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ editingSpec ? 'Modifier la spécialité' : 'Ajouter une spécialité' }}</h2>
+      <button class="modal-close" (click)="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="specForm">
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Nom <span style="color:red">*</span></label>
+            <input type="text" formControlName="nom" placeholder="ex: Intelligence Artificielle" />
+          </div>
+          <div class="form-group">
+            <label>Code <span style="color:red">*</span></label>
+            <input type="text" formControlName="code" placeholder="ex: IA" />
+          </div>
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Icône (emoji)</label>
+            <input type="text" formControlName="icon" placeholder="🧠" />
+          </div>
+          <div class="form-group">
+            <label>Filière <span style="color:red">*</span></label>
+            <select formControlName="filiereId">
+              <option value="">-- Choisir une filière --</option>
+              <option *ngFor="let f of filieres" [value]="f.id">{{ f.nom }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Description <span style="color:red">*</span></label>
+            <textarea formControlName="description" rows="3"
+                      placeholder="Décrivez la spécialité..."
+                      style="width:100%;padding:.5rem;border:1px solid #d1d5db;border-radius:8px;font-size:.875rem;resize:vertical;"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label>Capacité <span style="color:red">*</span></label>
+            <input type="number" formControlName="capacite" min="1" />
+          </div>
+          <div class="form-group">
+            <label>Année</label>
+            <select formControlName="annee">
+              <option>3ème année</option>
+              <option>2ème année</option>
+              <option>1ère année</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Statut</label>
+            <select formControlName="actif">
+              <option [ngValue]="true">Active</option>
+              <option [ngValue]="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Débouchés -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Débouchés professionnels</label>
+            <div style="display:flex;gap:.5rem;margin-bottom:.5rem">
+              <input type="text" [(ngModel)]="newDebouche" [ngModelOptions]="{standalone:true}"
+                     placeholder="Ajouter un débouché..."
+                     (keyup.enter)="addDebouche()" style="flex:1" />
+              <button type="button" class="btn-save" style="padding:.4rem .75rem"
+                      (click)="addDebouche()">+</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:.375rem">
+              <span *ngFor="let d of debouchesList; let i=index"
+                    style="display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;
+                           background:#eff6ff;color:#1a73e8;border-radius:20px;font-size:.8rem">
+                {{ d }}
+                <button type="button" (click)="removeDebouche(i)"
+                        style="background:none;border:none;cursor:pointer;color:#1a73e8;font-size:1rem;line-height:1">×</button>
+              </span>
+              <span *ngIf="debouchesList.length===0"
+                    style="font-size:.8rem;color:#9ca3af;font-style:italic">Aucun débouché ajouté</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compétences -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Compétences clés</label>
+            <div style="display:flex;gap:.5rem;margin-bottom:.5rem">
+              <input type="text" [(ngModel)]="newCompetence" [ngModelOptions]="{standalone:true}"
+                     placeholder="Ajouter une compétence..."
+                     (keyup.enter)="addCompetence()" style="flex:1" />
+              <button type="button" class="btn-save" style="padding:.4rem .75rem"
+                      (click)="addCompetence()">+</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:.375rem">
+              <span *ngFor="let c of competencesList; let i=index"
+                    style="display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;
+                           background:#f5f3ff;color:#7c3aed;border-radius:20px;font-size:.8rem">
+                {{ c }}
+                <button type="button" (click)="removeCompetence(i)"
+                        style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:1rem;line-height:1">×</button>
+              </span>
+              <span *ngIf="competencesList.length===0"
+                    style="font-size:.8rem;color:#9ca3af;font-style:italic">Aucune compétence ajoutée</span>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+      <button class="btn-save" (click)="saveSpec()" [disabled]="specForm.invalid">
+        {{ editingSpec ? 'Enregistrer les modifications' : 'Ajouter' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== MODAL DÉTAIL ===== -->
+<div class="modal-overlay" *ngIf="showDetailModal && selectedSpec" (click)="closeDetail()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header" [style.border-bottom]="'3px solid ' + selectedSpec.filiereCouleur">
+      <h2 [style.color]="selectedSpec.filiereCouleur">
+        {{ selectedSpec.icon }} {{ selectedSpec.nom }}
+      </h2>
+      <button class="modal-close" (click)="closeDetail()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div style="margin-bottom:.875rem">
+        <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .75rem;
+                     border-radius:20px;font-size:.8rem;font-weight:700"
+              [style.color]="selectedSpec.filiereCouleur"
+              [style.background]="selectedSpec.filiereCouleurBg">
+          📚 {{ selectedSpec.filiereNom }}
+        </span>
+        <span style="margin-left:.5rem;font-size:.8rem;color:#94a3b8">• {{ selectedSpec.annee }}</span>
+      </div>
+
+      <p style="color:#374151;line-height:1.6;margin-bottom:1rem">{{ selectedSpec.description }}</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem">
+        <div style="text-align:center;padding:.75rem;border:2px solid;border-radius:8px"
+             [style.border-color]="selectedSpec.filiereCouleur">
+          <div style="font-size:1.25rem;font-weight:700"
+               [style.color]="selectedSpec.filiereCouleur">
+            {{ selectedSpec.nbEtudiants }}/{{ selectedSpec.capacite }}
+          </div>
+          <div style="font-size:.75rem;color:#6b7280">Étudiants</div>
+        </div>
+        <div style="text-align:center;padding:.75rem;border:2px solid;border-radius:8px"
+             [style.border-color]="selectedSpec.filiereCouleur">
+          <div style="font-size:1.25rem;font-weight:700"
+               [style.color]="selectedSpec.filiereCouleur">{{ getTaux(selectedSpec) }}%</div>
+          <div style="font-size:.75rem;color:#6b7280">Remplissage</div>
+        </div>
+        <div style="text-align:center;padding:.75rem;border:2px solid;border-radius:8px"
+             [style.border-color]="selectedSpec.filiereCouleur">
+          <div style="font-size:1rem;font-weight:700"
+               [style.color]="selectedSpec.filiereCouleur">{{ selectedSpec.annee }}</div>
+          <div style="font-size:.75rem;color:#6b7280">Année</div>
+        </div>
+      </div>
+
+      <p style="font-size:.75rem;font-weight:700;color:#9ca3af;text-transform:uppercase;margin-bottom:.5rem">
+        Débouchés
+      </p>
+      <div *ngFor="let d of selectedSpec.debouches"
+           style="padding:.5rem .75rem;background:#f9fafb;border-radius:6px;
+                  border-left:3px solid;margin-bottom:.375rem;font-size:.875rem"
+           [style.border-left-color]="selectedSpec.filiereCouleur">{{ d }}</div>
+
+      <p style="font-size:.75rem;font-weight:700;color:#9ca3af;text-transform:uppercase;margin:.75rem 0 .5rem">
+        Compétences
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:.375rem">
+        <span *ngFor="let c of selectedSpec.competences"
+              style="padding:.2rem .6rem;border-radius:20px;font-size:.8rem;font-weight:600"
+              [style.color]="selectedSpec.filiereCouleur"
+              [style.background]="selectedSpec.filiereCouleurBg">{{ c }}</span>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeDetail()">Fermer</button>
+      <button class="btn-save" (click)="closeDetail(); openModal(selectedSpec)">Modifier</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== MODAL SUPPRESSION ===== -->
+<div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+  <div class="modal-box modal-small" (click)="$event.stopPropagation()">
+    <div class="modal-header danger">
+      <h2>Confirmer la suppression</h2>
+      <button class="modal-close" (click)="cancelDelete()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="delete-warning">
+        <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="#ef4444">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+        <p>Voulez-vous vraiment supprimer<br/>
+          <strong *ngIf="deletingSpec">« {{ deletingSpec.nom }} »</strong> ?
+        </p>
+        <p class="delete-note">Cette action est irréversible.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+      <button class="btn-danger" (click)="executeDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
