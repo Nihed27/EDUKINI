@@ -1,0 +1,378 @@
+<div class="page-header">
+  <h1 class="page-title">Paramètres</h1>
+  <p class="page-sub">Gérez la configuration de la plateforme Edukini</p>
+</div>
+
+<div class="page-body">
+
+  <!-- SETTINGS NAV -->
+  <div class="settings-nav">
+    <div class="settings-nav-item" [class.active]="activeSection === 'general'" (click)="setSection('general')">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <circle cx="12" cy="12" r="3" stroke-width="2"/>
+        <path stroke-width="2" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06
+          a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09
+          A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06
+          A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09
+          A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06
+          A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09
+          a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06
+          A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      Configuration générale
+    </div>
+    <div class="settings-nav-item" [class.active]="activeSection === 'securite'" (click)="setSection('securite')">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Sécurité
+    </div>
+    <div class="settings-nav-item" [class.active]="activeSection === 'notifications'" (click)="setSection('notifications')">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path stroke-width="2" d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      Notifications
+    </div>
+    <div class="settings-nav-item" [class.active]="activeSection === 'permissions'" (click)="setSection('permissions')">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4" stroke-width="2"/>
+        <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      Permissions
+    </div>
+    <div class="settings-nav-item" [class.active]="activeSection === 'sauvegarde'" (click)="setSection('sauvegarde')">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline stroke-width="2" points="17 8 12 3 7 8"/>
+        <line stroke-width="2" x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      Sauvegarde
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="settings-content">
+
+    <!-- GENERAL -->
+    <ng-container *ngIf="activeSection === 'general'">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon blue">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+              <path stroke-width="2" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06
+                a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09
+                A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06
+                A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09
+                A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06
+                A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09
+                a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06
+                A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Configuration générale</div>
+            <div class="card-desc">Paramètres globaux de la plateforme</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-row">
+            <div>
+              <div class="field-label">Nom de la plateforme</div>
+              <div class="field-sub">Affiché dans le titre et les emails</div>
+            </div>
+            <input type="text" class="setting-input" [(ngModel)]="config.nomPlateforme" />
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Langue</div>
+              <div class="field-sub">Langue de l'interface</div>
+            </div>
+            <select class="setting-select" [(ngModel)]="config.langue">
+              <option value="fr">Français</option>
+              <option value="ar">العربية</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Fuseau horaire</div>
+              <div class="field-sub">Heure locale utilisée</div>
+            </div>
+            <select class="setting-select" [(ngModel)]="config.timezone">
+              <option value="Africa/Tunis">Africa/Tunis (GMT+1)</option>
+              <option value="Europe/Paris">Europe/Paris (GMT+2)</option>
+              <option value="UTC">UTC</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Format de date</div>
+              <div class="field-sub">Affichage des dates dans l'application</div>
+            </div>
+            <select class="setting-select" [(ngModel)]="config.dateFormat">
+              <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+              <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+              <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-save" (click)="saveConfig()">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- SECURITE -->
+    <ng-container *ngIf="activeSection === 'securite'">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon orange">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#f97316">
+              <path stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Sécurité & Accès</div>
+            <div class="card-desc">Gestion des mots de passe et authentification</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-row">
+            <div>
+              <div class="field-label">Double authentification (2FA)</div>
+              <div class="field-sub">Exiger un code SMS à la connexion</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="securite.doubleAuth" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Expiration de session</div>
+              <div class="field-sub">Déconnexion automatique après inactivité</div>
+            </div>
+            <select class="setting-select" [(ngModel)]="securite.sessionTimeout">
+              <option value="15">15 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="60">1 heure</option>
+              <option value="120">2 heures</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Longueur minimale du mot de passe</div>
+              <div class="field-sub">Nombre de caractères minimum</div>
+            </div>
+            <select class="setting-select" [(ngModel)]="securite.motDePasseMinLength">
+              <option value="6">6 caractères</option>
+              <option value="8">8 caractères</option>
+              <option value="10">10 caractères</option>
+              <option value="12">12 caractères</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Historique des mots de passe</div>
+              <div class="field-sub">Empêcher la réutilisation des 5 derniers</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="securite.historiqueMdp" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-save" (click)="saveSecurite()">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- NOTIFICATIONS -->
+    <ng-container *ngIf="activeSection === 'notifications'">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon green">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#16a34a">
+              <path stroke-width="2" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path stroke-width="2" d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Notifications</div>
+            <div class="card-desc">Alertes email et SMS</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-row">
+            <div>
+              <div class="field-label">Email — Nouvel étudiant</div>
+              <div class="field-sub">Recevoir un email à chaque inscription</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.emailNouvelEtudiant" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Email — Nouvelle demande</div>
+              <div class="field-sub">Alertes pour les demandes administratives</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.emailDemande" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Email — Rapport hebdomadaire</div>
+              <div class="field-sub">Statistiques envoyées chaque lundi</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.emailStatistiques" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">SMS — Alertes critiques</div>
+              <div class="field-sub">Notifications urgentes par SMS</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.smsAlertes" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-save" (click)="saveNotifications()">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- PERMISSIONS -->
+    <ng-container *ngIf="activeSection === 'permissions'">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon purple">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#7c3aed">
+              <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4" stroke-width="2"/>
+              <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Gestion des permissions</div>
+            <div class="card-desc">Droits d'accès par rôle utilisateur</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="perm-table">
+            <thead>
+              <tr>
+                <th>Rôle</th>
+                <th>Accès total</th>
+                <th>Étudiants</th>
+                <th>Écoles</th>
+                <th>Statistiques</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of permissions">
+                <td>
+                  <span [class]="'perm-badge ' + p.label">{{ p.role }}</span>
+                </td>
+                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.accesTotal"/><span class="toggle-slider"></span></label></td>
+                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.gestionEtudiants"/><span class="toggle-slider"></span></label></td>
+                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.gestionEcoles"/><span class="toggle-slider"></span></label></td>
+                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.statistiques"/><span class="toggle-slider"></span></label></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <button class="btn-save">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Enregistrer les permissions
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- SAUVEGARDE -->
+    <ng-container *ngIf="activeSection === 'sauvegarde'">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon blue">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
+              <path stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline stroke-width="2" points="17 8 12 3 7 8"/>
+              <line stroke-width="2" x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Sauvegarde des données</div>
+            <div class="card-desc">Historique et gestion des sauvegardes</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="backup-row" *ngFor="let s of sauvegardes">
+            <div>
+              <div class="field-label">
+                <span class="status-dot"></span>{{ s.nom }}
+              </div>
+              <div class="backup-date">{{ s.date }}</div>
+            </div>
+            <button class="btn-secondary">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1M16 12l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              Télécharger
+            </button>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-secondary">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6M4 7h16M10 3h4"/>
+            </svg>
+            Supprimer anciennes
+          </button>
+          <button class="btn-save" (click)="lancerSauvegarde()">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline stroke-width="2" points="17 8 12 3 7 8"/>
+              <line stroke-width="2" x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Lancer une sauvegarde
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

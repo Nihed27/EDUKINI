@@ -1,0 +1,195 @@
+<div class="page-header">
+  <div class="header-left">
+    <h1 class="page-title">Statistiques</h1>
+    <p class="page-subtitle">Analyse des données — ENICarthage</p>
+  </div>
+  <div class="export-actions">
+    <button class="btn-export" (click)="exportPDF()">
+      <span class="btn-icon">📥</span> Exporter PDF
+    </button>
+    <button class="btn-export" (click)="exportExcel()">
+      <span class="btn-icon">📊</span> Exporter Excel
+    </button>
+    <button class="btn-export btn-primary" (click)="exportReport()">
+      <span class="btn-icon">📄</span> Rapport auto
+    </button>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ─── Filtres ─── -->
+  <div class="filters-bar">
+    <div class="filter-group-stat">
+      <label>Période</label>
+      <select [(ngModel)]="selectedPeriode" (change)="onFilterChange()">
+        <option *ngFor="let p of periodes" [value]="p.value">{{ p.label }}</option>
+      </select>
+    </div>
+    <div class="filter-group-stat">
+      <label>Filière</label>
+      <select [(ngModel)]="selectedFiliere" (change)="onFilterChange()">
+        <option *ngFor="let f of filieres" [value]="f.value">{{ f.label }}</option>
+      </select>
+    </div>
+    <div class="filter-group-stat">
+      <label>Niveau</label>
+      <select [(ngModel)]="selectedNiveau" (change)="onFilterChange()">
+        <option *ngFor="let n of niveaux" [value]="n.value">{{ n.label }}</option>
+      </select>
+    </div>
+    <div class="filter-group-stat">
+      <label>Type de demande</label>
+      <select [(ngModel)]="selectedType" (change)="onFilterChange()">
+        <option *ngFor="let t of types" [value]="t.value">{{ t.label }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ─── Cartes globales ─── -->
+  <section class="section">
+    <h2 class="section-title">Tableau de bord global</h2>
+    <div class="stats-row">
+      <div class="stat-card" [ngClass]="card.colorClass" *ngFor="let card of statCards">
+        <div class="stat-icon">{{ card.icon }}</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ card.value }}</span>
+          <span class="stat-label">{{ card.label }}</span>
+        </div>
+        <div class="card-trend" [ngClass]="getTrendClass(card.trend!)">
+          {{ getTrendIcon(card.trend!) }} {{ card.trend | number:'1.1-1' }}%
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Statistiques des demandes ─── -->
+  <section class="section">
+    <h2 class="section-title">Statistiques des demandes</h2>
+    <div class="charts-row">
+      <div class="chart-card chart-wide">
+        <div class="chart-header">
+          <h3>Demandes par mois</h3>
+          <div class="legend">
+            <span class="legend-dot" style="background:#16a34a"></span> Acceptées
+            <span class="legend-dot" style="background:#dc2626;margin-left:12px"></span> Refusées
+            <span class="legend-dot" style="background:#d97706;margin-left:12px"></span> En attente
+          </div>
+        </div>
+        <div class="chart-container" style="height:260px">
+          <canvas #barChart></canvas>
+        </div>
+      </div>
+      <div class="chart-card chart-narrow">
+        <div class="chart-header"><h3>Répartition par type</h3></div>
+        <div class="chart-container" style="height:200px">
+          <canvas #pieChart></canvas>
+        </div>
+        <div class="pie-legend">
+          <div class="pie-legend-item"><span class="legend-dot" style="background:#2563eb"></span><span>Attestation scolarité</span><strong>38%</strong></div>
+          <div class="pie-legend-item"><span class="legend-dot" style="background:#7c3aed"></span><span>Relevé de notes</span><strong>27%</strong></div>
+          <div class="pie-legend-item"><span class="legend-dot" style="background:#059669"></span><span>Attestation stage</span><strong>21%</strong></div>
+          <div class="pie-legend-item"><span class="legend-dot" style="background:#d97706"></span><span>Demande bourse</span><strong>14%</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-top:16px">
+      <div class="chart-header"><h3>Évolution des demandes</h3></div>
+      <div class="chart-container" style="height:220px"><canvas #lineChart></canvas></div>
+    </div>
+  </section>
+
+  <!-- ─── Statistiques d'orientation ─── -->
+  <section class="section">
+    <h2 class="section-title">Statistiques d'orientation</h2>
+    <div class="charts-row">
+      <div class="chart-card chart-wide">
+        <div class="chart-header"><h3>Étudiants par filière</h3></div>
+        <div class="chart-container" style="height:220px"><canvas #filiereChart></canvas></div>
+      </div>
+      <div class="chart-card chart-narrow">
+        <div class="chart-header"><h3>Répartition par spécialité</h3></div>
+        <div class="chart-container" style="height:200px"><canvas #specialiteChart></canvas></div>
+        <div class="pie-legend">
+          <div class="pie-legend-item"><span class="legend-dot" style="background:rgba(37,99,235,0.75)"></span><span>IA & Data</span><strong>145</strong></div>
+          <div class="pie-legend-item"><span class="legend-dot" style="background:rgba(124,58,237,0.75)"></span><span>Réseaux</span><strong>98</strong></div>
+          <div class="pie-legend-item"><span class="legend-dot" style="background:rgba(5,150,105,0.75)"></span><span>Robotique</span><strong>112</strong></div>
+          <div class="pie-legend-item"><span class="legend-dot" style="background:rgba(217,119,6,0.75)"></span><span>Automatique</span><strong>87</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-top:16px">
+      <div class="chart-header"><h3>Taux de réussite par filière</h3></div>
+      <div class="success-rates">
+        <div class="rate-row" *ngFor="let c of correlations">
+          <span class="rate-label">{{ c.filiere }}</span>
+          <div class="rate-bar-track">
+            <div class="rate-bar-fill" [style.width.%]="c.taux"
+              [style.background]="c.taux >= 85 ? '#16a34a' : c.taux >= 75 ? '#d97706' : '#dc2626'"></div>
+          </div>
+          <span class="rate-value">{{ c.taux }}%</span>
+          <span class="rate-avg">Moy. {{ c.moyenne }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Statistiques intelligentes ─── -->
+  <section class="section">
+    <h2 class="section-title">
+      Statistiques intelligentes
+      <span class="badge-ai">🤖 IA</span>
+    </h2>
+    <div class="ai-grid">
+      <div class="chart-card">
+        <div class="chart-header"><h3>Recommandations les plus proposées</h3></div>
+        <div class="reco-list">
+          <div class="reco-item" *ngFor="let r of recommendations; let i = index">
+            <span class="reco-rank">{{ i + 1 }}</span>
+            <div class="reco-info">
+              <span class="reco-label">{{ r.label }}</span>
+              <div class="reco-track"><div class="reco-fill" [style.width.%]="r.pct"></div></div>
+            </div>
+            <span class="reco-count">{{ r.count }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card satisfaction-card">
+        <div class="chart-header"><h3>Taux de satisfaction</h3></div>
+        <div class="satisfaction-ring">
+          <svg viewBox="0 0 120 120" class="ring-svg">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#e5e7eb" stroke-width="12"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#16a34a" stroke-width="12"
+              [attr.stroke-dasharray]="tauxSatisfaction * 3.14159 + ', 314.159'"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="ring-label">
+            <span class="ring-value">{{ tauxSatisfaction }}%</span>
+            <span class="ring-sub">satisfaction</span>
+          </div>
+        </div>
+        <p class="satisfaction-note">Basé sur 312 étudiants ayant reçu une recommandation</p>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header"><h3>Prédictions — filières demandées</h3></div>
+        <div class="pred-list">
+          <div class="pred-item" *ngFor="let p of predictions">
+            <div class="pred-info">
+              <span class="pred-label">{{ p.filiere }}</span>
+              <div class="pred-track">
+                <div class="pred-fill" [style.width.%]="p.score"
+                  [style.background]="p.score >= 80 ? '#2563eb' : p.score >= 60 ? '#7c3aed' : '#6b7280'"></div>
+              </div>
+            </div>
+            <span class="pred-badge" [ngClass]="getPredictionClass(p.trend)">
+              {{ getPredictionLabel(p.trend) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

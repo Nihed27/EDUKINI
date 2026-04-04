@@ -1,229 +1,131 @@
-<div class="layout">
+<!-- FILTRES -->
+<div class="page-header">
+  <h1 class="page-title">Ecoles</h1>
+</div>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-title">Edukini</div>
-      <div class="logo-sub">Administration</div>
+<div class="page-body">
+
+  <div class="filters-bar">
+    <div class="search-wrapper">
+      <span class="search-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+        </svg>
+      </span>
+      <input type="text" class="search-input" placeholder="Rechercher par nom, sigle, université..."
+        [(ngModel)]="searchTerm" (input)="applyFilters()" />
     </div>
-    <nav class="nav">
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
-          <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/>
-          <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
-          <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/>
-        </svg>
-        Dashboard
-      </div>
-      <div class="nav-item active">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M3 21h18M9 21V7l6-4v18"/>
-        </svg>
-        Ecoles
-      </div>
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-          <path stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-        </svg>
-        Filières
-      </div>
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <circle cx="12" cy="8" r="4" stroke-width="2"/>
-          <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-        </svg>
-        Spécialités
-      </div>
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4" stroke-width="2"/>
-          <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-        Etudiants
-      </div>
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M9 12h6M9 16h6M5 8h14M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
-        </svg>
-        Demandes administratives
-      </div>
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M18 20V10M12 20V4M6 20v-6"/>
-        </svg>
-        Statistiques
-      </div>
-      <div class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <circle cx="12" cy="12" r="3" stroke-width="2"/>
-          <path stroke-width="2" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-        Paramètres
-      </div>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="avatar-row">
-        <div class="avatar-circle">MBA</div>
-        <div>
-          <div class="avatar-name">Mehdi Ben Ali</div>
-          <div class="avatar-role">Admin système</div>
-        </div>
-      </div>
-      <button class="logout-btn">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
-        </svg>
-        Déconnexion
-      </button>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <div class="main">
-    <div class="page-header">
-      <h1 class="page-title">Ecoles</h1>
-    </div>
-
-    <div class="page-body">
-
-      <!-- FILTRES -->
-      <div class="filters-bar">
-        <div class="search-wrapper">
-          <span class="search-icon">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-            </svg>
-          </span>
-          <input type="text" class="search-input" placeholder="Rechercher par nom, sigle, université..."
-            [(ngModel)]="searchTerm" (input)="applyFilters()" />
-        </div>
-        <select class="filter-select" [(ngModel)]="filterRegion" (change)="applyFilters()">
-          <option value="">Toutes les régions</option>
-          <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
-        </select>
-        <select class="filter-select" [(ngModel)]="filterFiliere" (change)="applyFilters()">
-          <option value="">Toutes les filières</option>
-          <option *ngFor="let f of allFilieres" [value]="f">{{ f }}</option>
-        </select>
-        <button class="btn-reset" (click)="resetFilters()" *ngIf="searchTerm || filterRegion || filterFiliere">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-          Réinitialiser
-        </button>
-        <button class="btn-add" (click)="openAddModal()">
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-width="2" d="M12 4v16m8-8H4"/>
-          </svg>
-          Ajouter une école
-        </button>
-      </div>
-
-      <!-- COMPTEUR -->
-      <div class="results-count">
-        {{ filteredEcoles.length }} école{{ filteredEcoles.length > 1 ? 's' : '' }} trouvée{{ filteredEcoles.length > 1 ? 's' : '' }}
-      </div>
-
-      <!-- TABLEAU -->
-      <div class="table-card">
-        <table class="ecoles-table">
-          <thead>
-            <tr>
-              <th>Sigle</th>
-              <th>Nom de l'établissement</th>
-              <th>Université</th>
-              <th>Région</th>
-              <th>Adresse</th>
-              <th>Filières</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let ecole of filteredEcoles">
-              <tr class="table-row" [class.expanded]="expandedId === ecole.id">
-                <td>
-                  <span class="sigle-badge">{{ ecole.sigle }}</span>
-                </td>
-                <td>
-                  <div class="ecole-name">
-                    <div class="ecole-avatar">
-                      {{ ecole.sigle.substring(0, 2).toUpperCase() }}
-                    </div>
-                    <span class="name-full">{{ ecole.nom }}</span>
-                  </div>
-                </td>
-                <td>
-                  <span class="univ-tag">{{ ecole.universite }}</span>
-                </td>
-                <td>
-                  <div class="region-cell">
-                    <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-width="2" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                      <circle cx="12" cy="9" r="2.5" stroke-width="2"/>
-                    </svg>
-                    {{ ecole.region }}
-                  </div>
-                </td>
-                <td>
-                  <span class="adresse-text">{{ ecole.adresse }}</span>
-                </td>
-                <td>
-                  <button class="filieres-toggle" (click)="toggleExpand(ecole.id)">
-                    <span class="filiere-count">{{ ecole.filieres.length }}</span>
-                    filière{{ ecole.filieres.length > 1 ? 's' : '' }}
-                    <svg [class]="expandedId === ecole.id ? 'chevron rotated' : 'chevron'" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-width="2" d="M6 9l6 6 6-6"/>
-                    </svg>
-                  </button>
-                </td>
-                <td>
-                  <div class="action-buttons">
-                    <button class="btn-edit" (click)="openEditModal(ecole)">
-                      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-width="2" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                        <path stroke-width="2" d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                      </svg>
-                      Modifier
-                    </button>
-                    <button class="btn-delete" (click)="confirmDelete(ecole)">
-                      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-width="2" d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                      </svg>
-                      Supprimer
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <!-- LIGNE FILIÈRES EXPANDABLE -->
-              <tr class="filieres-row" *ngIf="expandedId === ecole.id">
-                <td colspan="7">
-                  <div class="filieres-panel">
-                    <span class="filieres-label">Filières :</span>
-                    <div class="filieres-list">
-                      <span *ngFor="let f of ecole.filieres" class="filiere-chip">{{ f }}</span>
-                      <span *ngIf="ecole.filieres.length === 0" class="no-filieres">Aucune filière renseignée</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </ng-container>
-
-            <tr *ngIf="filteredEcoles.length === 0">
-              <td colspan="7" class="empty-state">
-                <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="#cbd5e1">
-                  <path stroke-width="1" d="M3 21h18M9 21V7l6-4v18"/>
-                </svg>
-                <p>Aucune école trouvée</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <select class="filter-select" [(ngModel)]="filterRegion" (change)="applyFilters()">
+      <option value="">Toutes les régions</option>
+      <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="filterFiliere" (change)="applyFilters()">
+      <option value="">Toutes les filières</option>
+      <option *ngFor="let f of allFilieres" [value]="f">{{ f }}</option>
+    </select>
+    <button class="btn-reset" (click)="resetFilters()" *ngIf="searchTerm || filterRegion || filterFiliere">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      Réinitialiser
+    </button>
+    <button class="btn-add" (click)="openAddModal()">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      Ajouter une école
+    </button>
   </div>
+
+  <div class="results-count">
+    {{ filteredEcoles.length }} école{{ filteredEcoles.length > 1 ? 's' : '' }} trouvée{{ filteredEcoles.length > 1 ? 's' : '' }}
+  </div>
+
+  <div class="table-card">
+    <table class="ecoles-table">
+      <thead>
+        <tr>
+          <th>Sigle</th>
+          <th>Nom de l'établissement</th>
+          <th>Université</th>
+          <th>Région</th>
+          <th>Adresse</th>
+          <th>Filières</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let ecole of filteredEcoles">
+          <tr class="table-row" [class.expanded]="expandedId === ecole.id">
+            <td><span class="sigle-badge">{{ ecole.sigle }}</span></td>
+            <td>
+              <div class="ecole-name">
+                <div class="ecole-avatar">{{ ecole.sigle.substring(0, 2).toUpperCase() }}</div>
+                <span class="name-full">{{ ecole.nom }}</span>
+              </div>
+            </td>
+            <td><span class="univ-tag">{{ ecole.universite }}</span></td>
+            <td>
+              <div class="region-cell">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="2" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5" stroke-width="2"/>
+                </svg>
+                {{ ecole.region }}
+              </div>
+            </td>
+            <td><span class="adresse-text">{{ ecole.adresse }}</span></td>
+            <td>
+              <button class="filieres-toggle" (click)="toggleExpand(ecole.id)">
+                <span class="filiere-count">{{ ecole.filieres.length }}</span>
+                filière{{ ecole.filieres.length > 1 ? 's' : '' }}
+                <svg [class]="expandedId === ecole.id ? 'chevron rotated' : 'chevron'" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="2" d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-edit" (click)="openEditModal(ecole)">
+                  <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-width="2" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path stroke-width="2" d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                  Modifier
+                </button>
+                <button class="btn-delete" (click)="confirmDelete(ecole)">
+                  <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-width="2" d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  </svg>
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr class="filieres-row" *ngIf="expandedId === ecole.id">
+            <td colspan="7">
+              <div class="filieres-panel">
+                <span class="filieres-label">Filières :</span>
+                <div class="filieres-list">
+                  <span *ngFor="let f of ecole.filieres" class="filiere-chip">{{ f }}</span>
+                  <span *ngIf="ecole.filieres.length === 0" class="no-filieres">Aucune filière renseignée</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+        <tr *ngIf="filteredEcoles.length === 0">
+          <td colspan="7" class="empty-state">
+            <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="#cbd5e1">
+              <path stroke-width="1" d="M3 21h18M9 21V7l6-4v18"/>
+            </svg>
+            <p>Aucune école trouvée</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 <!-- MODAL AJOUTER / MODIFIER -->
@@ -260,8 +162,6 @@
             <option>Université de Gafsa</option>
             <option>Université de Jendouba</option>
             <option>Université de Zaghouan</option>
-            <option>Université de Kairouan</option>
-            <option>Université de Kasserine</option>
           </select>
         </div>
       </div>
@@ -270,30 +170,11 @@
           <label>Région</label>
           <select [(ngModel)]="formData.region">
             <option value="">-- Choisir --</option>
-            <option>Tunis</option>
-            <option>Ben Arous</option>
-            <option>Manouba</option>
-            <option>Ariana</option>
-            <option>Bizerte</option>
-            <option>Nabeul</option>
-            <option>Zaghouan</option>
-            <option>Béja</option>
-            <option>Jendouba</option>
-            <option>Le Kef</option>
-            <option>Siliana</option>
-            <option>Kairouan</option>
-            <option>Kasserine</option>
-            <option>Sidi Bouzid</option>
-            <option>Sousse</option>
-            <option>Monastir</option>
-            <option>Mahdia</option>
-            <option>Sfax</option>
-            <option>Gabès</option>
-            <option>Medenine</option>
-            <option>Tataouine</option>
-            <option>Gafsa</option>
-            <option>Tozeur</option>
-            <option>Kebili</option>
+            <option>Tunis</option><option>Ben Arous</option><option>Manouba</option>
+            <option>Ariana</option><option>Bizerte</option><option>Nabeul</option>
+            <option>Zaghouan</option><option>Béja</option><option>Jendouba</option>
+            <option>Le Kef</option><option>Sousse</option><option>Monastir</option>
+            <option>Sfax</option><option>Gabès</option><option>Gafsa</option>
           </select>
         </div>
         <div class="form-group">
@@ -301,8 +182,6 @@
           <input type="text" [(ngModel)]="formData.adresse" placeholder="Adresse complète" />
         </div>
       </div>
-
-      <!-- FILIÈRES -->
       <div class="form-row">
         <div class="form-group">
           <label>Filières</label>
@@ -318,9 +197,7 @@
               <button class="chip-remove" (click)="removeFiliere(i)">✕</button>
             </span>
           </div>
-          <div class="no-filieres-msg" *ngIf="formData.filieres.length === 0">
-            Aucune filière ajoutée
-          </div>
+          <div class="no-filieres-msg" *ngIf="formData.filieres.length === 0">Aucune filière ajoutée</div>
         </div>
       </div>
     </div>

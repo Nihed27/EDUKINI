@@ -18,13 +18,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('admissionsChart', { static: false }) admissionsChartRef!: ElementRef;
 
-  totalEtudiants: number = 0;
-  totalEcoles: number = 0;
-  totalFilieres: number = 0;
-  totalDemandesAttente: number = 0;
-
+  totalEtudiants = 0;
+  totalEcoles = 0;
+  totalFilieres = 0;
+  totalDemandesAttente = 0;
   demandes: any[] = [];
-
   private chart: Chart | null = null;
 
   constructor(
@@ -33,30 +31,23 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private demandeService: DemandeService
   ) {}
 
-  ngOnInit(): void {
-    this.loadStats();
-  }
+  ngOnInit(): void { this.loadStats(); }
 
-ngAfterViewInit(): void {
-  setTimeout(() => {
-    if (this.admissionsChartRef) {
-      this.buildChart();
+  ngAfterViewInit(): void {
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        if (this.admissionsChartRef) this.buildChart();
+      }, 100);
     }
-  }, 100);
-}
+  }
 
   loadStats(): void {
     const ecoles = this.ecoleService.getAll();
     const toutesLesDemandes = this.demandeService.getAll();
-
     this.totalEtudiants = 800;
     this.totalEcoles = ecoles.length;
-
-    const allFilieres = ecoles.flatMap(e => e.filieres || []);
     this.totalFilieres = 4;
-
     this.totalDemandesAttente = toutesLesDemandes.filter(d => d.statut === 'en_attente').length;
-
     this.demandes = toutesLesDemandes.map(d => ({
       id: d.id,
       numeroInscription: d.numeroInscription,
@@ -87,74 +78,38 @@ ngAfterViewInit(): void {
 
   buildChart(): void {
     const ctx = this.admissionsChartRef.nativeElement.getContext('2d');
-
-    if (this.chart) {
-      this.chart.destroy();
-    }
-
+    if (this.chart) this.chart.destroy();
     const gradientBlue = ctx.createLinearGradient(0, 0, 0, 300);
     gradientBlue.addColorStop(0, 'rgba(37, 99, 235, 0.9)');
     gradientBlue.addColorStop(1, 'rgba(37, 99, 235, 0.2)');
-
     const gradientTeal = ctx.createLinearGradient(0, 0, 0, 300);
     gradientTeal.addColorStop(0, 'rgba(13, 148, 136, 0.9)');
     gradientTeal.addColorStop(1, 'rgba(13, 148, 136, 0.2)');
-
     this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['2020', '2021', '2022', '2023', '2024'],
         datasets: [
-          {
-            label: 'Admis',
-            data: [3100, 3300, 3250, 3500, 3800],
-            backgroundColor: gradientBlue,
-            hoverBackgroundColor: '#1d4ed8',
-            borderRadius: 8,
-            barPercentage: 0.5,
-            categoryPercentage: 0.65,
-          },
-          {
-            label: 'Refusés',
-            data: [1600, 1500, 1150, 1300, 1050],
-            backgroundColor: gradientTeal,
-            hoverBackgroundColor: '#0f766e',
-            borderRadius: 8,
-            barPercentage: 0.5,
-            categoryPercentage: 0.65,
-          }
+          { label: 'Admis', data: [3100, 3300, 3250, 3500, 3800], backgroundColor: gradientBlue, borderRadius: 8, barPercentage: 0.5, categoryPercentage: 0.65 },
+          { label: 'Refusés', data: [1600, 1500, 1150, 1300, 1050], backgroundColor: gradientTeal, borderRadius: 8, barPercentage: 0.5, categoryPercentage: 0.65 }
         ]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
-        scales: { y: { beginAtZero: true } }
-      }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
     });
   }
 
   getStatutLabel(statut: string): string {
-    switch (statut) {
-      case 'en_attente': return 'En attente';
-      case 'approuvee': return 'Approuvée';
-      case 'rejetee': return 'Rejetée';
-      default: return statut;
-    }
+    const map: any = { en_attente: 'En attente', approuvee: 'Approuvée', rejetee: 'Rejetée' };
+    return map[statut] || statut;
   }
 
   getStatutClass(statut: string): string {
-    switch (statut) {
-      case 'en_attente': return 'tag-attente';
-      case 'approuvee': return 'tag-approuvee';
-      case 'rejetee': return 'tag-rejetee';
-      default: return '';
-    }
+    const map: any = { en_attente: 'tag-attente', approuvee: 'tag-approuvee', rejetee: 'tag-rejetee' };
+    return map[statut] || '';
   }
 
   getAvatarColor(initiales: string): string {
     const colors = ['#3b82f6', '#6366f1', '#8b5cf6', '#0d9488', '#059669', '#2563eb', '#7c3aed', '#0891b2'];
-    const index = initiales.charCodeAt(0) % colors.length;
-    return colors[index];
+    return colors[initiales.charCodeAt(0) % colors.length];
   }
 }
