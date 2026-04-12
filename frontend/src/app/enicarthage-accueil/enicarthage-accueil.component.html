@@ -1,0 +1,58 @@
+<div class="page-header">
+  <h1 class="page-title">Tableau de bord</h1>
+  <p class="page-sub">Bienvenue, Mohamed Ali — 1ère année ENICarthage</p>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card blue">
+    <div class="stat-label">Moyenne générale</div>
+    <div class="stat-val">14.2/20</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-label">Matière forte</div>
+    <div class="stat-val">Algorithmique</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="stat-label">Spécialités disponibles</div>
+    <div class="stat-val">3</div>
+  </div>
+  <div class="stat-card orange">
+    <div class="stat-label">Compatibilité max IA</div>
+    <div class="stat-val">88%</div>
+  </div>
+</div>
+
+<div class="actions-grid">
+  <div class="action-card" (click)="goTo('/enicarthage/recommandations')">
+    <div class="action-icon green-bg">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+        <polyline points="17 6 23 6 23 12"/>
+      </svg>
+    </div>
+    <div class="action-title">Voir mes recommandations IA</div>
+    <div class="action-desc">Découvrez les spécialités les plus compatibles avec votre profil académique</div>
+  </div>
+
+  <div class="action-card" (click)="goTo('/enicarthage/specialites')">
+    <div class="action-icon blue-bg">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+    </div>
+    <div class="action-title">Explorer les spécialités</div>
+    <div class="action-desc">Consultez les programmes, débouchés et places disponibles pour chaque filière</div>
+  </div>
+
+  <div class="action-card" (click)="goTo('/enicarthage/profil')">
+    <div class="action-icon purple-bg">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+    </div>
+    <div class="action-title">Compléter mon profil</div>
+    <div class="action-desc">Ajoutez vos notes et préférences pour améliorer la précision des recommandations</div>
+  </div>
+</div>

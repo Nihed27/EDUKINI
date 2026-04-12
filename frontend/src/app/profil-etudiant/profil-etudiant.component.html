@@ -1,0 +1,56 @@
+<div class="page-header">
+  <h1 class="page-title">Mon Profil</h1>
+</div>
+
+<div class="page-body">
+
+  <div class="profil-card">
+    <div class="profil-id">
+      <div class="avatar-big">AK</div>
+      <div class="profil-info">
+        <div class="profil-nom">Amira Khaled</div>
+        <div class="profil-rang">Rang : 127e / 4320</div>
+        <div class="profil-score">Score : 14.8/20</div>
+      </div>
+      <div class="progression">
+        <div class="prog-label">Progression du profil</div>
+        <div class="prog-bar-bg">
+          <div class="prog-bar-fill" style="width: 80%"></div>
+        </div>
+        <div class="prog-pct">80%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">Informations personnelles</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">Email</div>
+        <div class="info-val">amira.khaled&#64;etudiant.tn</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Téléphone</div>
+        <div class="info-val">+216 20 123 456</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Adresse</div>
+        <div class="info-val">Tunis, Tunisie</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Résultats académiques</div>
+      <button class="releve-btn">Télécharger le relevé</button>
+    </div>
+    <div class="notes-grid">
+      <div class="note-card" *ngFor="let m of matieres">
+        <div class="note-label">{{ m.nom }}</div>
+        <div class="note-val blue">{{ m.note }}/20</div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,44 @@
+.page-header { margin-bottom: 28px; }
+.page-title { font-size: 22px; font-weight: 700; color: #1e293b; }
+.page-sub { font-size: 14px; color: #64748b; margin-top: 4px; }
+
+.spec-list { display: flex; flex-direction: column; gap: 14px; }
+
+.spec-card {
+  background: #fff; border-radius: 14px;
+  overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border-left: 5px solid #e2e8f0;
+}
+.spec-card.border-blue   { border-left-color: #2563eb; }
+.spec-card.border-purple { border-left-color: #8b5cf6; }
+.spec-card.border-orange { border-left-color: #f59e0b; }
+
+.spec-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; cursor: pointer;
+}
+.spec-header:hover { background: #f8fafc; }
+.spec-left { display: flex; align-items: center; gap: 16px; }
+
+.spec-sigle {
+  width: 52px; height: 52px; border-radius: 12px;
+  color: #fff; font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.bg-blue   { background: #2563eb; }
+.bg-purple { background: #8b5cf6; }
+.bg-orange { background: #f59e0b; }
+
+.spec-nom  { font-size: 16px; font-weight: 700; color: #1e293b; }
+.spec-meta { font-size: 12px; color: #94a3b8; margin-top: 3px; }
+.chevron { transition: transform 0.2s; stroke: #94a3b8; }
+.chevron.open { transform: rotate(180deg); }
+
+.spec-body { padding: 0 24px 24px; border-top: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 16px; }
+.spec-desc { font-size: 14px; color: #475569; line-height: 1.6; padding-top: 16px; }
+.spec-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.col-title { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.spec-ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.spec-ul li { font-size: 13.5px; color: #374151; padding-left: 16px; position: relative; }
+.spec-ul li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #94a3b8; }
+.spec-ul.green li::before { background: #22c55e; }

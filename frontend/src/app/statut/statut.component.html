@@ -1,0 +1,48 @@
+<div class="page">
+  <div class="header">
+    <h1 class="title">Quel est votre statut ?</h1>
+    <p class="subtitle">Sélectionnez votre situation pour accéder aux fonctionnalités adaptées</p>
+  </div>
+
+  <div class="cards">
+
+    <!-- Carte Concours -->
+    <div class="card" [class.selected]="selected === 'concours'" (click)="select('concours')">
+      <div class="icon-wrap blue">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <h2 class="card-title">J'ai obtenu le concours national</h2>
+      <p class="card-desc">Consultez votre rang, découvrez les écoles d'ingénieurs publiques et postulez aux filières qui vous correspondent.</p>
+      <ul class="card-list blue-dot">
+        <li>Voir votre rang et score</li>
+        <li>Recommandations IA personnalisées</li>
+        <li>10 écoles publiques d'ingénieurs</li>
+        <li>Postuler aux filières</li>
+      </ul>
+      <button class="btn btn-blue" (click)="continuer('concours'); $event.stopPropagation()">Continuer</button>
+    </div>
+
+    <!-- Carte ENICarthage -->
+    <div class="card" [class.selected]="selected === 'enicarthage'" (click)="select('enicarthage')">
+      <div class="icon-wrap green">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+          <path d="M3 21h18M9 21V7l6-4v18"/>
+          <rect x="12" y="12" width="3" height="4" rx="0.5"/>
+        </svg>
+      </div>
+      <h2 class="card-title">Je suis en 1ère année à ENICarthage</h2>
+      <p class="card-desc">Découvrez les spécialités disponibles et faites votre choix en fonction de votre profil académique et de vos préférences.</p>
+      <ul class="card-list green-dot">
+        <li>3 spécialités au choix</li>
+        <li>Score de compatibilité personnalisé</li>
+        <li>Programmes et débouchés détaillés</li>
+        <li>Validation de votre choix</li>
+      </ul>
+      <button class="btn btn-green" (click)="continuer('enicarthage'); $event.stopPropagation()">Continuer</button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="page-header">
+  <h1 class="page-title">Démarches administratives</h1>
+</div>
+
+<div class="page-body">
+
+  <div class="form-card">
+    <div class="form-title">Faire une demande administrative</div>
+
+    <div class="field-group">
+      <label>Type de document</label>
+      <select [(ngModel)]="typeChoisi">
+        <option value="">Sélectionner un type</option>
+        <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label>Documents justificatifs (optionnel)</label>
+      <div class="upload-zone" (click)="fileInput.click()">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="1.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <div class="upload-text">Cliquez pour télécharger des fichiers</div>
+        <div class="upload-sub">PDF, JPG ou PNG (max. 5MB)</div>
+        <input #fileInput type="file" accept=".pdf,.jpg,.png" hidden (change)="onFile($event)" />
+      </div>
+      <div class="file-name" *ngIf="fichierNom">📎 {{ fichierNom }}</div>
+    </div>
+
+    <button class="send-btn" (click)="envoyer()" [disabled]="!typeChoisi">
+      Envoyer la demande
+    </button>
+
+    <div class="success-msg" *ngIf="messageSucces">✅ {{ messageSucces }}</div>
+  </div>
+
+  <div class="suivi-card">
+    <div class="suivi-title">Suivi de mes demandes</div>
+    <div class="suivi-list">
+      <div class="suivi-item" *ngFor="let d of demandes">
+        <div class="suivi-left">
+          <div class="suivi-type">{{ d.type }}</div>
+          <div class="suivi-date">{{ d.date }}</div>
+        </div>
+        <span [class]="'statut-tag statut-' + d.statut">{{ getStatutLabel(d.statut) }}</span>
+      </div>
+      <div class="suivi-empty" *ngIf="demandes.length === 0">Aucune demande envoyée</div>
+    </div>
+  </div>
+
+</div>

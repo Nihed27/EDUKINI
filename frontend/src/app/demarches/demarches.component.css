@@ -1,0 +1,90 @@
+.page-header { margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; color: #1e293b; }
+.page-body { display: flex; flex-direction: column; gap: 24px; }
+
+.form-card, .suivi-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+
+.form-title, .suivi-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.field-group label { font-size: 13px; font-weight: 600; color: #374151; }
+
+.field-group select {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #1e293b;
+  background: #fff;
+  outline: none;
+}
+.field-group select:focus { border-color: #2563eb; }
+
+.upload-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.upload-zone:hover { border-color: #2563eb; }
+.upload-text { font-size: 14px; font-weight: 500; color: #1e293b; }
+.upload-sub { font-size: 12px; color: #64748b; }
+.file-name { font-size: 13px; color: #2563eb; font-weight: 500; }
+
+.send-btn {
+  width: 100%;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.send-btn:hover:not(:disabled) { background: #1d4ed8; }
+.send-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+.success-msg {
+  margin-top: 12px;
+  background: #dcfce7;
+  color: #15803d;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.suivi-list { display: flex; flex-direction: column; gap: 10px; }
+.suivi-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+.suivi-type { font-size: 14px; font-weight: 600; color: #1e293b; }
+.suivi-date { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.suivi-empty { font-size: 13px; color: #94a3b8; text-align: center; padding: 20px; }
+
+.statut-tag { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+.statut-en_attente { background: #fef9c3; color: #a16207; }
+.statut-valide     { background: #dcfce7; color: #15803d; }
+.statut-refuse     { background: #fee2e2; color: #b91c1c; }

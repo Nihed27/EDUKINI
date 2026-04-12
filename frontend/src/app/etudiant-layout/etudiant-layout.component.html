@@ -1,0 +1,64 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-title">Edukini</div>
+      <div class="logo-sub">Espace Étudiant</div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/etudiant/accueil" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline stroke-width="2" points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Accueil
+      </a>
+      <a routerLink="/etudiant/mes-ecoles" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M3 21h18M9 21V7l6-4v18"/>
+        </svg>
+        Mes Écoles
+      </a>
+      <a routerLink="/etudiant/candidatures" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <line x1="22" y1="2" x2="11" y2="13" stroke-width="2"/>
+          <polygon stroke-width="2" points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Candidatures
+      </a>
+      <a routerLink="/etudiant/demarches" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 12h6M9 16h6M5 8h14M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
+        </svg>
+        Démarches
+      </a>
+      <a routerLink="/etudiant/profil" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="8" r="4" stroke-width="2"/>
+          <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Mon Profil
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar-row">
+        <div class="avatar-circle">AK</div>
+        <div>
+          <div class="avatar-name">Amira Khaled</div>
+          <div class="avatar-role">Rang : 127e / 4320</div>
+        </div>
+      </div>
+      <a routerLink="/login" class="logout-btn">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+        Déconnexion
+      </a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

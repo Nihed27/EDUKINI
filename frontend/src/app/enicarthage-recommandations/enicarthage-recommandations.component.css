@@ -1,0 +1,76 @@
+.page-header { margin-bottom: 20px; }
+.page-title { font-size: 22px; font-weight: 700; color: #1e293b; }
+.page-sub { font-size: 14px; color: #64748b; margin-top: 4px; }
+
+.ia-banner {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff; border-radius: 12px; padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 13.5px; margin-bottom: 24px; line-height: 1.5;
+}
+
+.reco-list { display: flex; flex-direction: column; gap: 18px; }
+
+.reco-card {
+  background: #fff; border-radius: 16px; padding: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border-left: 5px solid #e2e8f0;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.reco-card.niveau-tres_recommande { border-left-color: #22c55e; }
+.reco-card.niveau-recommande      { border-left-color: #2563eb; }
+.reco-card.niveau-peu_recommande  { border-left-color: #f59e0b; }
+
+.reco-header { display: flex; align-items: center; gap: 16px; }
+
+.reco-rang {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #f1f5f9; color: #475569;
+  font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.reco-title-block { flex: 1; }
+.reco-sigle { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+.reco-nom   { font-size: 17px; font-weight: 800; color: #1e293b; }
+
+.reco-score-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+.score-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  font-size: 15px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.score-tres_recommande { background: #22c55e; }
+.score-recommande      { background: #2563eb; }
+.score-peu_recommande  { background: #f59e0b; }
+
+.niveau-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.niveau-badge.niveau-tres_recommande { background: #dcfce7; color: #15803d; }
+.niveau-badge.niveau-recommande      { background: #eff6ff; color: #2563eb; }
+.niveau-badge.niveau-peu_recommande  { background: #fef9c3; color: #a16207; }
+
+.reco-desc { font-size: 13.5px; color: #475569; line-height: 1.6; }
+
+.reco-raison {
+  background: #f8fafc; border-radius: 8px; padding: 12px 14px;
+  font-size: 13px; color: #374151;
+  display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+}
+
+.reco-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.meta-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { background: #f1f5f9; color: #475569; font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.tag.green { background: #dcfce7; color: #15803d; }
+.places-val { font-size: 16px; font-weight: 700; color: #1e293b; }
+
+.choisir-btn {
+  width: 100%; padding: 12px; border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  cursor: pointer; transition: opacity 0.15s;
+}
+.choisir-btn:hover { opacity: 0.88; }
+.btn-tres_recommande { background: #22c55e; }
+.btn-recommande      { background: #2563eb; }
+.btn-peu_recommande  { background: #f59e0b; }
