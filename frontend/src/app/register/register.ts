@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +19,9 @@ export class Register {
   showPwd = false;
   showPwd2 = false;
   errorMsg = '';
+  successMsg = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   togglePwd() { this.showPwd = !this.showPwd; }
   togglePwd2() { this.showPwd2 = !this.showPwd2; }
@@ -33,7 +35,25 @@ export class Register {
       this.errorMsg = 'Les mots de passe ne correspondent pas.';
       return;
     }
+
     this.errorMsg = '';
-    this.router.navigate(['/login']);
+
+    const body = {
+      prenom: this.prenom,
+      nom: this.nom,
+      email: this.email,
+      password: this.password
+    };
+
+    this.http.post('http://localhost:8081/api/auth/register', body, { responseType: 'text' })
+      .subscribe({
+        next: (response) => {
+          this.successMsg = 'Compte créé avec succès !';
+          setTimeout(() => this.router.navigate(['/login']), 1500);
+        },
+        error: (err) => {
+          this.errorMsg = err.error || 'Erreur lors de l\'inscription.';
+        }
+      });
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -13,18 +14,43 @@ export class Login {
   email = '';
   password = '';
   showPwd = false;
+  errorMsg = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
-  togglePwd() {
-    this.showPwd = !this.showPwd;
-  }
+  togglePwd() { this.showPwd = !this.showPwd; }
 
   goStudent() {
-    this.router.navigate(['/statut']);
+    if (!this.email || !this.password) {
+      this.errorMsg = 'Veuillez remplir tous les champs.';
+      return;
+    }
+    this.http.post('http://localhost:8081/api/auth/login', 
+      { email: this.email, password: this.password }, 
+      { responseType: 'text' }
+    ).subscribe({
+      next: (role) => {
+        if (role === 'STUDENT') this.router.navigate(['/statut']);
+        else this.errorMsg = 'Accès refusé.';
+      },
+      error: (err) => this.errorMsg = err.error || 'Erreur de connexion.'
+    });
   }
 
   goAdmin() {
-    this.router.navigate(['/dashboard-admin']);
+    if (!this.email || !this.password) {
+      this.errorMsg = 'Veuillez remplir tous les champs.';
+      return;
+    }
+    this.http.post('http://localhost:8081/api/auth/login',
+      { email: this.email, password: this.password },
+      { responseType: 'text' }
+    ).subscribe({
+      next: (role) => {
+        if (role === 'ADMIN') this.router.navigate(['/dashboard-admin']);
+        else this.errorMsg = 'Accès refusé.';
+      },
+      error: (err) => this.errorMsg = err.error || 'Erreur de connexion.'
+    });
   }
 }

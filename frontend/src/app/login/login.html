@@ -39,5 +39,6 @@
     <div class="forgot" style="margin-top: 10px;">
   Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
     </div>
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
   </div>
 </div>
