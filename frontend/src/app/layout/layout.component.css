@@ -15,4 +15,4 @@
 .avatar-role { font-size: 11px; color: #94a3b8; }
 .logout-btn { display: flex; align-items: center; gap: 7px; padding: 7px 10px; border-radius: 7px; font-size: 12px; color: #64748b; text-decoration: none; border: none; background: none; width: 100%; cursor: pointer; transition: background 0.15s; }
 .logout-btn:hover { background: #f1f5f9; color: #e53935; }
-.main { flex: 1; overflow-y: auto; height: 100vh; }
+.main { flex: 1; overflow-y: auto; }
