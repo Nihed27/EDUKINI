@@ -1,17 +1,15 @@
 <div class="page-header">
   <h1 class="page-title">Mon Profil Académique</h1>
+  <p class="page-sub">Saisissez vos notes — l'IA recommande votre spécialité automatiquement</p>
 </div>
 
 <div class="page-body">
 
-  <!-- 🔽 FILIERE -->
+  <!-- ══ FILIÈRE ══ -->
   <div class="section-card">
     <div class="section-title">Choisir la filière</div>
- <!-- ✅ LABEL ACCESSIBLE -->
-  <label for="filiereSelect" class="form-label">
-    Filière
-  </label>
-    <select id="filiereSelect" [(ngModel)]="filiere">
+    <label for="filiereSelect" class="form-label">Filière</label>
+    <select id="filiereSelect" [(ngModel)]="filiere" (ngModelChange)="changerFiliere()">
       <option value="informatique">Informatique</option>
       <option value="infotronique">Infotronique</option>
       <option value="mecathronique">Mécatronique</option>
@@ -19,106 +17,116 @@
     </select>
   </div>
 
-  <!-- 📊 SEMESTRE + MOYENNE -->
+  <!-- ══ SEMESTRE + MOYENNE ══ -->
   <div class="section-card">
-
     <div class="tabs">
-      <button
-        [class.active]="semestre === 'S1'"
-        (click)="semestre='S1'">
-        Semestre 1
-      </button>
-
-      <button
-        [class.active]="semestre === 'S2'"
-        (click)="semestre='S2'">
-        Semestre 2
-      </button>
-
-      <div class="moyenne">
-        Moyenne : {{ moyenne }}/20
-      </div>
+      <button [class.active]="semestre === 'S1'" (click)="semestre='S1'">📘 Semestre 1</button>
+      <button [class.active]="semestre === 'S2'" (click)="semestre='S2'">📗 Semestre 2</button>
+      <div class="moyenne">Moyenne : {{ moyenne }}{{ moyenne !== '—' ? '/20' : '' }}</div>
     </div>
 
+    <!-- Barre de progression -->
+    <div class="progression">
+      <span class="prog-label">{{ notesRemplies }} / {{ totalMatieres }} notes saisies</span>
+      <div class="prog-bar-bg">
+        <div class="prog-bar-fill" [style.width.%]="progressionPct"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- 📚 NOTES PAR UE -->
-  <div
-    class="section-card"
-    *ngFor="let ue of notesActuelles">
+  <!-- ══ NOTES PAR UE ══ -->
+  <div class="section-card" *ngFor="let ue of notesActuelles">
+    <div class="section-title">{{ ue.ue }}</div>
 
-    <div class="section-title">
-      {{ ue.ue }}
-    </div>
+    <div class="note-row" *ngFor="let item of ue.matieres">
+      <div class="note-matiere">{{ item.matiere }}</div>
 
-    <div
-      class="note-row"
-      *ngFor="let item of ue.matieres">
-
-      <!-- Matière -->
-      <div class="note-matiere">
-        {{ item.matiere }}
-      </div>
-
-      <!-- Input -->
       <input
         class="note-input"
         type="number"
         [(ngModel)]="item.note"
         (ngModelChange)="validerNote(item)"
-        min="0"
-        max="20"
-        step="0.25"
+        min="0" max="20" step="0.25"
         placeholder="—"
       />
 
-      <!-- Barre -->
       <div class="note-bar-bg">
-        <div
-          class="note-bar-fill"
-          [style.width.%]="barreWidth(item.note)"
-          [style.background]="couleurBarre(item.note)">
+        <div class="note-bar-fill"
+             [style.width.%]="barreWidth(item.note)"
+             [style.background]="couleurBarre(item.note)">
         </div>
       </div>
 
-      <!-- Supprimer -->
-      <button
-        class="btn-delete"
-        (click)="supprimerNote(item)"
-        title="Supprimer la note">
-        ✕
-      </button>
-
+      <button class="btn-delete" (click)="supprimerNote(item)" title="Supprimer">✕</button>
     </div>
   </div>
 
-  <!-- 🤖 IA -->
-  <div class="section-card ia">
-    🤖 Recommandation IA basée sur vos notes (bientôt disponible)
+  <!-- ══ SECTION IA ══ -->
+  <div class="section-card ia-section">
+
+    <div class="ia-header">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#7c3aed" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83
+                 M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+      </svg>
+      <span>Recommandation de spécialité par IA</span>
+      <span class="ia-badge">✨ Gemini</span>
+    </div>
+
+    <!-- Pas assez de notes -->
+    <div class="ia-attente" *ngIf="!iaLoading && !iaResultat && !iaErreur">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#a78bfa" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4l3 3"/>
+      </svg>
+      Saisissez au moins <strong>5 notes</strong> pour l'analyse.
+      ({{ notesRemplies }}/{{ totalMatieres }})
+    </div>
+
+    <!-- Chargement -->
+    <div class="ia-loading-wrap" *ngIf="iaLoading">
+      <div class="spinner"></div>
+      <span>Analyse de votre profil en cours...</span>
+    </div>
+
+    <!-- Erreur -->
+    <div class="ia-erreur" *ngIf="iaErreur && !iaLoading">
+      ⚠️ {{ iaErreur }}
+    </div>
+
+    <!-- Résultat -->
+    <div class="ia-resultat" *ngIf="iaResultat && !iaLoading">
+
+      <div class="ia-recommandation">
+        <div class="ia-label">Spécialité recommandée</div>
+        <div class="ia-specialite">🎯 {{ iaResultat.specialite }}</div>
+        <p class="ia-explication">{{ iaResultat.explication }}</p>
+      </div>
+
+      <div class="ia-scores">
+        <div class="ia-score-row" *ngFor="let s of iaResultat.scores">
+          <div class="ia-score-label">{{ s.nom }}</div>
+          <div class="ia-score-bar-bg">
+            <div class="ia-score-bar-fill"
+                 [style.width.%]="s.score"
+                 [style.background]="couleurScore(s.score)">
+            </div>
+          </div>
+          <div class="ia-score-val" [style.color]="couleurScore(s.score)">{{ s.score }}%</div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- ⚙️ ACTIONS -->
+  <!-- ══ ACTIONS ══ -->
   <div class="actions">
-
-    <button
-      class="btn-secondary"
-      (click)="toutEffacer()">
-      Tout effacer
-    </button>
-
-    <button
-      class="btn-primary"
-      (click)="sauvegarder()">
-      Sauvegarder
-    </button>
-
+    <button class="btn-secondary" (click)="toutEffacer()">Tout effacer</button>
+    <button class="btn-primary"   (click)="sauvegarder()">💾 Sauvegarder</button>
   </div>
 
-  <!-- ✅ MESSAGE -->
-  <div
-    class="success-msg"
-    *ngIf="messageSucces">
-    {{ messageSucces }}
-  </div>
+  <div class="success-msg" *ngIf="messageSucces">{{ messageSucces }}</div>
 
 </div>
