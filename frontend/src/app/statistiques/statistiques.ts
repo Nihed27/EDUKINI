@@ -1,17 +1,9 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, TooltipItem } from 'chart.js';
 
 Chart.register(...registerables);
-
-interface StatCard {
-  label: string;
-  value: number;
-  icon: string;
-  colorClass: string;
-  trend?: number;
-}
 
 interface Demande {
   mois: string;
@@ -30,89 +22,81 @@ interface Demande {
 })
 export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('barChart') barChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('pieChart') pieChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('lineChart') lineChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('filiereChart') filiereChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('barChart')       barChartRef!:       ElementRef<HTMLCanvasElement>;
+  @ViewChild('pieChart')       pieChartRef!:       ElementRef<HTMLCanvasElement>;
+  @ViewChild('lineChart')      lineChartRef!:      ElementRef<HTMLCanvasElement>;
+  @ViewChild('filiereChart')   filiereChartRef!:   ElementRef<HTMLCanvasElement>;
   @ViewChild('specialiteChart') specialiteChartRef!: ElementRef<HTMLCanvasElement>;
 
-  private charts: any[] = [];
+  private charts: Chart[] = [];
 
   selectedPeriode = 'mois';
   selectedFiliere = 'all';
-  selectedNiveau = 'all';
-  selectedType = 'all';
+  selectedNiveau  = 'all';
+  selectedType    = 'all';
 
   periodes = [
-    { value: 'jour', label: 'Par jour' },
-    { value: 'mois', label: 'Par mois' },
+    { value: 'jour',  label: 'Par jour'  },
+    { value: 'mois',  label: 'Par mois'  },
     { value: 'annee', label: 'Par année' },
   ];
 
   filieres = [
-    { value: 'all', label: 'Toutes les filières' },
-    { value: 'gi', label: 'Génie Informatique' },
-    { value: 'meca', label: 'Mécatronique' },
-    { value: 'indus', label: 'Industriel' },
-    { value: 'info', label: 'Infotronique' },
+    { value: 'all',   label: 'Toutes les filières'  },
+    { value: 'gi',    label: 'Génie Informatique'    },
+    { value: 'meca',  label: 'Mécatronique'          },
+    { value: 'indus', label: 'Industriel'            },
+    { value: 'info',  label: 'Infotronique'          },
   ];
 
   niveaux = [
     { value: 'all', label: 'Tous les niveaux' },
-    { value: '1', label: '1ère année' },
-    { value: '2', label: '2ème année' },
-    { value: '3', label: '3ème année' },
+    { value: '1',   label: '1ère année'        },
+    { value: '2',   label: '2ème année'        },
+    { value: '3',   label: '3ème année'        },
   ];
 
   types = [
-    { value: 'all', label: 'Tous les types' },
-    { value: 'attestation', label: 'Attestation' },
-    { value: 'releve', label: 'Relevé de notes' },
-    { value: 'stage', label: 'Attestation de stage' },
-    { value: 'bourse', label: 'Demande de bourse' },
-  ];
-
-  statCards: StatCard[] = [
-    { label: 'Total étudiants', value: 847, icon: '👥', colorClass: 'card-blue', trend: 5.2 },
-    { label: 'Total demandes', value: 312, icon: '📄', colorClass: 'card-purple', trend: 12.1 },
-    { label: 'Acceptées', value: 198, icon: '✅', colorClass: 'card-green', trend: 8.4 },
-    { label: 'Refusées', value: 47, icon: '❌', colorClass: 'card-red', trend: -3.1 },
-    { label: 'En attente', value: 67, icon: '⏳', colorClass: 'card-yellow', trend: 2.0 },
+    { value: 'all',         label: 'Tous les types'       },
+    { value: 'attestation', label: 'Attestation'          },
+    { value: 'releve',      label: 'Relevé de notes'      },
+    { value: 'stage',       label: 'Attestation de stage' },
+    { value: 'bourse',      label: 'Demande de bourse'    },
   ];
 
   recommendations = [
     { label: 'Génie Informatique', count: 289, pct: 78 },
-    { label: 'Infotronique', count: 121, pct: 52 },
-    { label: 'Mécatronique', count: 98, pct: 42 },
-    { label: 'Industriel', count: 74, pct: 32 },
+    { label: 'Infotronique',        count: 121, pct: 52 },
+    { label: 'Mécatronique',        count: 98,  pct: 42 },
+    { label: 'Industriel',          count: 74,  pct: 32 },
   ];
 
   tauxSatisfaction = 84;
 
   correlations = [
     { filiere: 'Génie Informatique', moyenne: 14.2, taux: 91 },
-    { filiere: 'Infotronique', moyenne: 13.8, taux: 85 },
-    { filiere: 'Mécatronique', moyenne: 13.1, taux: 79 },
-    { filiere: 'Industriel', moyenne: 12.6, taux: 72 },
+    { filiere: 'Infotronique',        moyenne: 13.8, taux: 85 },
+    { filiere: 'Mécatronique',        moyenne: 13.1, taux: 79 },
+    { filiere: 'Industriel',          moyenne: 12.6, taux: 72 },
   ];
 
   predictions = [
     { filiere: 'Génie Informatique', score: 94, trend: 'hausse' },
-    { filiere: 'Infotronique', score: 71, trend: 'stable' },
-    { filiere: 'Mécatronique', score: 58, trend: 'stable' },
-    { filiere: 'Industriel', score: 42, trend: 'baisse' },
+    { filiere: 'Infotronique',        score: 71, trend: 'stable' },
+    { filiere: 'Mécatronique',        score: 58, trend: 'stable' },
+    { filiere: 'Industriel',          score: 42, trend: 'baisse' },
   ];
 
   private demandesData: Demande[] = [
-    { mois: 'Sep', total: 18, acceptees: 12, refusees: 3, enAttente: 3 },
-    { mois: 'Oct', total: 24, acceptees: 16, refusees: 4, enAttente: 4 },
-    { mois: 'Nov', total: 31, acceptees: 20, refusees: 5, enAttente: 6 },
-    { mois: 'Déc', total: 22, acceptees: 14, refusees: 4, enAttente: 4 },
-    { mois: 'Jan', total: 45, acceptees: 30, refusees: 8, enAttente: 7 },
-    { mois: 'Fév', total: 38, acceptees: 25, refusees: 6, enAttente: 7 },
-    { mois: 'Mar', total: 52, acceptees: 35, refusees: 9, enAttente: 8 },
-    { mois: 'Avr', total: 41, acceptees: 27, refusees: 7, enAttente: 7 },
-    { mois: 'Mai', total: 29, acceptees: 19, refusees: 5, enAttente: 5 },
+    { mois: 'Sep', total: 18, acceptees: 12, refusees: 3,  enAttente: 3 },
+    { mois: 'Oct', total: 24, acceptees: 16, refusees: 4,  enAttente: 4 },
+    { mois: 'Nov', total: 31, acceptees: 20, refusees: 5,  enAttente: 6 },
+    { mois: 'Déc', total: 22, acceptees: 14, refusees: 4,  enAttente: 4 },
+    { mois: 'Jan', total: 45, acceptees: 30, refusees: 8,  enAttente: 7 },
+    { mois: 'Fév', total: 38, acceptees: 25, refusees: 6,  enAttente: 7 },
+    { mois: 'Mar', total: 52, acceptees: 35, refusees: 9,  enAttente: 8 },
+    { mois: 'Avr', total: 41, acceptees: 27, refusees: 7,  enAttente: 7 },
+    { mois: 'Mai', total: 29, acceptees: 19, refusees: 5,  enAttente: 5 },
   ];
 
   ngOnInit(): void {}
@@ -135,17 +119,55 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.createSpecialiteChart();
   }
 
+  /* ── Bar Chart (Demandes par mois) AVEC BLEU CIEL ET VERT CIEL ── */
   private createBarChart(): void {
     const ctx = this.barChartRef?.nativeElement?.getContext('2d');
     if (!ctx) return;
+
+    // BLEU CIEL pour les Acceptées
+    const gradBlueCiel = ctx.createLinearGradient(0, 0, 0, 300);
+    gradBlueCiel.addColorStop(0, 'rgba(135, 206, 235, 0.95)');
+    gradBlueCiel.addColorStop(1, 'rgba(135, 206, 235, 0.25)');
+
+    // Rouge pour les Refusées
+    const gradRed = ctx.createLinearGradient(0, 0, 0, 300);
+    gradRed.addColorStop(0, 'rgba(220, 38, 38, 0.95)');
+    gradRed.addColorStop(1, 'rgba(220, 38, 38, 0.25)');
+
+    // VERT CIEL pour les En attente
+    const gradVertCiel = ctx.createLinearGradient(0, 0, 0, 300);
+    gradVertCiel.addColorStop(0, 'rgba(152, 251, 152, 0.95)');
+    gradVertCiel.addColorStop(1, 'rgba(152, 251, 152, 0.25)');
+
     const chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: this.demandesData.map(d => d.mois),
         datasets: [
-          { label: 'Acceptées', data: this.demandesData.map(d => d.acceptees), backgroundColor: '#16a34a', borderRadius: 6, barPercentage: 0.6 },
-          { label: 'Refusées', data: this.demandesData.map(d => d.refusees), backgroundColor: '#dc2626', borderRadius: 6, barPercentage: 0.6 },
-          { label: 'En attente', data: this.demandesData.map(d => d.enAttente), backgroundColor: '#d97706', borderRadius: 6, barPercentage: 0.6 },
+          {
+            label: 'Acceptées',
+            data: this.demandesData.map(d => d.acceptees),
+            backgroundColor: gradBlueCiel,
+            borderRadius: 8,
+            barPercentage: 0.5,
+            categoryPercentage: 0.65,
+          },
+          {
+            label: 'Refusées',
+            data: this.demandesData.map(d => d.refusees),
+            backgroundColor: gradRed,
+            borderRadius: 8,
+            barPercentage: 0.5,
+            categoryPercentage: 0.65,
+          },
+          {
+            label: 'En attente',
+            data: this.demandesData.map(d => d.enAttente),
+            backgroundColor: gradVertCiel,
+            borderRadius: 8,
+            barPercentage: 0.5,
+            categoryPercentage: 0.65,
+          },
         ],
       },
       options: {
@@ -154,40 +176,55 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
         plugins: { legend: { display: false } },
         scales: {
           x: { grid: { display: false }, ticks: { color: '#6b7280', font: { size: 12 } } },
-          y: { grid: { color: '#f3f4f6' }, ticks: { color: '#6b7280', font: { size: 12 } } },
+          y: { grid: { color: '#f3f4f6' }, ticks: { color: '#6b7280', font: { size: 12 } }, beginAtZero: true },
         },
       },
     });
     this.charts.push(chart);
   }
 
+  /* ── Pie Chart (Répartition par type) ── */
   private createPieChart(): void {
     const ctx = this.pieChartRef?.nativeElement?.getContext('2d');
     if (!ctx) return;
+
     const chart = new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels: ['Attestation scolarité', 'Relevé de notes', 'Attestation stage', 'Demande bourse'],
         datasets: [{
           data: [38, 27, 21, 14],
-          backgroundColor: ['#2563eb', '#7c3aed', '#059669', '#d97706'],
+          backgroundColor: ['#87CEEB', '#98FB98', '#059669', '#d97706'],
           borderWidth: 0,
-          hoverOffset: 6,
+          hoverOffset: 8,
         }],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        cutout: '62%',
-        plugins: { legend: { display: false } },
+        cutout: '65%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx: TooltipItem<'doughnut'>) => ` ${ctx.label}: ${ctx.parsed}%`,
+            },
+          },
+        },
       } as any,
     });
     this.charts.push(chart);
   }
 
+  /* ── Line Chart (Évolution des demandes) AVEC BLEU CIEL ── */
   private createLineChart(): void {
     const ctx = this.lineChartRef?.nativeElement?.getContext('2d');
     if (!ctx) return;
+
+    const gradBlueCiel = ctx.createLinearGradient(0, 0, 0, 250);
+    gradBlueCiel.addColorStop(0, 'rgba(135, 206, 235, 0.35)');
+    gradBlueCiel.addColorStop(1, 'rgba(135, 206, 235, 0.01)');
+
     const chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -195,14 +232,16 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
         datasets: [{
           label: 'Total demandes',
           data: this.demandesData.map(d => d.total),
-          borderColor: '#2563eb',
-          backgroundColor: 'rgba(37,99,235,0.08)',
+          borderColor: '#87CEEB',
+          backgroundColor: gradBlueCiel,
           borderWidth: 2.5,
           fill: true,
-          tension: 0.4,
-          pointBackgroundColor: '#2563eb',
-          pointRadius: 4,
-          pointHoverRadius: 6,
+          tension: 0.45,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#87CEEB',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
         }],
       },
       options: {
@@ -211,16 +250,25 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
         plugins: { legend: { display: false } },
         scales: {
           x: { grid: { display: false }, ticks: { color: '#6b7280', font: { size: 12 } } },
-          y: { grid: { color: '#f3f4f6' }, ticks: { color: '#6b7280', font: { size: 12 } } },
+          y: { grid: { color: '#f3f4f6' }, ticks: { color: '#6b7280', font: { size: 12 } }, beginAtZero: true },
         },
       },
     });
     this.charts.push(chart);
   }
 
+  /* ── Filière Chart (Étudiants par filière) ── */
   private createFiliereChart(): void {
     const ctx = this.filiereChartRef?.nativeElement?.getContext('2d');
     if (!ctx) return;
+
+    const makeGrad = (r: number, g: number, b: number) => {
+      const grad = ctx.createLinearGradient(400, 0, 0, 0);
+      grad.addColorStop(0, `rgba(${r},${g},${b},0.95)`);
+      grad.addColorStop(1, `rgba(${r},${g},${b},0.25)`);
+      return grad;
+    };
+
     const chart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -228,9 +276,14 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
         datasets: [{
           label: 'Étudiants',
           data: [312, 218, 187, 130],
-          backgroundColor: ['#2563eb', '#7c3aed', '#059669', '#d97706'],
+          backgroundColor: [
+            makeGrad(135, 206, 235),
+            makeGrad(152, 251, 152),
+            makeGrad(5, 150, 105),
+            makeGrad(217, 119, 6),
+          ],
           borderRadius: 8,
-          barPercentage: 0.55,
+          barPercentage: 0.6,
         }],
       },
       options: {
@@ -239,7 +292,7 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
         indexAxis: 'y',
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { color: '#f3f4f6' }, ticks: { color: '#6b7280' } },
+          x: { grid: { color: '#f3f4f6' }, ticks: { color: '#6b7280' }, beginAtZero: true },
           y: { grid: { display: false }, ticks: { color: '#374151', font: { size: 12 } } },
         },
       } as any,
@@ -247,9 +300,11 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.charts.push(chart);
   }
 
+  /* ── Specialité Chart (Polar Area) ── */
   private createSpecialiteChart(): void {
     const ctx = this.specialiteChartRef?.nativeElement?.getContext('2d');
     if (!ctx) return;
+
     const chart = new Chart(ctx, {
       type: 'polarArea',
       data: {
@@ -257,8 +312,12 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
         datasets: [{
           data: [145, 98, 112, 87, 134, 84],
           backgroundColor: [
-            'rgba(37,99,235,0.75)', 'rgba(124,58,237,0.75)', 'rgba(5,150,105,0.75)',
-            'rgba(217,119,6,0.75)', 'rgba(220,38,38,0.75)', 'rgba(14,165,233,0.75)',
+            'rgba(135,206,235,0.78)',
+            'rgba(152,251,152,0.78)',
+            'rgba(5,150,105,0.78)',
+            'rgba(217,119,6,0.78)',
+            'rgba(220,38,38,0.78)',
+            'rgba(14,165,233,0.78)',
           ],
           borderWidth: 0,
         }],
@@ -283,12 +342,9 @@ export class StatistiquesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  exportPDF(): void { window.print(); }
+  exportPDF(): void   { window.print(); }
   exportExcel(): void { alert('Export Excel en cours de génération...'); }
   exportReport(): void { alert('Rapport automatique généré.'); }
-
-  getTrendIcon(trend: number): string { return trend >= 0 ? '↑' : '↓'; }
-  getTrendClass(trend: number): string { return trend >= 0 ? 'trend-up' : 'trend-down'; }
 
   getPredictionClass(trend: string): string {
     if (trend === 'hausse') return 'pred-up';
