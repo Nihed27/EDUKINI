@@ -27,7 +27,7 @@ import { EnicarthageAccueilComponent } from './enicarthage-accueil/enicarthage-a
 import { EnicarthageProfilComponent } from './enicarthage-profil/enicarthage-profil.component';
 import { EnicarthageSpecialitesComponent } from './enicarthage-specialites/enicarthage-specialites.component';
 import { EnicarthageRecommandationsComponent } from './enicarthage-recommandations/enicarthage-recommandations.component';
-import { EnicarthageMesChoixComponent } from './enicarthage-mes-choix/enicarthage-mes-choix.component';
+
 import { EnicarthageNotificationsComponent } from './enicarthage-notifications/enicarthage-notifications.component';
 import { EnicarthageChatbotComponent } from './enicarthage-chatbot/enicarthage-chatbot.component';
 
@@ -77,7 +77,7 @@ export const routes: Routes = [
       { path: 'profil',          component: EnicarthageProfilComponent },
       { path: 'specialites',     component: EnicarthageSpecialitesComponent },
       { path: 'recommandations', component: EnicarthageRecommandationsComponent },
-      { path: 'mes-choix',       component: EnicarthageMesChoixComponent },
+      
       { path: 'notifications',   component: EnicarthageNotificationsComponent },
       { path: 'chatbot', component: EnicarthageChatbotComponent },
     ]
