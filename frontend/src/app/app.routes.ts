@@ -18,8 +18,7 @@ import { ParametresComponent } from './parametres/parametres';
 import { EtudiantLayoutComponent } from './etudiant-layout/etudiant-layout.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MesEcolesComponent } from './mes-ecoles/mes-ecoles.component';
-import { CandidaturesComponent } from './candidatures/candidatures.component';
-import { DemarchesComponent as DemarchesEtudiantComponent } from './demarches/demarches.component';
+
 import { ProfilEtudiantComponent } from './profil-etudiant/profil-etudiant.component';
 
 // ENICarthage
@@ -63,8 +62,7 @@ export const routes: Routes = [
       { path: '',              redirectTo: 'accueil', pathMatch: 'full' },
       { path: 'accueil',      component: AccueilComponent },
       { path: 'mes-ecoles',   component: MesEcolesComponent },
-      { path: 'candidatures', component: CandidaturesComponent },
-      { path: 'demarches',    component: DemarchesEtudiantComponent },
+     
       { path: 'profil',       component: ProfilEtudiantComponent },
     ]
   },

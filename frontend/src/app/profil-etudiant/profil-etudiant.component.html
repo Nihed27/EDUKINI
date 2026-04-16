@@ -4,13 +4,18 @@
 
 <div class="page-body">
 
+  <!-- Carte profil -->
   <div class="profil-card">
     <div class="profil-id">
-      <div class="avatar-big">AK</div>
+      <div class="avatar-big">
+        {{ (infos[0]?.valeur?.[0] || '') + (infos[1]?.valeur?.[0] || '') || '?' }}
+      </div>
       <div class="profil-info">
-        <div class="profil-nom">Amira Khaled</div>
-        <div class="profil-rang">Rang : 127e / 4320</div>
-        <div class="profil-score">Score : 14.8/20</div>
+        <div class="profil-nom">
+          {{ infos[0]?.valeur || infos[1]?.valeur ? (infos[1]?.valeur + ' ' + infos[0]?.valeur) : 'Mon Profil' }}
+        </div>
+        <div class="profil-rang">Rang : {{ rangEtudiant || '—' }}</div>
+        <div class="profil-score">Score : {{ scoreEtudiant || '—' }}</div>
       </div>
       <div class="progression">
         <div class="prog-label">Progression du profil</div>
@@ -22,35 +27,173 @@
     </div>
   </div>
 
+  <!-- Informations personnelles -->
   <div class="section-card">
-    <div class="section-title">Informations personnelles</div>
+    <div class="section-header">
+      <div class="section-title">Informations personnelles</div>
+      <button class="btn-modifier-infos" (click)="ouvrirEditionInfos()">✏️ Modifier les informations</button>
+    </div>
+
     <div class="info-grid">
-      <div class="info-item">
-        <div class="info-label">Email</div>
-        <div class="info-val">amira.khaled&#64;etudiant.tn</div>
-      </div>
-      <div class="info-item">
-        <div class="info-label">Téléphone</div>
-        <div class="info-val">+216 20 123 456</div>
-      </div>
-      <div class="info-item">
-        <div class="info-label">Adresse</div>
-        <div class="info-val">Tunis, Tunisie</div>
+      <div class="info-item" *ngFor="let info of infos">
+        <div class="info-label">{{ info.label }}</div>
+        <div class="info-val" *ngIf="info.valeur; else vide">{{ info.valeur }}</div>
+        <ng-template #vide>
+          <span class="info-val-vide">—</span>
+        </ng-template>
       </div>
     </div>
   </div>
 
+  <!-- Résultats académiques -->
   <div class="section-card">
     <div class="section-header">
       <div class="section-title">Résultats académiques</div>
-      <button class="releve-btn">Télécharger le relevé</button>
+      <div class="filiere-selector">
+        <span class="filiere-label">Filière :</span>
+        <div class="filiere-btns">
+          <button
+            *ngFor="let f of filieres"
+            class="filiere-btn"
+            [class.active]="filiereSelectionnee === f"
+            (click)="filiereSelectionnee = f">
+            {{ f }}
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="notes-grid">
-      <div class="note-card" *ngFor="let m of matieres">
-        <div class="note-label">{{ m.nom }}</div>
-        <div class="note-val blue">{{ m.note }}/20</div>
+
+    <div class="no-filiere" *ngIf="!filiereSelectionnee">
+      <span>👆 Sélectionnez votre filière pour afficher et remplir vos notes.</span>
+    </div>
+
+    <div class="notes-grid" *ngIf="filiereSelectionnee">
+      <div class="note-card" *ngFor="let m of matieres" [class.note-vide]="m.note === null">
+        <div class="note-top">
+          <div class="note-label">{{ m.nom }}</div>
+          <div class="note-actions" *ngIf="m.note !== null">
+            <button class="icon-btn" title="Modifier" (click)="ouvrirSaisie(m)">✏️</button>
+            <button class="icon-btn" title="Supprimer la note" (click)="supprimerNote(m)">🗑️</button>
+          </div>
+        </div>
+        <div *ngIf="m.note !== null" class="note-val blue">{{ m.note }}/20</div>
+        <button *ngIf="m.note === null" class="saisir-btn" (click)="ouvrirSaisie(m)">
+          + Ajouter une note
+        </button>
+      </div>
+    </div>
+
+    <!-- Bloc Score et Rang modifiables manuellement -->
+    <div class="score-rang-block" *ngIf="filiereSelectionnee">
+      <div class="score-item">
+        <span class="label">Score :</span>
+        <span class="value">{{ scoreEtudiant || '—' }}</span>
+        <button class="icon-btn edit-btn" title="Modifier le score" (click)="ouvrirEditionScore()">✏️</button>
+      </div>
+      <div class="rang-item">
+        <span class="label">Rang :</span>
+        <span class="value">{{ rangEtudiant || '—' }}</span>
+        <button class="icon-btn edit-btn" title="Modifier le rang" (click)="ouvrirEditionRang()">✏️</button>
       </div>
     </div>
   </div>
+</div>
 
+<!-- ===== MODALE UNIQUE POUR TOUTES LES INFOS PERSONNELLES ===== -->
+<div class="modal-overlay" *ngIf="showInfosModal" (click)="fermerInfosModal()">
+  <div class="modal-box modal-large" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">Modifier mes informations</h2>
+      <button class="modal-close" (click)="fermerInfosModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="infos-form-grid">
+        <div class="form-group" *ngFor="let info of infosTemp">
+          <label class="form-label">{{ info.label }}</label>
+          <input class="form-input" type="text" [(ngModel)]="info.valeur" [placeholder]="'Saisir ' + info.label" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="fermerInfosModal()">Annuler</button>
+      <button class="btn-confirm" (click)="validerInfos()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL SAISIE NOTE ===== -->
+<div class="modal-overlay" *ngIf="showModal" (click)="fermerModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">
+        {{ matiereSelectionnee?.note !== null ? 'Modifier la note' : 'Ajouter une note' }}
+      </h2>
+      <button class="modal-close" (click)="fermerModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-matiere-nom">{{ matiereSelectionnee?.nom }}</div>
+      <div class="form-group">
+        <label class="form-label">Note <span class="required">*</span></label>
+        <div class="note-input-wrap">
+          <input
+            class="form-input"
+            type="number"
+            min="0"
+            max="20"
+            step="0.25"
+            placeholder="Ex : 14.5"
+            [(ngModel)]="formNote" />
+          <span class="note-suffix">/20</span>
+        </div>
+        <span class="form-hint">Entre 0 et 20, pas de 0.25</span>
+      </div>
+      <div class="form-error" *ngIf="formError">⚠️ {{ formError }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="fermerModal()">Annuler</button>
+      <button class="btn-confirm" (click)="enregistrerNote()">
+        {{ matiereSelectionnee?.note !== null ? 'Enregistrer' : 'Ajouter' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL SCORE ===== -->
+<div class="modal-overlay" *ngIf="showScoreModal" (click)="fermerScoreModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">Modifier le score</h2>
+      <button class="modal-close" (click)="fermerScoreModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Score </label>
+        <input class="form-input" type="text" [(ngModel)]="formScoreValue"  />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="fermerScoreModal()">Annuler</button>
+      <button class="btn-confirm" (click)="validerScore()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL RANG ===== -->
+<div class="modal-overlay" *ngIf="showRangModal" (click)="fermerRangModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">Modifier le rang</h2>
+      <button class="modal-close" (click)="fermerRangModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Rang </label>
+        <input class="form-input" type="text" [(ngModel)]="formRangValue"  />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="fermerRangModal()">Annuler</button>
+      <button class="btn-confirm" (click)="validerRang()">Enregistrer</button>
+    </div>
+  </div>
 </div>

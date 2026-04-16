@@ -2,9 +2,9 @@
   <h1 class="page-title">Paramètres</h1>
   <p class="page-sub">Gérez la configuration de la plateforme Edukini</p>
 </div>
-
+ 
 <div class="page-body">
-
+ 
   <!-- SETTINGS NAV -->
   <div class="settings-nav">
     <div class="settings-nav-item" [class.active]="activeSection === 'general'" (click)="setSection('general')">
@@ -34,27 +34,18 @@
       </svg>
       Notifications
     </div>
-    <div class="settings-nav-item" [class.active]="activeSection === 'permissions'" (click)="setSection('permissions')">
+    <div class="settings-nav-item" [class.active]="activeSection === 'profil'" (click)="setSection('profil')">
       <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4" stroke-width="2"/>
-        <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+        <circle cx="12" cy="8" r="4" stroke-width="2"/>
+        <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
       </svg>
-      Permissions
-    </div>
-    <div class="settings-nav-item" [class.active]="activeSection === 'sauvegarde'" (click)="setSection('sauvegarde')">
-      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline stroke-width="2" points="17 8 12 3 7 8"/>
-        <line stroke-width="2" x1="12" y1="3" x2="12" y2="15"/>
-      </svg>
-      Sauvegarde
+      Profil
     </div>
   </div>
-
+ 
   <!-- CONTENT -->
   <div class="settings-content">
-
+ 
     <!-- GENERAL -->
     <ng-container *ngIf="activeSection === 'general'">
       <div class="card">
@@ -129,7 +120,7 @@
         </div>
       </div>
     </ng-container>
-
+ 
     <!-- SECURITE -->
     <ng-container *ngIf="activeSection === 'securite'">
       <div class="card">
@@ -200,7 +191,7 @@
         </div>
       </div>
     </ng-container>
-
+ 
     <!-- NOTIFICATIONS -->
     <ng-container *ngIf="activeSection === 'notifications'">
       <div class="card">
@@ -268,111 +259,64 @@
         </div>
       </div>
     </ng-container>
-
-    <!-- PERMISSIONS -->
-    <ng-container *ngIf="activeSection === 'permissions'">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-header-icon purple">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#7c3aed">
-              <path stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4" stroke-width="2"/>
-              <path stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <div>
-            <div class="card-title">Gestion des permissions</div>
-            <div class="card-desc">Droits d'accès par rôle utilisateur</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <table class="perm-table">
-            <thead>
-              <tr>
-                <th>Rôle</th>
-                <th>Accès total</th>
-                <th>Étudiants</th>
-                <th>Écoles</th>
-                <th>Statistiques</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let p of permissions">
-                <td>
-                  <span [class]="'perm-badge ' + p.label">{{ p.role }}</span>
-                </td>
-                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.accesTotal"/><span class="toggle-slider"></span></label></td>
-                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.gestionEtudiants"/><span class="toggle-slider"></span></label></td>
-                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.gestionEcoles"/><span class="toggle-slider"></span></label></td>
-                <td><label class="toggle"><input type="checkbox" [(ngModel)]="p.statistiques"/><span class="toggle-slider"></span></label></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card-footer">
-          <button class="btn-save">
-            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            Enregistrer les permissions
-          </button>
-        </div>
-      </div>
-    </ng-container>
-
-    <!-- SAUVEGARDE -->
-    <ng-container *ngIf="activeSection === 'sauvegarde'">
+ 
+    <!-- PROFIL -->
+    <ng-container *ngIf="activeSection === 'profil'">
       <div class="card">
         <div class="card-header">
           <div class="card-header-icon blue">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
-              <path stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline stroke-width="2" points="17 8 12 3 7 8"/>
-              <line stroke-width="2" x1="12" y1="3" x2="12" y2="15"/>
+              <circle cx="12" cy="8" r="4" stroke-width="2"/>
+              <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
             </svg>
           </div>
           <div>
-            <div class="card-title">Sauvegarde des données</div>
-            <div class="card-desc">Historique et gestion des sauvegardes</div>
+            <div class="card-title">Profil administrateur</div>
+            <div class="card-desc">Informations personnelles du compte admin</div>
           </div>
         </div>
         <div class="card-body">
-          <div class="backup-row" *ngFor="let s of sauvegardes">
+          <div class="field-row">
             <div>
-              <div class="field-label">
-                <span class="status-dot"></span>{{ s.nom }}
-              </div>
-              <div class="backup-date">{{ s.date }}</div>
+              <div class="field-label">Prénom</div>
+              <div class="field-sub">Votre prénom</div>
             </div>
-            <button class="btn-secondary">
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1M16 12l-4 4m0 0l-4-4m4 4V4"/>
-              </svg>
-              Télécharger
-            </button>
+            <input type="text" class="setting-input" [(ngModel)]="profil.prenom" placeholder="ex : Mehdi" />
           </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Nom</div>
+              <div class="field-sub">Votre nom de famille</div>
+            </div>
+            <input type="text" class="setting-input" [(ngModel)]="profil.nom" placeholder="ex : Ben Ali" />
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Adresse email</div>
+              <div class="field-sub">Email de connexion et de contact</div>
+            </div>
+            <input type="email" class="setting-input" [(ngModel)]="profil.email" placeholder="ex : admin@edukini.tn" />
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="field-label">Téléphone</div>
+              <div class="field-sub">Numéro de contact</div>
+            </div>
+            <input type="tel" class="setting-input" [(ngModel)]="profil.telephone" placeholder="ex : +216 XX XXX XXX" />
+          </div>
+          
         </div>
         <div class="card-footer">
-          <button class="btn-secondary">
+          <button class="btn-save" (click)="saveProfil()">
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6M4 7h16M10 3h4"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
             </svg>
-            Supprimer anciennes
-          </button>
-          <button class="btn-save" (click)="lancerSauvegarde()">
-            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline stroke-width="2" points="17 8 12 3 7 8"/>
-              <line stroke-width="2" x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            Lancer une sauvegarde
+            Enregistrer
           </button>
         </div>
       </div>
     </ng-container>
-
+ 
   </div>
 </div>
+ 
