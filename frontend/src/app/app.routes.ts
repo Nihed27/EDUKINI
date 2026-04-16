@@ -25,11 +25,9 @@ import { ProfilEtudiantComponent } from './profil-etudiant/profil-etudiant.compo
 import { EnicarthageLayoutComponent } from './enicarthage-layout/enicarthage-layout.component';
 import { EnicarthageAccueilComponent } from './enicarthage-accueil/enicarthage-accueil.component';
 import { EnicarthageProfilComponent } from './enicarthage-profil/enicarthage-profil.component';
-import { EnicarthageSpecialitesComponent } from './enicarthage-specialites/enicarthage-specialites.component';
-import { EnicarthageRecommandationsComponent } from './enicarthage-recommandations/enicarthage-recommandations.component';
+ import { EnicarthageRecommandationsComponent } from './enicarthage-recommandations/enicarthage-recommandations.component';
 import { EnicarthageMesChoixComponent } from './enicarthage-mes-choix/enicarthage-mes-choix.component';
-import { EnicarthageNotificationsComponent } from './enicarthage-notifications/enicarthage-notifications.component';
-import { EnicarthageChatbotComponent } from './enicarthage-chatbot/enicarthage-chatbot.component';
+ import { EnicarthageChatbotComponent } from './enicarthage-chatbot/enicarthage-chatbot.component';
 
 export const routes: Routes = [
   { path: '',         redirectTo: 'login', pathMatch: 'full' },
@@ -75,11 +73,9 @@ export const routes: Routes = [
       { path: '',                redirectTo: 'accueil', pathMatch: 'full' },
       { path: 'accueil',         component: EnicarthageAccueilComponent },
       { path: 'profil',          component: EnicarthageProfilComponent },
-      { path: 'specialites',     component: EnicarthageSpecialitesComponent },
-      { path: 'recommandations', component: EnicarthageRecommandationsComponent },
+       { path: 'recommandations', component: EnicarthageRecommandationsComponent },
       { path: 'mes-choix',       component: EnicarthageMesChoixComponent },
-      { path: 'notifications',   component: EnicarthageNotificationsComponent },
-      { path: 'chatbot', component: EnicarthageChatbotComponent },
+       { path: 'chatbot', component: EnicarthageChatbotComponent },
     ]
   },
 
