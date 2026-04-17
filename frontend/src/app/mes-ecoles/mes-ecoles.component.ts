@@ -50,6 +50,28 @@ export class MesEcolesComponent {
 
   ecoles: Ecole[] = [
     {
+      sigle: 'ENICarthage',
+      nom: "École Nationale d'Ingénieurs de Carthage",
+      ville: 'Ariana',
+      description: "Technologies de l'ingénierie et systèmes avancés",
+      fondation: 2002,
+      universite: "Université de Carthage",
+      site: "www.enicarthage.rnu.tn",
+      siteUrl: "http://www.enicarthage.rnu.tn/",
+      campus: "Charguia II, Ariana",
+      lat: 36.8543,
+      lng: 10.1974,
+      langues: ["Français", "Anglais"],
+      directeur: "Prof. Hassen Zairi",
+      specs: [
+        "Génie informatique",
+        "Génie mécatronique",
+        "Génie des systèmes industriels & logistiques",
+        "Génie des systèmes infotronique"
+      ],
+      note: "Créée le 9 juillet 2002 par le décret n°2002-1623, à l'initiative du Pr Abdelhamid Ben Youssef, sous le nom initial d'École Supérieure de Technologie et d'Informatique (ESTI). 2 239 étudiants en 2010-2011. Offre des diplômes de master et d'ingénieur avec une dominante fondamentale en 1er cycle et appliquée en 2e cycle."
+    },
+    {
       sigle: 'ENIT',
       nom: "École Nationale d'Ingénieurs de Tunis",
       ville: 'Tunis',
@@ -188,28 +210,6 @@ export class MesEcolesComponent {
         "Traitement du signal & Image"
       ],
       note: "Leader en formation d'ingénieurs en TIC en Tunisie. Localisée dans le parc technologique El Ghazala à Ariana, au cœur de l'écosystème numérique tunisien. Offre des formations en ingénierie des TIC de haut niveau avec des partenariats internationaux."
-    },
-    {
-      sigle: 'ENICarthage',
-      nom: "École Nationale d'Ingénieurs de Carthage",
-      ville: 'Ariana',
-      description: "Technologies de l'ingénierie et systèmes avancés",
-      fondation: 2002,
-      universite: "Université de Carthage",
-      site: "www.enicarthage.rnu.tn",
-      siteUrl: "http://www.enicarthage.rnu.tn/",
-      campus: "Charguia II, Ariana",
-      lat: 36.8543,
-      lng: 10.1974,
-      langues: ["Français", "Anglais"],
-      directeur: "Prof. Hassen Zairi",
-      specs: [
-        "Génie informatique",
-        "Génie mécatronique",
-        "Génie des systèmes industriels & logistiques",
-        "Génie des systèmes infotronique"
-      ],
-      note: "Créée le 9 juillet 2002 par le décret n°2002-1623, à l'initiative du Pr Abdelhamid Ben Youssef, sous le nom initial d'École Supérieure de Technologie et d'Informatique (ESTI). 2 239 étudiants en 2010-2011. Offre des diplômes de master et d'ingénieur avec une dominante fondamentale en 1er cycle et appliquée en 2e cycle."
     },
     {
       sigle: 'ENIM',
