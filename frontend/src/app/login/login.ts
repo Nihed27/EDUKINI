@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,16 +14,41 @@ export class Login {
   email = '';
   password = '';
   showPwd = false;
+  errorMsg = '';
+  loading = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   togglePwd() {
     this.showPwd = !this.showPwd;
   }
-goStudent() {
-  this.router.navigate(['/statut']); // ← redirige vers la page statut
-}
-  goAdmin() {
-  this.router.navigate(['/admin/dashboard']);
-}
+
+  login() {
+    if (!this.email || !this.password) {
+      this.errorMsg = 'Veuillez remplir tous les champs.';
+      return;
+    }
+
+    this.loading = true;
+    this.errorMsg = '';
+
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
+      next: (role: string) => {
+        this.loading = false;
+        if (role === 'ADMIN') {
+          this.router.navigate(['/admin/dashboard']);
+        } else if (role === 'STUDENT') {
+          this.router.navigate(['/statut']);
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        if (err.error) {
+          this.errorMsg = err.error;
+        } else {
+          this.errorMsg = 'Erreur de connexion au serveur.';
+        }
+      }
+    });
+  }
 }
