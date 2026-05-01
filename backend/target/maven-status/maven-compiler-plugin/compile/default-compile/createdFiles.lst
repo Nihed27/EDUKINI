@@ -1,1 +1,10 @@
+com\edukini\edukini_backend\config\CorsConfig.class
+com\edukini\edukini_backend\dto\RegisterRequest.class
+com\edukini\edukini_backend\model\User.class
 com\edukini\edukini_backend\EdukiniBackendApplication.class
+com\edukini\edukini_backend\dto\LoginRequest.class
+com\edukini\edukini_backend\service\AuthService.class
+com\edukini\edukini_backend\controller\AuthController.class
+com\edukini\edukini_backend\config\CorsConfig$1.class
+com\edukini\edukini_backend\repository\UserRepository.class
+com\edukini\edukini_backend\controller\UserController.class

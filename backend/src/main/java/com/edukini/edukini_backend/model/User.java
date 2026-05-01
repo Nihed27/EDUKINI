@@ -1,10 +1,13 @@
 package com.edukini.edukini_backend.model;
 
 import jakarta.persistence.*;
+import java.io.Serializable;  // ← Ajouter (cours page 20)
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable { 
+    
+    private static final long serialVersionUID = 1L; 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,12 +16,19 @@ public class User {
     private String prenom;
     private String nom;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)  
     private String email;
 
     private String password;
+    
+    private String role;  // "STUDENT" ou "ADMIN"
 
+    // Constructeur par défaut (OBLIGATOIRE pour JPA)
+    public User() {}
+
+    // Getters et Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getPrenom() { return prenom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }
@@ -31,8 +41,7 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-    private String role; // "STUDENT" ou "ADMIN"
 
-public String getRole() { return role; }
-public void setRole(String role) { this.role = role; }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }

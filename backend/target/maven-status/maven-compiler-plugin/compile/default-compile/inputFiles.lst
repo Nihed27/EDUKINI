@@ -1,7 +1,9 @@
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\model\User.java
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\service\AuthService.java
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\dto\LoginRequest.java
+C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\config\CorsConfig.java
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\controller\AuthController.java
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\EdukiniBackendApplication.java
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\repository\UserRepository.java
 C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\dto\RegisterRequest.java
+C:\Users\missa\Desktop\N\2emeCycle\2-semestre2\web\EDUKINI\backend\src\main\java\com\edukini\edukini_backend\controller\UserController.java
