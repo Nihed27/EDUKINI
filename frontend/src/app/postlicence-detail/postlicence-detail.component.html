@@ -1,0 +1,126 @@
+<div class="detail-wrap" *ngIf="programme">
+
+  <!-- ── Bouton retour ── -->
+  <button class="back-btn" (click)="goBack()">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Retour aux programmes
+  </button>
+
+  <!-- ── En-tête programme ── -->
+  <div [class]="'detail-header border-' + programme.couleur">
+    <div [class]="'detail-sigle bg-' + programme.couleur">{{ programme.sigle }}</div>
+    <div class="detail-info">
+      <div class="detail-meta-top">
+        <span [class]="'type-badge badge-' + programme.couleur">{{ programme.type }}</span>
+        <span class="detail-duree">⏱ {{ programme.duree }}</span>
+      </div>
+      <h1 class="detail-nom">{{ programme.nom }}</h1>
+      <p class="detail-intro">{{ programme.intro }}</p>
+    </div>
+  </div>
+
+  <!-- ── Partenaires rapides ── -->
+  <div class="partenaires-row" *ngIf="programme.partenaires.length">
+    <span class="partner-label">Porté par :</span>
+    <span class="partner-tag" *ngFor="let p of programme.partenaires">{{ p }}</span>
+  </div>
+
+  <!-- ── Onglets ── -->
+  <div class="detail-tabs">
+    <button *ngFor="let t of tabs"
+            [class]="activeTab === t.id ? 'dtab active' : 'dtab'"
+            (click)="activeTab = t.id">
+      {{ t.label }}
+    </button>
+  </div>
+
+  <!-- ── Contenu onglets ── -->
+  <div class="tab-body">
+
+    <!-- Objectifs -->
+    <div *ngIf="activeTab === 'objectifs'">
+      <div class="tab-section-title">Objectifs de la formation</div>
+      <ul class="detail-list" [class]="'dots-' + programme.couleur">
+        <li *ngFor="let o of programme.objectifs">{{ o }}</li>
+      </ul>
+    </div>
+
+    <!-- Conditions d'accès -->
+    <div *ngIf="activeTab === 'acces'">
+      <div class="tab-section-title">Conditions d'accès &amp; prérequis</div>
+      <ul class="detail-list dots-violet">
+        <li *ngFor="let a of programme.acces">{{ a }}</li>
+      </ul>
+    </div>
+
+    <!-- Perspectives pro -->
+    <div *ngIf="activeTab === 'pro'">
+      <div class="tab-section-title">Perspectives professionnelles</div>
+      <div class="jobs-grid">
+        <div class="job-chip" *ngFor="let d of programme.perspectives_pro">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+            <path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>
+          </svg>
+          {{ d }}
+        </div>
+      </div>
+      <!-- Stage (MPSDM only) -->
+      <div class="stage-box" *ngIf="programme.stage">
+        <div class="stage-title">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#f59e0b" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 3H8L2 7h20z"/>
+          </svg>
+          Stage de fin d'études
+        </div>
+        <p class="stage-desc">{{ programme.stage }}</p>
+      </div>
+    </div>
+
+    <!-- Perspectives académiques -->
+    <div *ngIf="activeTab === 'academique'">
+      <div class="tab-section-title">Perspectives académiques</div>
+      <ul class="detail-list dots-indigo">
+        <li *ngFor="let a of programme.perspectives_academiques">{{ a }}</li>
+      </ul>
+    </div>
+
+    <!-- Compétences -->
+    <div *ngIf="activeTab === 'competences'">
+      <div class="tab-section-title">Compétences développées</div>
+      <div class="tags-grid">
+        <span [class]="'skill-tag bg-' + programme.couleur"
+              *ngFor="let c of programme.competences">{{ c }}</span>
+      </div>
+      <!-- Modalités (MPSDM) -->
+      <ng-container *ngIf="programme.modalite && programme.modalite.length">
+        <div class="tab-section-title" style="margin-top:24px">Déroulement de la formation</div>
+        <ul class="detail-list dots-orange">
+          <li *ngFor="let m of programme.modalite">{{ m }}</li>
+        </ul>
+      </ng-container>
+    </div>
+
+    <!-- Partenaires -->
+    <div *ngIf="activeTab === 'partenaires'">
+      <div class="tab-section-title">Partenaires institutionnels &amp; industriels</div>
+      <div class="partner-cards">
+        <div class="partner-card" *ngFor="let p of programme.partenaires">
+          <div class="partner-icon">🏢</div>
+          <div class="partner-name">{{ p }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Fallback si programme introuvable -->
+<div class="not-found" *ngIf="!programme">
+  <p>Programme introuvable.</p>
+  <button class="back-btn" (click)="goBack()">← Retour</button>
+</div>

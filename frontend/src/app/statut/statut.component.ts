@@ -23,6 +23,8 @@ export class StatutComponent {
       this.router.navigate(['/etudiant/accueil']);
     } else if (statut === 'enicarthage') {
       this.router.navigate(['/enicarthage/accueil']);
+    } else if (statut === 'postlicence') {
+      this.router.navigate(['/postlicence/accueil']);
     }
   }
 }

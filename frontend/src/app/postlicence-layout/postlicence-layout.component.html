@@ -1,0 +1,57 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-wrap">
+        <div class="logo-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-title">Edukini</div>
+          <div class="logo-sub">ENICarthage — Masters &amp; Doctorat</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/postlicence/accueil" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline stroke-width="2" points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Accueil
+      </a>
+      <a routerLink="/postlicence/programmes" routerLinkActive="active" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path stroke-width="2" d="M2 17l10 5 10-5"/>
+          <path stroke-width="2" d="M2 12l10 5 10-5"/>
+        </svg>
+        Programmes
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar-row">
+        <div class="avatar-circle">ET</div>
+        <div>
+          <div class="avatar-name">Étudiant</div>
+          <div class="avatar-role">Post-Licence ENICarthage</div>
+        </div>
+      </div>
+      <a routerLink="/login" class="logout-btn">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+        Déconnexion
+      </a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

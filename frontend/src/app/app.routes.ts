@@ -29,6 +29,12 @@ import { EnicarthageProfilComponent } from './enicarthage-profil/enicarthage-pro
 import { EnicarthageMesChoixComponent } from './enicarthage-mes-choix/enicarthage-mes-choix.component';
  import { EnicarthageChatbotComponent } from './enicarthage-chatbot/enicarthage-chatbot.component';
 
+// Master & Doctorat
+import { PostlicenceLayoutComponent } from './postlicence-layout/postlicence-layout.component';
+import { PostlicenceAccueilComponent } from './postlicence-accueil/postlicence-accueil.component';
+import { PostlicenceDetailComponent } from './postlicence-detail/postlicence-detail.component';
+import { PostlicenceProgrammesComponent } from './postlicence-programmes/postlicence-programmes.component';
+
 export const routes: Routes = [
   { path: '',         redirectTo: 'login', pathMatch: 'full' },
   { path: 'login',    component: Login },
@@ -76,6 +82,18 @@ export const routes: Routes = [
        { path: 'recommandations', component: EnicarthageRecommandationsComponent },
       { path: 'mes-choix',       component: EnicarthageMesChoixComponent },
        { path: 'chatbot', component: EnicarthageChatbotComponent },
+    ]
+  },
+
+  // ── MASTER & DOCTORAT ──
+  {
+    path: 'postlicence',
+    component: PostlicenceLayoutComponent,
+    children: [
+      { path: '',                   redirectTo: 'accueil', pathMatch: 'full' },
+      { path: 'accueil',            component: PostlicenceAccueilComponent },
+      { path: 'programmes',         component: PostlicenceProgrammesComponent },
+      { path: 'programme/:id',      component: PostlicenceDetailComponent },
     ]
   },
 

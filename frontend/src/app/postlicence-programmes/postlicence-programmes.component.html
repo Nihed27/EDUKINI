@@ -1,0 +1,54 @@
+<!-- ── Top bar ── -->
+<div class="top-bar">
+  <div>
+    <h1 class="page-title">Programmes disponibles</h1>
+    <p class="page-sub">Découvrez les Masters et le Doctorat proposés par ENICarthage</p>
+  </div>
+</div>
+
+<!-- ── Onglets Masters / Doctorat ── -->
+<div class="programmes-panel">
+  <div class="panel-header">
+    <h2 class="panel-title">Tous les programmes</h2>
+    <div class="panel-tabs">
+      <button [class]="activeTab==='master'   ? 'ptab active' : 'ptab'" (click)="activeTab='master'">
+        Masters <span class="tab-count">3</span>
+      </button>
+      <button [class]="activeTab==='doctorat' ? 'ptab active' : 'ptab'" (click)="activeTab='doctorat'">
+        Doctorat <span class="tab-count">1</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Masters -->
+  <div class="prog-grid" *ngIf="activeTab==='master'">
+    <div class="prog-card" *ngFor="let p of masters" (click)="goToDetail(p.id)">
+      <div [class]="'prog-sigle bg-' + p.couleur">{{ p.sigle }}</div>
+      <div class="prog-info">
+        <div class="prog-nom">{{ p.nom }}</div>
+        <div class="prog-meta">
+          <span [class]="'type-badge badge-' + p.couleur">{{ p.type }}</span>
+          <span class="prog-duree">{{ p.duree }}</span>
+        </div>
+        <div class="prog-desc">{{ p.shortDesc }}</div>
+      </div>
+      <div class="prog-arrow">→</div>
+    </div>
+  </div>
+
+  <!-- Doctorat -->
+  <div class="prog-grid" *ngIf="activeTab==='doctorat'">
+    <div class="prog-card wide" *ngFor="let p of doctorats" (click)="goToDetail(p.id)">
+      <div [class]="'prog-sigle bg-' + p.couleur">{{ p.sigle }}</div>
+      <div class="prog-info">
+        <div class="prog-nom">{{ p.nom }}</div>
+        <div class="prog-meta">
+          <span [class]="'type-badge badge-' + p.couleur">{{ p.type }}</span>
+          <span class="prog-duree">{{ p.duree }}</span>
+        </div>
+        <div class="prog-desc">{{ p.shortDesc }}</div>
+      </div>
+      <div class="prog-arrow">→</div>
+    </div>
+  </div>
+</div>

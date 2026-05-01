@@ -32,8 +32,10 @@
 .cards {
   display: flex;
   gap: 24px;
-  max-width: 860px;
+  max-width: 1200px;
   width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
@@ -69,8 +71,9 @@
   justify-content: center;
 }
 
-.icon-wrap.blue { background: #2563eb; }
-.icon-wrap.green { background: #22c55e; }
+.icon-wrap.blue   { background: #2563eb; }
+.icon-wrap.green  { background: #22c55e; }
+.icon-wrap.violet { background: #7c3aed; }
 
 /* ── TEXTE ── */
 .card-title {
@@ -113,8 +116,9 @@
   border-radius: 50%;
 }
 
-.blue-dot li::before { background: #2563eb; }
-.green-dot li::before { background: #22c55e; }
+.blue-dot li::before   { background: #2563eb; }
+.green-dot li::before  { background: #22c55e; }
+.violet-dot li::before { background: #7c3aed; }
 
 /* ── BOUTONS ── */
 .btn {
@@ -130,6 +134,10 @@
   margin-top: 8px;
 }
 
-.btn:hover { opacity: 0.9; }
-.btn-blue  { background: #2563eb; }
-.btn-green { background: #22c55e; }
+.btn:hover   { opacity: 0.9; }
+.btn-blue    { background: #2563eb; }
+.btn-green   { background: #22c55e; }
+.btn-violet  { background: #7c3aed; }
+
+/* Selected border adapts per card color */
+.card.selected.violet-card { border-color: #7c3aed; background: #f5f3ff; }
