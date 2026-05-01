@@ -26,6 +26,18 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'postlicence/**',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'dashboard-admin',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'dashboard-etudiant',
+    renderMode: RenderMode.Client
+  },
+  {
     path: '**',
     renderMode: RenderMode.Server
   }
