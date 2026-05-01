@@ -3,9 +3,6 @@
     <div class="logo">Edukini</div>
     <div class="subtitle">Créer votre compte</div>
 
-    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
-    <div class="success" *ngIf="successMsg" style="color: #4caf50; text-align: center; margin-bottom: 10px; font-weight: 500;">{{ successMsg }}</div>
-
     <div class="row">
       <div class="field">
         <label>Prénom</label>
@@ -54,9 +51,9 @@
       </div>
     </div>
 
-    <button class="btn-submit" (click)="register()" [disabled]="loading">
-      {{ loading ? 'Création...' : 'Créer mon compte' }}
-    </button>
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <button class="btn-submit" (click)="register()">Créer mon compte</button>
 
     <div class="login-link">
       Déjà un compte ? <a routerLink="/login">Se connecter</a>
