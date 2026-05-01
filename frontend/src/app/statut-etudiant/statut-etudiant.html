@@ -1,0 +1,44 @@
+<div class="page">
+  <div class="header">
+    <h1>Quel est votre statut ?</h1>
+    <p>Sélectionnez votre situation pour accéder aux fonctionnalités adaptées</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="icon-box blue">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <h2>J'ai obtenu le concours national</h2>
+      <p class="desc">Consultez votre rang, découvrez les écoles d'ingénieurs publiques et postulez aux filières qui vous correspondent.</p>
+      <ul>
+        <li>Voir votre rang et score</li>
+        <li>Recommandations IA personnalisées</li>
+        <li>10 écoles publiques d'ingénieurs</li>
+        <li>Postuler aux filières</li>
+      </ul>
+      <button class="btn blue" (click)="goConcours()">Continuer</button>
+    </div>
+
+    <div class="card">
+      <div class="icon-box green">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <h2>Je suis en 1ère année à ENICarthage</h2>
+      <p class="desc">Découvrez les spécialités disponibles et faites votre choix en fonction de votre profil académique et de vos préférences.</p>
+      <ul>
+        <li>3 spécialités au choix</li>
+        <li>Score de compatibilité personnalisé</li>
+        <li>Programmes et débouchés détaillés</li>
+        <li>Validation de votre choix</li>
+      </ul>
+      <button class="btn green" (click)="goEnicarthage()">Continuer</button>
+    </div>
+  </div>
+</div>

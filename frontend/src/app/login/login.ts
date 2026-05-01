@@ -19,10 +19,12 @@ export class Login {
   togglePwd() {
     this.showPwd = !this.showPwd;
   }
-goStudent() {
-  this.router.navigate(['/statut']); // ← redirige vers la page statut
-}
+
+  goStudent() {
+    this.router.navigate(['/statut']);
+  }
+
   goAdmin() {
-  this.router.navigate(['/admin/dashboard']);
-}
+    this.router.navigate(['/dashboard-admin']);
+  }
 }

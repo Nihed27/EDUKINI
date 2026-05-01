@@ -1,33 +1,12 @@
 import { Routes } from '@angular/router';
 import { Login } from './login/login';
-import { Register } from './register/register';
-import { StatutComponent } from './statut/statut.component';
-
-// Admin
-import { LayoutComponent } from './layout/layout.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { EcolesComponent } from './ecole/ecoles.component';
-import { FilieresComponent } from './filieres/filieres';
-import { SpecialitesComponent } from './specialites/specialites';
+import { StatutEtudiant } from './statut-etudiant/statut-etudiant';
+import { DashboardEtudiant } from './dashboard-etudiant/dashboard-etudiant';
+import { DashboardAdmin } from './dashboard-admin/dashboard-admin';
+import { Enicarthage } from './enicarthage/enicarthage';
 import { EtudiantsComponent } from './etudiants/etudiants.component';
-import { DemandesComponent } from './demandes/demandes';
-import { StatistiquesComponent } from './statistiques/statistiques';
-import { ParametresComponent } from './parametres/parametres';
+import { Register } from './register/register';
 
-// Etudiant Concours
-import { EtudiantLayoutComponent } from './etudiant-layout/etudiant-layout.component';
-import { AccueilComponent } from './accueil/accueil.component';
-import { MesEcolesComponent } from './mes-ecoles/mes-ecoles.component';
-
-import { ProfilEtudiantComponent } from './profil-etudiant/profil-etudiant.component';
-
-// ENICarthage
-import { EnicarthageLayoutComponent } from './enicarthage-layout/enicarthage-layout.component';
-import { EnicarthageAccueilComponent } from './enicarthage-accueil/enicarthage-accueil.component';
-import { EnicarthageProfilComponent } from './enicarthage-profil/enicarthage-profil.component';
- import { EnicarthageRecommandationsComponent } from './enicarthage-recommandations/enicarthage-recommandations.component';
-import { EnicarthageMesChoixComponent } from './enicarthage-mes-choix/enicarthage-mes-choix.component';
- import { EnicarthageChatbotComponent } from './enicarthage-chatbot/enicarthage-chatbot.component';
 
 // Master & Doctorat
 import { PostlicenceLayoutComponent } from './postlicence-layout/postlicence-layout.component';
@@ -36,9 +15,9 @@ import { PostlicenceDetailComponent } from './postlicence-detail/postlicence-det
 import { PostlicenceProgrammesComponent } from './postlicence-programmes/postlicence-programmes.component';
 
 export const routes: Routes = [
-  { path: '',         redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login',    component: Login },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'register', component: Register },
+<<<<<<< HEAD
   { path: 'statut',   component: StatutComponent },
 
   // ── ADMIN ──
@@ -98,4 +77,12 @@ export const routes: Routes = [
   },
 
   { path: '**', redirectTo: 'login' }
+=======
+  { path: 'login', component: Login },
+  { path: 'statut', component: StatutEtudiant },
+  { path: 'dashboard-etudiant', component: DashboardEtudiant },
+  { path: 'dashboard-admin', component: DashboardAdmin },
+  { path: 'enicarthage', component: Enicarthage },
+  { path: 'etudiants', component: EtudiantsComponent },
+>>>>>>> 4352b6d1f1b6b85d834f592ce4e5e466c9d5a420
 ];
