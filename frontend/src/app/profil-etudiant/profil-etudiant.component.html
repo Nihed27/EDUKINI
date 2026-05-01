@@ -110,8 +110,10 @@
       <div class="infos-form-grid">
         <div class="form-group" *ngFor="let info of infosTemp">
           <label class="form-label">{{ info.label }}</label>
-          <input class="form-input" type="text" [(ngModel)]="info.valeur" [placeholder]="'Saisir ' + info.label" />
-        </div>
+      <input class="form-input" type="number" 
+       title="Note" 
+       placeholder="Ex : 14.5"
+       aria-label="Saisir la note" ... />        </div>
       </div>
     </div>
     <div class="modal-footer">
@@ -168,8 +170,11 @@
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label">Score </label>
-        <input class="form-input" type="text" [(ngModel)]="formScoreValue"  />
-      </div>
+        <input class="form-input" type="text" 
+       title="Score"
+       placeholder="Entrez le score"
+       aria-label="Modifier le score" 
+       [(ngModel)]="formScoreValue" />      </div>
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" (click)="fermerScoreModal()">Annuler</button>
@@ -188,8 +193,11 @@
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label">Rang </label>
-        <input class="form-input" type="text" [(ngModel)]="formRangValue"  />
-      </div>
+      <input class="form-input" type="text" 
+       title="Rang"
+       placeholder="Entrez le rang"
+       aria-label="Modifier le rang" 
+       [(ngModel)]="formRangValue" />      </div>
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" (click)="fermerRangModal()">Annuler</button>
