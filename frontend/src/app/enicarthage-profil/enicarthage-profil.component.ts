@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NotesApiService, EduNote } from '../services/notes-api.service';
 
 @Component({
   selector: 'app-enicarthage-profil',
@@ -9,96 +10,97 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './enicarthage-profil.component.html',
   styleUrl: './enicarthage-profil.component.css'
 })
-export class EnicarthageProfilComponent {
+export class EnicarthageProfilComponent implements OnInit {
+
+  // ID étudiant (à terme depuis auth/localStorage)
+  etudiantId: number = 1;
 
   filiere: 'informatique' | 'infotronique' | 'mecatronique' | 'industriel' = 'informatique';
   semestre: 'S1' | 'S2' = 'S1';
 
   filieres: any = {
-
-   informatique: {
-  S1: [
-    {
-      ue: 'UE1.1 — Mathématiques',
-      matieres: [
-        { matiere: "Mathématiques de l'ingénieur", note: null },
-        { matiere: 'Analyse numérique 1', note: null },
+    informatique: {
+      S1: [
+        {
+          ue: 'UE1.1 — Mathématiques',
+          matieres: [
+            { matiere: "Mathématiques de l'ingénieur", note: null },
+            { matiere: 'Analyse numérique 1', note: null },
+          ]
+        },
+        {
+          ue: 'UE1.2 — Informatique de base',
+          matieres: [
+            { matiere: 'Algorithmique', note: null },
+            { matiere: 'Programmation', note: null },
+          ]
+        },
+        {
+          ue: 'UE1.3 — Logique & Génie logiciel',
+          matieres: [
+            { matiere: 'Logique formelle', note: null },
+            { matiere: 'Génie logiciel', note: null },
+            { matiere: "Technologies de l'information et de la communication", note: null },
+          ]
+        },
+        {
+          ue: 'UE1.4 — Électronique',
+          matieres: [
+            { matiere: "Circuits numériques et éléments d'architecture", note: null },
+            { matiere: 'Semi-conducteurs et électronique analogique', note: null },
+          ]
+        },
+        {
+          ue: 'UE1.5 — Culture & Langues',
+          matieres: [
+            { matiere: "Économie de l'entreprise", note: null },
+            { matiere: 'Basic english', note: null },
+            { matiere: 'Culture et communication 1', note: null },
+          ]
+        },
+      ],
+      S2: [
+        {
+          ue: 'UE1.6 — Mathématiques avancées',
+          matieres: [
+            { matiere: 'Probabilités & Statistiques', note: null },
+            { matiere: 'Analyse numérique 2', note: null },
+            { matiere: 'Processus Stochastiques', note: null },
+          ]
+        },
+        {
+          ue: 'UE1.7 — Algorithmique avancée',
+          matieres: [
+            { matiere: 'Algorithmique avancée & Complexité', note: null },
+            { matiere: 'Programmation orientée objet C++', note: null },
+          ]
+        },
+        {
+          ue: 'UE1.8 — Architecture & Réseaux',
+          matieres: [
+            { matiere: 'Architecture des ordinateurs', note: null },
+            { matiere: 'Réseaux avancés & Routage', note: null },
+          ]
+        },
+        {
+          ue: "UE1.9 — Systèmes d'information",
+          matieres: [
+            { matiere: 'Base de données relationnelles', note: null },
+            { matiere: "Analyse et conception des systèmes d'information", note: null },
+            { matiere: 'Web Basics', note: null },
+            { matiere: 'Projet fédérateur : Web application Builder', note: null },
+          ]
+        },
+        {
+          ue: 'UE1.10 — Culture & Langues',
+          matieres: [
+            { matiere: 'Théorie des organisations', note: null },
+            { matiere: 'Professional english', note: null },
+            { matiere: 'Culture et communication 2', note: null },
+          ]
+        },
       ]
     },
-    {
-      ue: 'UE1.2 — Informatique de base',
-      matieres: [
-        { matiere: 'Algorithmique', note: null },
-        { matiere: 'Programmation', note: null },
-      ]
-    },
-    {
-      ue: 'UE1.3 — Logique & Génie logiciel',
-      matieres: [
-        { matiere: 'Logique formelle', note: null },
-        { matiere: 'Génie logiciel', note: null },
-        { matiere: "Technologies de l'information et de la communication", note: null },
-      ]
-    },
-    {
-      ue: 'UE1.4 — Électronique',
-      matieres: [
-        { matiere: "Circuits numériques et éléments d'architecture", note: null },
-        { matiere: 'Semi-conducteurs et électronique analogique', note: null },
-      ]
-    },
-    {
-      ue: 'UE1.5 — Culture & Langues',
-      matieres: [
-        { matiere: "Économie de l'entreprise", note: null },
-        { matiere: 'Basic english', note: null },
-        { matiere: 'Culture et communication 1', note: null },
-      ]
-    },
-  ],
-
-  S2: [
-    {
-      ue: 'UE1.6 — Mathématiques avancées',
-      matieres: [
-        { matiere: 'Probabilités & Statistiques', note: null },
-        { matiere: 'Analyse numérique 2', note: null },
-        { matiere: 'Processus Stochastiques', note: null },
-      ]
-    },
-    {
-      ue: 'UE1.7 — Algorithmique avancée',
-      matieres: [
-        { matiere: 'Algorithmique avancée & Complexité', note: null },
-        { matiere: 'Programmation orientée objet C++', note: null },
-      ]
-    },
-    {
-      ue: 'UE1.8 — Architecture & Réseaux',
-      matieres: [
-        { matiere: 'Architecture des ordinateurs', note: null },
-        { matiere: 'Réseaux avancés & Routage', note: null },
-      ]
-    },
-    {
-      ue: "UE1.9 — Systèmes d'information",
-      matieres: [
-        { matiere: 'Base de données relationnelles', note: null },
-        { matiere: "Analyse et conception des systèmes d'information", note: null },
-        { matiere: 'Web Basics', note: null },
-        { matiere: 'Projet fédérateur : Web application Builder', note: null },
-      ]
-    },
-    {
-      ue: 'UE1.10 — Culture & Langues',
-      matieres: [
-        { matiere: 'Théorie des organisations', note: null },
-        { matiere: 'Professional english', note: null },
-        { matiere: 'Culture et communication 2', note: null },
-      ]
-    },
-  ]
-},
 
     infotronique: {
       S1: [
@@ -119,7 +121,7 @@ export class EnicarthageProfilComponent {
       ]
     },
 
-    mecathronique: {
+    mecatronique: {
       S1: [
         { ue: 'Fondamentaux', matieres: [
           { matiere: 'Maths ingénieur', note: null },
@@ -156,12 +158,53 @@ export class EnicarthageProfilComponent {
         ]}
       ]
     }
-
   };
 
   messageSucces = '';
   messageErreur = '';
 
+  constructor(
+    private notesApi: NotesApiService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.loadNotes();
+  }
+
+  // ===================== CHARGEMENT =====================
+  loadNotes(): void {
+    this.notesApi.getNotes(this.etudiantId).subscribe({
+      next: (notes) => {
+        this.applyNotesFromBackend(notes);
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  private applyNotesFromBackend(notes: EduNote[]): void {
+    for (const n of notes) {
+      const filiereKey = n.filiere;
+      const semestreKey = n.semestre === 1 ? 'S1' : 'S2';
+
+      if (this.filieres[filiereKey] && this.filieres[filiereKey][semestreKey]) {
+        const ues = this.filieres[filiereKey][semestreKey];
+        for (const ue of ues) {
+          if (ue.ue === n.ueNom) {
+            const matiere = ue.matieres.find((m: any) => m.matiere === n.matiereNom);
+            if (matiere) {
+              matiere.note = n.note;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ===================== GETTERS =====================
   get notesActuelles() {
     return this.filieres[this.filiere][this.semestre];
   }
@@ -201,14 +244,90 @@ export class EnicarthageProfilComponent {
     item.note = null;
   }
 
-  sauvegarder() {
-    this.messageSucces = 'Profil sauvegardé ✔️';
-    setTimeout(() => this.messageSucces = '', 3000);
+  // ===================== SAUVEGARDE =====================
+  sauvegarder(): void {
+    const notesToSave: EduNote[] = [];
+
+    // Parcourir TOUTES les filières et semestres pour sauvegarder toutes les notes
+    for (const filiereKey of Object.keys(this.filieres)) {
+      for (const semKey of ['S1', 'S2']) {
+        const ues = this.filieres[filiereKey][semKey];
+        if (!ues) continue;
+        for (const ue of ues) {
+          for (const m of ue.matieres) {
+            if (m.note !== null) {
+              notesToSave.push({
+                etudiantId: this.etudiantId,
+                filiere: filiereKey,
+                semestre: semKey === 'S1' ? 1 : 2,
+                ueNom: ue.ue,
+                matiereNom: m.matiere,
+                note: m.note
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // D'abord supprimer les anciennes notes, puis sauvegarder les nouvelles
+    this.notesApi.deleteNotes(this.etudiantId).subscribe({
+      next: () => {
+        if (notesToSave.length > 0) {
+          this.notesApi.saveNotes(notesToSave).subscribe({
+            next: () => {
+              this.messageSucces = 'Profil sauvegardé ✔️';
+              this.messageErreur = '';
+              this.cdr.detectChanges();
+              setTimeout(() => {
+                this.messageSucces = '';
+                this.cdr.detectChanges();
+              }, 3000);
+            },
+            error: () => {
+              this.messageErreur = 'Erreur lors de la sauvegarde.';
+              this.cdr.detectChanges();
+            }
+          });
+        } else {
+          this.messageSucces = 'Profil sauvegardé ✔️';
+          this.cdr.detectChanges();
+          setTimeout(() => {
+            this.messageSucces = '';
+            this.cdr.detectChanges();
+          }, 3000);
+        }
+      },
+      error: () => {
+        this.messageErreur = 'Erreur lors de la suppression.';
+        this.cdr.detectChanges();
+      }
+    });
   }
 
-  toutEffacer() {
-    this.notesActuelles.forEach((ue: any) =>
-      ue.matieres.forEach((m: any) => m.note = null)
-    );
+  // ===================== TOUT EFFACER =====================
+  toutEffacer(): void {
+    // Effacer côté frontend
+    for (const filiereKey of Object.keys(this.filieres)) {
+      for (const semKey of ['S1', 'S2']) {
+        const ues = this.filieres[filiereKey][semKey];
+        if (!ues) continue;
+        ues.forEach((ue: any) =>
+          ue.matieres.forEach((m: any) => m.note = null)
+        );
+      }
+    }
+
+    // Effacer côté backend
+    this.notesApi.deleteNotes(this.etudiantId).subscribe({
+      next: () => {
+        this.messageSucces = 'Notes effacées ✔️';
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.messageSucces = '';
+          this.cdr.detectChanges();
+        }, 3000);
+      }
+    });
   }
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router'; // ← même import que EtudiantsComponent
+import { RouterModule } from '@angular/router';
+import { FiliereApiService, BackendFiliere } from '../services/filiere-api.service';
 
 export interface Filiere {
   id: number;
@@ -23,7 +24,7 @@ export interface Filiere {
 @Component({
   selector: 'app-filieres',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule], // ← RouterModule
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './filieres.html',
   styleUrls: ['./filieres.css']
 })
@@ -33,56 +34,7 @@ export class FilieresComponent implements OnInit {
   searchQuery: string = '';
   filterActif: string = 'tous';
 
-  filieres: Filiere[] = [
-    {
-      id: 1,
-      nom: 'Génie Informatique',
-      code: 'GI',
-      icon: '💻',
-      couleur: '#1a73e8',
-      couleurBg: '#eff6ff',
-      description: 'Formation en développement logiciel, systèmes d\'information, intelligence artificielle et cybersécurité.',
-      debouches: ['Ingénieur développeur', 'Architecte logiciel', 'Data Scientist', 'Expert cybersécurité'],
-      competences: ['Algorithmique', 'Base de données', 'Développement web', 'Intelligence artificielle'],
-      capacite: 120, duree: '3 ans', scoreMin: 75, actif: true, nbEtudiants: 98
-    },
-    {
-      id: 2,
-      nom: 'Génie Mécatronique',
-      code: 'GM',
-      icon: '⚙️',
-      couleur: '#0ea5e9',
-      couleurBg: '#f0f9ff',
-      description: 'Intégration de la mécanique, électronique et informatique pour concevoir des systèmes automatisés intelligents.',
-      debouches: ['Ingénieur robotique', 'Concepteur systèmes embarqués', 'Ingénieur automobile', 'R&D industriel'],
-      competences: ['Mécanique', 'Électronique', 'Automatique', 'Systèmes embarqués'],
-      capacite: 100, duree: '3 ans', scoreMin: 72, actif: true, nbEtudiants: 85
-    },
-    {
-      id: 3,
-      nom: 'Génie Industriel & Logistique',
-      code: 'GIL',
-      icon: '🏭',
-      couleur: '#f59e0b',
-      couleurBg: '#fffbeb',
-      description: 'Optimisation des systèmes de production, gestion de la chaîne logistique et amélioration continue.',
-      debouches: ['Ingénieur production', 'Responsable logistique', 'Chef de projet industriel', 'Consultant Supply Chain'],
-      competences: ['Lean Management', 'Gestion de projet', 'Supply Chain', 'Qualité industrielle'],
-      capacite: 90, duree: '3 ans', scoreMin: 68, actif: true, nbEtudiants: 76
-    },
-    {
-      id: 4,
-      nom: 'Génie Infotronique',
-      code: 'GINFO',
-      icon: '📡',
-      couleur: '#8b5cf6',
-      couleurBg: '#f5f3ff',
-      description: 'Convergence de l\'informatique et de l\'électronique pour les systèmes de communication, IoT et traitement du signal.',
-      debouches: ['Ingénieur télécom', 'Développeur IoT', 'Ingénieur réseaux', 'Expert traitement signal'],
-      competences: ['Électronique numérique', 'Réseaux', 'IoT', 'Traitement du signal'],
-      capacite: 80, duree: '3 ans', scoreMin: 70, actif: true, nbEtudiants: 67
-    }
-  ];
+  filieres: Filiere[] = [];
 
   showModal        = false;
   showDeleteConfirm= false;
@@ -97,9 +49,39 @@ export class FilieresComponent implements OnInit {
   competencesList : string[] = [];
   successMessage  = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private filiereApi: FiliereApiService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void { this.initForm(); }
+  ngOnInit(): void {
+    this.initForm();
+    this.loadFilieres();
+  }
+
+  loadFilieres(): void {
+    this.filiereApi.getAll().subscribe({
+      next: (filieres) => {
+        this.filieres = filieres.map((f) => ({
+          id: f.id ?? 0,
+          nom: f.nom ?? '',
+          code: f.code ?? '',
+          icon: f.icon ?? '🎓',
+          couleur: f.couleur ?? '#1a73e8',
+          couleurBg: this.hexToLightBg(f.couleur ?? '#1a73e8'),
+          description: f.description ?? '',
+          debouches: f.debouches ?? [],
+          competences: f.competences ?? [],
+          capacite: f.capacite ?? 60,
+          duree: f.duree ?? '3 ans',
+          scoreMin: f.scoreMin ?? 60,
+          actif: f.actif ?? true,
+          nbEtudiants: 0
+        }));
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.filieres = [];
+      }
+    });
+  }
 
   initForm(): void {
     this.filiereForm = this.fb.group({
@@ -151,16 +133,38 @@ export class FilieresComponent implements OnInit {
   saveFiliere(): void {
     if (this.filiereForm.invalid) return;
     const val = this.filiereForm.value;
-    const bg  = this.hexToLightBg(val.couleur);
+
+    const payload: BackendFiliere = {
+      nom: val.nom,
+      code: val.code,
+      icon: val.icon,
+      couleur: val.couleur,
+      description: val.description,
+      capacite: val.capacite,
+      scoreMin: val.scoreMin,
+      duree: val.duree,
+      actif: val.actif,
+      debouches: this.debouchesList,
+      competences: this.competencesList
+    };
+
     if (this.editingFiliere) {
-      const idx = this.filieres.findIndex(f => f.id === this.editingFiliere!.id);
-      this.filieres[idx] = { ...this.editingFiliere, ...val, couleurBg: bg, debouches: [...this.debouchesList], competences: [...this.competencesList] };
-      this.showSuccess('Filière modifiée avec succès.');
-    } else {
-      this.filieres.push({ id: Date.now(), ...val, couleurBg: bg, debouches: [...this.debouchesList], competences: [...this.competencesList], nbEtudiants: 0 });
-      this.showSuccess('Filière ajoutée avec succès.');
+      this.filiereApi.update(this.editingFiliere.id, payload).subscribe({
+        next: () => {
+          this.showSuccess('Filière modifiée avec succès.');
+          this.closeModal();
+          this.loadFilieres();
+        }
+      });
+      return;
     }
-    this.closeModal();
+    this.filiereApi.create(payload).subscribe({
+      next: () => {
+        this.showSuccess('Filière ajoutée avec succès.');
+        this.closeModal();
+        this.loadFilieres();
+      }
+    });
   }
 
   addDebouche   (): void { if (this.newDebouche.trim())    { this.debouchesList.push(this.newDebouche.trim());       this.newDebouche    = ''; } }
@@ -172,9 +176,15 @@ export class FilieresComponent implements OnInit {
   cancelDelete  (): void { this.showDeleteConfirm = false; this.deletingFiliere = null; }
   executeDelete (): void {
     if (!this.deletingFiliere) return;
-    this.filieres = this.filieres.filter(f => f.id !== this.deletingFiliere!.id);
-    this.showSuccess(`Filière "${this.deletingFiliere.nom}" supprimée.`);
-    this.showDeleteConfirm = false; this.deletingFiliere = null;
+    const id = this.deletingFiliere.id;
+    this.filiereApi.delete(id).subscribe({
+      next: () => {
+        this.showSuccess(`Filière "${this.deletingFiliere!.nom}" supprimée.`);
+        this.showDeleteConfirm = false;
+        this.deletingFiliere = null;
+        this.loadFilieres();
+      }
+    });
   }
 
   openDetail (f: Filiere): void { this.selectedFiliere = f; this.showDetailModal = true; }

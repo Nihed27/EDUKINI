@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ProfilApiService, BackendProfil } from '../services/profil-api.service';
 
 @Component({
   selector: 'app-accueil',
@@ -9,17 +10,18 @@ import { Router } from '@angular/router';
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.css'
 })
-export class AccueilComponent {
-  rang = '127e / 4320';
-  scoreGlobal = 14.8;
+export class AccueilComponent implements OnInit {
+  rang = '—';
+  scoreGlobal: string = '—';
 
-  matieres = [
-    { nom: 'Mathématiques',           note: 16 },
-    { nom: 'Physique',                note: 15 },
-    { nom: 'Chimie',                  note: 14 },
-    { nom: 'Français',                note: 12 },
-    { nom: 'Anglais',                 note: 14 },
-    { nom: "Sciences de l'ingénieur", note: 13 },
+  matieres: { nom: string; note: number | null }[] = [
+    { nom: 'Mathématiques',           note: null },
+    { nom: 'Physique',                note: null },
+    { nom: 'Chimie Générale',         note: null },
+    { nom: 'Français',                note: null },
+    { nom: 'Anglais',                 note: null },
+    { nom: "Sciences de l'ingénieur", note: null },
+    { nom: 'Informatique',            note: null },
   ];
 
   recommandations = [
@@ -29,7 +31,42 @@ export class AccueilComponent {
     { filiere: 'Génie électrique',              ecole: 'ENIT',    pct: 70, places: 90,  rangMin: 300 },
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private profilApi: ProfilApiService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.loadProfil();
+  }
+
+  loadProfil(): void {
+    this.profilApi.getAll().subscribe({
+      next: (profils) => {
+        if (profils.length > 0) {
+          const p = profils[0];
+
+          // Rang
+          this.rang = p.rang ? `${p.rang}e` : '—';
+
+          // Score
+          this.scoreGlobal = p.score ? String(p.score) : '—';
+
+          // Notes par matière
+          if (p.notes) {
+            for (const m of this.matieres) {
+              m.note = p.notes[m.nom] !== undefined ? p.notes[m.nom] : null;
+            }
+          }
+        }
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   postuler(r: any) {
     this.router.navigate(['/etudiant/candidatures']);

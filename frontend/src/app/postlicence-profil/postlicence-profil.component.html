@@ -1,0 +1,157 @@
+<div class="page-header">
+  <h1 class="page-title">Mon Profil Candidat</h1>
+  <p class="page-subtitle">Remplissez votre profil pour recevoir des recommandations IA personnalisées</p>
+</div>
+
+<div class="page-body">
+
+  <!-- ======= FORMULAIRE PROFIL ======= -->
+  <div class="section-card">
+    <div class="section-title">📋 Informations académiques</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Licence obtenue</label>
+        <input type="text" [(ngModel)]="profil.licence" (ngModelChange)="onFieldChange()" placeholder="Ex: Informatique, EEA..." />
+      </div>
+      <div class="form-group">
+        <label>Spécialité</label>
+        <input type="text" [(ngModel)]="profil.specialite" (ngModelChange)="onFieldChange()" placeholder="Ex: Réseaux, Automatique..." />
+      </div>
+      <div class="form-group">
+        <label>Moyenne générale (/20)</label>
+        <input type="number" [(ngModel)]="profil.moyenne" (ngModelChange)="onFieldChange()" min="0" max="20" step="0.1" placeholder="Ex: 14.5" />
+      </div>
+      <div class="form-group">
+        <label>Niveau d'anglais</label>
+        <select [(ngModel)]="profil.niveauAnglais" (ngModelChange)="onFieldChange()">
+          <option value="">-- Choisir --</option>
+          <option *ngFor="let n of niveauxAnglais" [value]="n">{{ n }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= COMPÉTENCES ======= -->
+  <div class="section-card">
+    <div class="section-title">🎯 Domaines de compétences</div>
+    <div class="tags-grid">
+      <button *ngFor="let comp of allCompetences"
+        class="tag-btn"
+        [class.selected]="isSelected(comp)"
+        (click)="toggleCompetence(comp)">
+        {{ comp }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ======= MOTIVATION ======= -->
+  <div class="section-card">
+    <div class="section-title">💬 Motivation</div>
+    <div class="form-group full">
+      <label>Motivation</label>
+      <textarea [(ngModel)]="profil.motivation" (ngModelChange)="onFieldChange()" rows="3" placeholder="Décrivez votre motivation pour les études post-licence..."></textarea>
+    </div>
+  </div>
+
+  <!-- ======= BOUTON SAUVEGARDER ======= -->
+  <div class="action-section">
+    <button class="btn-save" (click)="sauvegarder()">💾 Sauvegarder mon profil</button>
+    <span class="save-msg" *ngIf="saveMessage">{{ saveMessage }}</span>
+  </div>
+
+  <!-- ======= CONDITIONS PAR PROGRAMME ======= -->
+  <div class="section-card">
+    <div class="section-title">📊 Vérification des conditions</div>
+
+    <div class="conditions-grid">
+      <div class="cond-card">
+        <div class="cond-header">Master TIC</div>
+        <div class="cond-item" *ngFor="let c of conditionsTIC">
+          <span class="cond-icon">{{ getStatusIcon(c.status) }}</span>
+          <span [class]="'cond-text cond-' + c.status">{{ c.label }}</span>
+        </div>
+      </div>
+
+      <div class="cond-card">
+        <div class="cond-header">Master ARTI/WESET</div>
+        <div class="cond-item" *ngFor="let c of conditionsARTI">
+          <span class="cond-icon">{{ getStatusIcon(c.status) }}</span>
+          <span [class]="'cond-text cond-' + c.status">{{ c.label }}</span>
+        </div>
+      </div>
+
+      <div class="cond-card">
+        <div class="cond-header">Master MPSDM</div>
+        <div class="cond-item" *ngFor="let c of conditionsMPSDM">
+          <span class="cond-icon">{{ getStatusIcon(c.status) }}</span>
+          <span [class]="'cond-text cond-' + c.status">{{ c.label }}</span>
+        </div>
+      </div>
+
+      <div class="cond-card">
+        <div class="cond-header">Doctorat Génie Électrique</div>
+        <div class="cond-item" *ngFor="let c of conditionsDoctorat">
+          <span class="cond-icon">{{ getStatusIcon(c.status) }}</span>
+          <span [class]="'cond-text cond-' + c.status">{{ c.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= BOUTON ANALYSE ======= -->
+  <div class="action-section">
+    <button class="btn-analyse" (click)="analyser()" [disabled]="loading">
+      <span *ngIf="!loading">🤖 Analyser mon profil</span>
+      <span *ngIf="loading" class="loader-text">
+        <span class="spinner"></span> Analyse en cours...
+      </span>
+    </button>
+  </div>
+
+  <!-- ======= ERREUR ======= -->
+  <div class="error-msg" *ngIf="errorMessage">
+    ❌ {{ errorMessage }}
+  </div>
+
+  <!-- ======= RÉSULTATS IA ======= -->
+  <div class="results-section" *ngIf="result">
+    <div class="section-title">🎓 Recommandations IA</div>
+
+    <div class="reco-grid">
+      <div class="reco-card" *ngFor="let r of result.recommandations"
+           [class.meilleur]="isMeilleurChoix(r)">
+
+        <div class="reco-badge-row">
+          <span class="reco-badge" *ngIf="isMeilleurChoix(r)">⭐ Meilleur choix</span>
+        </div>
+
+        <div class="reco-name">{{ r.programme }}</div>
+
+        <div class="reco-pct-row">
+          <div class="reco-bar-bg">
+            <div class="reco-bar-fill"
+              [style.width.%]="r.pourcentage"
+              [style.background]="getBarColor(r.pourcentage)">
+            </div>
+          </div>
+          <span class="reco-pct" [style.color]="getBarColor(r.pourcentage)">{{ r.pourcentage }}%</span>
+        </div>
+
+        <div class="reco-raison">{{ r.raison }}</div>
+
+        <div class="reco-points" *ngIf="r.points_forts?.length">
+          <div class="point-fort" *ngFor="let p of r.points_forts">✅ {{ p }}</div>
+        </div>
+        <div class="reco-points" *ngIf="r.points_faibles?.length">
+          <div class="point-faible" *ngFor="let p of r.points_faibles">❌ {{ p }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conseil-card" *ngIf="result.conseil">
+      <div class="conseil-title">💡 Conseil personnalisé</div>
+      <p>{{ result.conseil }}</p>
+    </div>
+  </div>
+
+</div>

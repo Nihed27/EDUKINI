@@ -33,6 +33,7 @@ import { PostlicenceLayoutComponent } from './postlicence-layout/postlicence-lay
 import { PostlicenceAccueilComponent } from './postlicence-accueil/postlicence-accueil.component';
 import { PostlicenceDetailComponent } from './postlicence-detail/postlicence-detail.component';
 import { PostlicenceProgrammesComponent } from './postlicence-programmes/postlicence-programmes.component';
+import { PostlicenceProfilComponent } from './postlicence-profil/postlicence-profil.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -92,6 +93,7 @@ export const routes: Routes = [
       { path: 'accueil', component: PostlicenceAccueilComponent },
       { path: 'programmes', component: PostlicenceProgrammesComponent },
       { path: 'programme/:id', component: PostlicenceDetailComponent },
+      { path: 'profil', component: PostlicenceProfilComponent },
     ]
   },
 

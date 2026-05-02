@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Ecole } from './ecole.model';
-import { EcoleService } from './ecole.service';
+import { EcoleApiService, BackendEcole } from '../services/ecole-api.service';
 
 @Component({
   selector: 'app-ecoles',
@@ -35,24 +35,52 @@ export class EcolesComponent implements OnInit {
 
   formData: Omit<Ecole, 'id'> = this.emptyForm();
 
-  constructor(private ecoleService: EcoleService) {}
+  constructor(private ecoleApi: EcoleApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
-    this.ecoles = this.ecoleService.getAll();
-    this.regions = this.ecoleService.getRegions();
-    this.universites = this.ecoleService.getUniversites();
-    this.allFilieres = this.ecoleService.getAllFilieres();
-    this.applyFilters();
+    this.ecoleApi.getAll().subscribe({
+      next: (ecoles) => {
+        this.ecoles = ecoles.map((e) => ({
+          id: e.id ?? 0,
+          nom: e.nom ?? '',
+          sigle: e.sigle ?? '',
+          universite: e.universite ?? '',
+          region: e.region ?? '',
+          adresse: e.adresse ?? '',
+          filieres: e.filieres ?? []
+        }));
+        this.regions = [...new Set(this.ecoles.map(e => e.region).filter(r => r))].sort();
+        this.universites = [...new Set(this.ecoles.map(e => e.universite).filter(u => u))].sort();
+        this.allFilieres = [...new Set(this.ecoles.flatMap(e => e.filieres))].sort();
+        this.applyFilters();
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.ecoles = [];
+        this.filteredEcoles = [];
+        this.regions = [];
+        this.universites = [];
+        this.allFilieres = [];
+      }
+    });
   }
 
   applyFilters(): void {
-    this.filteredEcoles = this.ecoleService.search(
-      this.searchTerm, this.filterRegion, this.filterFiliere
-    );
+    const term = this.searchTerm.trim().toLowerCase();
+    this.filteredEcoles = this.ecoles.filter((e) => {
+      const matchTerm = !term ||
+        e.nom.toLowerCase().includes(term) ||
+        e.sigle.toLowerCase().includes(term) ||
+        e.universite.toLowerCase().includes(term);
+      const matchRegion = !this.filterRegion || e.region === this.filterRegion;
+      const matchFiliere = !this.filterFiliere ||
+        e.filieres.some(f => f.toLowerCase().includes(this.filterFiliere.toLowerCase()));
+      return matchTerm && matchRegion && matchFiliere;
+    });
   }
 
   resetFilters(): void {
@@ -101,13 +129,30 @@ export class EcolesComponent implements OnInit {
   }
 
   saveEcole(): void {
+    const payload: BackendEcole = {
+      nom: this.formData.nom,
+      sigle: this.formData.sigle,
+      universite: this.formData.universite,
+      region: this.formData.region,
+      adresse: this.formData.adresse,
+      filieres: this.formData.filieres
+    };
+
     if (this.isEditMode && this.selectedId !== null) {
-      this.ecoleService.update(this.selectedId, this.formData);
+      this.ecoleApi.update(this.selectedId, payload).subscribe({
+        next: () => {
+          this.closeModal();
+          this.loadData();
+        }
+      });
     } else {
-      this.ecoleService.add(this.formData);
+      this.ecoleApi.create(payload).subscribe({
+        next: () => {
+          this.closeModal();
+          this.loadData();
+        }
+      });
     }
-    this.closeModal();
-    this.loadData();
   }
 
   closeModal(): void {
@@ -122,10 +167,13 @@ export class EcolesComponent implements OnInit {
 
   deleteEcole(): void {
     if (this.ecoleToDelete) {
-      this.ecoleService.delete(this.ecoleToDelete.id);
-      this.ecoleToDelete = null;
-      this.showDeleteConfirm = false;
-      this.loadData();
+      this.ecoleApi.delete(this.ecoleToDelete.id).subscribe({
+        next: () => {
+          this.ecoleToDelete = null;
+          this.showDeleteConfirm = false;
+          this.loadData();
+        }
+      });
     }
   }
 

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Student } from './student.model';
-import { StudentService } from './student.service';
+import { EtudiantApiService, BackendEtudiant } from '../services/etudiant-api.service';
 
 @Component({
   selector: 'app-etudiants',
@@ -25,28 +25,49 @@ export class EtudiantsComponent implements OnInit {
   formData: Omit<Student, 'id'> = this.emptyForm();
   selectedId: number | null = null;
 
-  constructor(private studentService: StudentService) {}
+  constructor(private etudiantApi: EtudiantApiService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadStudents();
   }
 
   loadStudents(): void {
-    this.students = this.studentService.getAll();
-    this.applySearch();
+    this.etudiantApi.getAll().subscribe({
+      next: (etudiants) => {
+        this.students = etudiants.map((e) => ({
+          id: e.id ?? 0,
+          nom: e.nom ?? '',
+          prenom: e.prenom ?? '',
+          email: e.email ?? '',
+          filiere: e.filiere ?? '',
+          annee: e.annee ?? '',
+          etablissement: e.etablissement ?? ''
+        }));
+        this.applySearch();
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.students = [];
+        this.filteredStudents = [];
+      }
+    });
   }
 
   applySearch(): void {
     if (this.searchTerm.trim()) {
-      this.filteredStudents = this.studentService.search(this.searchTerm);
+      const t = this.searchTerm.toLowerCase();
+      this.filteredStudents = this.students.filter(
+        (s) =>
+          s.nom.toLowerCase().includes(t) ||
+          s.prenom.toLowerCase().includes(t) ||
+          s.email.toLowerCase().includes(t)
+      );
     } else {
       this.filteredStudents = [...this.students];
     }
   }
 
-  onSearch(): void {
-    this.applySearch();
-  }
+  onSearch(): void { this.applySearch(); }
 
   openAddModal(): void {
     this.isEditMode = false;
@@ -58,26 +79,28 @@ export class EtudiantsComponent implements OnInit {
     this.isEditMode = true;
     this.selectedId = student.id;
     this.formData = {
-      numeroInscription: student.numeroInscription,
       nom: student.nom,
       prenom: student.prenom,
-      rang: student.rang,
-      score: student.score,
-      specialiteSouhaitee: student.specialiteSouhaitee,
-      typeConcours: student.typeConcours,
-      filierePrepa: student.filierePrepa
+      email: student.email,
+      filiere: student.filiere,
+      annee: student.annee,
+      etablissement: student.etablissement
     };
     this.showModal = true;
   }
 
   saveStudent(): void {
+    const payload: BackendEtudiant = { ...this.formData };
+
     if (this.isEditMode && this.selectedId !== null) {
-      this.studentService.update(this.selectedId, this.formData);
+      this.etudiantApi.update(this.selectedId, payload).subscribe({
+        next: () => { this.closeModal(); this.loadStudents(); }
+      });
     } else {
-      this.studentService.add(this.formData);
+      this.etudiantApi.create(payload).subscribe({
+        next: () => { this.closeModal(); this.loadStudents(); }
+      });
     }
-    this.closeModal();
-    this.loadStudents();
   }
 
   closeModal(): void {
@@ -92,10 +115,13 @@ export class EtudiantsComponent implements OnInit {
 
   deleteStudent(): void {
     if (this.studentToDelete) {
-      this.studentService.delete(this.studentToDelete.id);
-      this.studentToDelete = null;
-      this.showDeleteConfirm = false;
-      this.loadStudents();
+      this.etudiantApi.delete(this.studentToDelete.id).subscribe({
+        next: () => {
+          this.studentToDelete = null;
+          this.showDeleteConfirm = false;
+          this.loadStudents();
+        }
+      });
     }
   }
 
@@ -106,14 +132,12 @@ export class EtudiantsComponent implements OnInit {
 
   private emptyForm(): Omit<Student, 'id'> {
     return {
-      numeroInscription: '',
       nom: '',
       prenom: '',
-      rang: null,
-      score: 0,
-      specialiteSouhaitee: '',
-      typeConcours: 'prepa',
-      filierePrepa: ''
+      email: '',
+      filiere: '',
+      annee: '',
+      etablissement: ''
     };
   }
 }
