@@ -92,7 +92,7 @@
 
 <!-- ── Actions rapides (2 cartes seulement) ── -->
 <div class="actions-grid">
-  <div class="action-card" (click)="goTo('/enicarthage/recommandations')">
+  <div class="action-card" (click)="navigate('/enicarthage/recommandations')">
     <div class="action-icon green-bg">
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
@@ -103,7 +103,7 @@
     <div class="action-desc">Découvrez les spécialités les plus compatibles avec votre profil</div>
   </div>
 
-  <div class="action-card" (click)="goTo('/enicarthage/profil')">
+  <div class="action-card" (click)="navigate('/enicarthage/profil')">
     <div class="action-icon purple-bg">
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
         <circle cx="12" cy="8" r="4"/>
@@ -207,7 +207,7 @@
       </div>
 
       <div class="cta-row">
-        <button [class]="'cta-btn bg-' + s.couleur" (click)="goTo('/enicarthage/recommandations')">
+        <button [class]="'cta-btn bg-' + s.couleur" (click)="navigate('/enicarthage/recommandations')">
           Voir ma compatibilité détaillée →
         </button>
       </div>

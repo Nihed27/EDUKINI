@@ -97,6 +97,50 @@
       </div>
     </div>
   </div>
+
+  <!-- Recommandations de spécialités -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Recommandations de spécialités (IA)</div>
+      <button class="btn-calculer" (click)="calculerIA()" [disabled]="loading">
+        {{ loading ? 'Calcul en cours...' : '🚀 Calculer mes recommandations' }}
+      </button>
+    </div>
+    
+    <div class="recommandations-list" *ngIf="recommandations.length > 0; else noRecom">
+      <div class="recom-item" *ngFor="let r of recommandations">
+        <div class="recom-main">
+          <div class="recom-ecole">{{ r.ecole }}</div>
+          <div class="recom-spec">{{ r.specialite }}</div>
+          <div class="recom-label-badge" [ngClass]="{
+            'recom-recommande': r.label === 'Recommandé',
+            'recom-compatible': r.label === 'Compatible',
+            'recom-peu-compatible': r.label === 'Peu compatible'
+          }">
+            {{ r.label }}
+          </div>
+        </div>
+        <div class="recom-stats">
+          <div class="recom-stat">
+            <span class="stat-label">Score</span>
+            <span class="stat-val score-high">{{ r.score }}%</span>
+          </div>
+          <div class="recom-stat">
+            <span class="stat-label">Places</span>
+            <span class="stat-val">{{ r.placesDisponibles }}</span>
+          </div>
+          <div class="recom-stat">
+            <span class="stat-label">Rang min</span>
+            <span class="stat-val">{{ r.rangMinimum }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noRecom>
+      <div class="no-data">Complétez vos notes et cliquez sur le bouton pour obtenir vos recommandations personnalisées.</div>
+    </ng-template>
+  </div>
+
 </div>
 
 <!-- ===== MODALE UNIQUE POUR TOUTES LES INFOS PERSONNELLES ===== -->
