@@ -1,0 +1,217 @@
+<!-- ── Top bar ── -->
+<div class="top-bar">
+  <div>
+    <h1 class="page-title">Tableau de bord</h1>
+    <p class="page-sub">Bienvenue, Mohamed Ali — 1ère année ENICarthage</p>
+  </div>
+
+  <div class="notif-wrapper">
+    <button class="notif-btn" (click)="toggleNotif()">
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="notif-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+    </button>
+
+    <!-- Panneau notifications -->
+    <div class="notif-panel" [class.open]="notifOpen">
+      <div class="notif-panel-header">
+        <span class="notif-panel-title">Notifications</span>
+        <button class="notif-clear-btn" (click)="clearAll()">Tout marquer lu</button>
+      </div>
+
+      <div class="notif-list">
+        <div
+          *ngFor="let n of notifications"
+          class="notif-item"
+          [class.unread]="n.unread"
+          (click)="markRead(n.id)">
+          <div class="notif-icon" [style.background]="n.bg">
+            <!-- icon user -->
+            <ng-container *ngIf="n.icon === 'user'">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+                   [attr.stroke]="n.color" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+              </svg>
+            </ng-container>
+            <!-- icon monitor -->
+            <ng-container *ngIf="n.icon === 'monitor'">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+                   [attr.stroke]="n.color" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+              </svg>
+            </ng-container>
+            <!-- icon bell -->
+            <ng-container *ngIf="n.icon === 'bell'">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+                   [attr.stroke]="n.color" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+            </ng-container>
+          </div>
+          <div class="notif-body">
+            <div class="notif-msg">{{ n.msg }}</div>
+            <div class="notif-time">{{ n.time }}</div>
+          </div>
+          <div class="notif-dot" *ngIf="n.unread"></div>
+        </div>
+
+        <div class="notif-empty" *ngIf="unreadCount === 0">
+          Aucune nouvelle notification
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Stats ── -->
+<div class="stats-grid">
+  <div class="stat-card blue">
+    <div class="stat-label">Moyenne générale</div>
+    <div class="stat-val">14.2/20</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-label">Matière forte</div>
+    <div class="stat-val">Algorithmique</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="stat-label">Spécialités disponibles</div>
+    <div class="stat-val">3</div>
+  </div>
+  <div class="stat-card orange">
+    <div class="stat-label">Compatibilité max IA</div>
+    <div class="stat-val">88%</div>
+  </div>
+</div>
+
+<!-- ── Actions rapides (2 cartes seulement) ── -->
+<div class="actions-grid">
+  <div class="action-card" (click)="goTo('/enicarthage/recommandations')">
+    <div class="action-icon green-bg">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+        <polyline points="17 6 23 6 23 12"/>
+      </svg>
+    </div>
+    <div class="action-title">Voir mes recommandations IA</div>
+    <div class="action-desc">Découvrez les spécialités les plus compatibles avec votre profil</div>
+  </div>
+
+  <div class="action-card" (click)="goTo('/enicarthage/profil')">
+    <div class="action-icon purple-bg">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+    </div>
+    <div class="action-title">Compléter mon profil</div>
+    <div class="action-desc">Ajoutez vos notes pour améliorer la précision des recommandations</div>
+  </div>
+</div>
+
+<!-- ── Section Spécialités ── -->
+<div class="section-header">
+  <h2 class="section-title">Spécialités disponibles</h2>
+  <p class="section-sub">ENICarthage propose 3 spécialités — cliquez pour voir les détails</p>
+</div>
+
+<div class="spec-list">
+  <div class="spec-card" *ngFor="let s of specialites; let i = index"
+       [class]="'spec-card border-' + s.couleur">
+
+    <!-- En-tête -->
+    <div class="spec-header" (click)="toggle(i)">
+      <div class="spec-left">
+        <div [class]="'spec-sigle bg-' + s.couleur">{{ s.sigle }}</div>
+        <div>
+          <div class="spec-nom">{{ s.nom }}</div>
+          <div class="spec-meta">
+            <span>{{ s.places }} places</span>
+            <span class="dot">·</span>
+            <span>{{ s.duree }}</span>
+            <span class="dot">·</span>
+            <span>{{ s.langue }}</span>
+            <span class="dot">·</span>
+            <span>{{ s.niveau }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-right">
+        <div [class]="'compat-badge bg-' + s.couleur">{{ s.compatibilite }}% compatible</div>
+        <svg [class]="ouvert === i ? 'chevron open' : 'chevron'" width="20" height="20"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Corps -->
+    <div class="spec-body" *ngIf="ouvert === i">
+      <p class="spec-desc">{{ s.description }}</p>
+
+      <div class="quick-stats">
+        <div class="quick-item">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+          </svg>
+          <span><strong>{{ s.taux_insertion }}</strong> taux d'insertion</span>
+        </div>
+        <div class="quick-item">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          <span><strong>{{ s.salaire }}</strong></span>
+        </div>
+        <div class="quick-item">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#8b5cf6" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <span><strong>{{ s.places }} places</strong> disponibles</span>
+        </div>
+      </div>
+
+      <!-- Onglets -->
+      <div class="onglets">
+        <button [class]="onglet[i]==='programme'   ? 'onglet active' : 'onglet'" (click)="setOnglet(i,'programme')">Programme</button>
+        <button [class]="onglet[i]==='debouches'   ? 'onglet active' : 'onglet'" (click)="setOnglet(i,'debouches')">Débouchés</button>
+        <button [class]="onglet[i]==='competences' ? 'onglet active' : 'onglet'" (click)="setOnglet(i,'competences')">Compétences</button>
+        <button [class]="onglet[i]==='partenaires' ? 'onglet active' : 'onglet'" (click)="setOnglet(i,'partenaires')">Partenaires</button>
+      </div>
+
+      <div class="onglet-content">
+        <div *ngIf="onglet[i]==='programme'">
+          <ul class="spec-ul">
+            <li *ngFor="let m of s.matieres">{{ m }}</li>
+          </ul>
+        </div>
+        <div *ngIf="onglet[i]==='debouches'">
+          <ul class="spec-ul green">
+            <li *ngFor="let d of s.debouches">{{ d }}</li>
+          </ul>
+        </div>
+        <div *ngIf="onglet[i]==='competences'" class="tags-list">
+          <span [class]="'tag bg-' + s.couleur" *ngFor="let c of s.competences">{{ c }}</span>
+        </div>
+        <div *ngIf="onglet[i]==='partenaires'" class="tags-list">
+          <span class="tag partner" *ngFor="let p of s.partenaires">🏢 {{ p }}</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <button [class]="'cta-btn bg-' + s.couleur" (click)="goTo('/enicarthage/recommandations')">
+          Voir ma compatibilité détaillée →
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

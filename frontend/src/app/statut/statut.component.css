@@ -1,0 +1,143 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* ── CARDS ── */
+.cards {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  flex: 1;
+  background: #fff;
+  border-radius: 18px;
+  padding: 32px 28px;
+  border: 2px solid transparent;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.card.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+/* ── ICONES ── */
+.icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrap.blue   { background: #2563eb; }
+.icon-wrap.green  { background: #22c55e; }
+.icon-wrap.violet { background: #7c3aed; }
+
+/* ── TEXTE ── */
+.card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ── LISTE ── */
+.card-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.card-list li {
+  font-size: 14px;
+  color: #374151;
+  padding-left: 18px;
+  position: relative;
+}
+
+.card-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.blue-dot li::before   { background: #2563eb; }
+.green-dot li::before  { background: #22c55e; }
+.violet-dot li::before { background: #7c3aed; }
+
+/* ── BOUTONS ── */
+.btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-top: 8px;
+}
+
+.btn:hover   { opacity: 0.9; }
+.btn-blue    { background: #2563eb; }
+.btn-green   { background: #22c55e; }
+.btn-violet  { background: #7c3aed; }
+
+/* Selected border adapts per card color */
+.card.selected.violet-card { border-color: #7c3aed; background: #f5f3ff; }

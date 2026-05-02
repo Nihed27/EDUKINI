@@ -1,0 +1,54 @@
+<div class="page-header">
+  <h1 class="page-title">Profil académique</h1>
+</div>
+
+<div class="page-body">
+
+  <div class="profil-card">
+    <div class="profil-top">
+      <div>
+        <div class="profil-label">Rang au concours</div>
+        <div class="profil-big blue">{{ rang }}</div>
+      </div>
+      <div>
+        <div class="profil-label">Score global</div>
+        <div class="profil-big blue">{{ scoreGlobal }}/20</div>
+      </div>
+    </div>
+    <div class="notes-grid">
+      <div class="note-card" *ngFor="let m of matieres">
+        <div class="note-label">{{ m.nom }}</div>
+        <div class="note-val">{{ m.note }}/20</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+      <polyline points="17 6 23 6 23 12"/>
+    </svg>
+    Recommandations IA
+  </div>
+
+  <div class="reco-grid">
+    <div class="reco-card" *ngFor="let r of recommandations">
+      <div class="reco-top">
+        <span class="reco-badge">Recommandé</span>
+        <span class="reco-pct blue">{{ r.pct }}%</span>
+      </div>
+      <div class="reco-title">{{ r.filiere }}</div>
+      <div class="reco-ecole">{{ r.ecole }}</div>
+      <div class="reco-row">
+        <span class="reco-detail-label">Places disponibles</span>
+        <span class="reco-detail-val">{{ r.places }}</span>
+      </div>
+      <div class="reco-row">
+        <span class="reco-detail-label">Rang minimum requis</span>
+        <span class="reco-detail-val">{{ r.rangMin }}</span>
+      </div>
+      <button class="postuler-btn" (click)="postuler(r)">Postuler</button>
+    </div>
+  </div>
+
+</div>

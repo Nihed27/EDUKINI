@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1 class="page-title">Mes Choix de Spécialités</h1>
+  <p class="page-sub">Classez vos spécialités par ordre de préférence</p>
+</div>
+
+<div class="page-body">
+
+  <div class="choix-list" *ngIf="choix.length > 0">
+    <div class="choix-card" *ngFor="let c of choix">
+      <div class="choix-rang">{{ c.rang }}</div>
+      <div class="choix-sigle">{{ c.sigle }}</div>
+      <div class="choix-info">
+        <div class="choix-nom">{{ c.nom }}</div>
+        <div class="choix-score">Score de compatibilité : {{ c.score }}%</div>
+      </div>
+      <span [class]="'statut-tag statut-' + c.statut">{{ getStatutLabel(c.statut) }}</span>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="choix.length === 0">
+    <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="1.5">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    <div class="empty-title">Aucun choix enregistré</div>
+    <div class="empty-sub">Consultez les recommandations IA pour choisir vos spécialités</div>
+  </div>
+
+  <button class="add-btn" (click)="ajouterChoix()">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    Ajouter / Modifier mes choix
+  </button>
+
+</div>

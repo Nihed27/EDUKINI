@@ -1,0 +1,236 @@
+<!-- FILTRES -->
+<div class="page-header">
+  <h1 class="page-title">Ecoles</h1>
+</div>
+
+<div class="page-body">
+
+  <div class="filters-bar">
+    <div class="search-wrapper">
+      <span class="search-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+        </svg>
+      </span>
+      <input type="text" class="search-input" placeholder="Rechercher par nom, sigle, université..."
+        [(ngModel)]="searchTerm" (input)="applyFilters()" />
+    </div>
+    <select class="filter-select" [(ngModel)]="filterRegion" (change)="applyFilters()">
+      <option value="">Toutes les régions</option>
+      <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="filterFiliere" (change)="applyFilters()">
+      <option value="">Toutes les filières</option>
+      <option *ngFor="let f of allFilieres" [value]="f">{{ f }}</option>
+    </select>
+    <button class="btn-reset" (click)="resetFilters()" *ngIf="searchTerm || filterRegion || filterFiliere">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      Réinitialiser
+    </button>
+    <button class="btn-add" (click)="openAddModal()">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      Ajouter une école
+    </button>
+  </div>
+
+  <div class="results-count">
+    {{ filteredEcoles.length }} école{{ filteredEcoles.length > 1 ? 's' : '' }} trouvée{{ filteredEcoles.length > 1 ? 's' : '' }}
+  </div>
+
+  <div class="table-card">
+    <table class="ecoles-table">
+      <thead>
+        <tr>
+          <th>Sigle</th>
+          <th>Nom de l'établissement</th>
+          <th>Université</th>
+          <th>Région</th>
+          <th>Adresse</th>
+          <th>Filières</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let ecole of filteredEcoles">
+          <tr class="table-row" [class.expanded]="expandedId === ecole.id">
+            <td><span class="sigle-badge">{{ ecole.sigle }}</span></td>
+            <td>
+              <div class="ecole-name">
+                <div class="ecole-avatar">{{ ecole.sigle.substring(0, 2).toUpperCase() }}</div>
+                <span class="name-full">{{ ecole.nom }}</span>
+              </div>
+            </td>
+            <td><span class="univ-tag">{{ ecole.universite }}</span></td>
+            <td>
+              <div class="region-cell">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="2" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5" stroke-width="2"/>
+                </svg>
+                {{ ecole.region }}
+              </div>
+            </td>
+            <td><span class="adresse-text">{{ ecole.adresse }}</span></td>
+            <td>
+              <button class="filieres-toggle" (click)="toggleExpand(ecole.id)">
+                <span class="filiere-count">{{ ecole.filieres.length }}</span>
+                filière{{ ecole.filieres.length > 1 ? 's' : '' }}
+                <svg [class]="expandedId === ecole.id ? 'chevron rotated' : 'chevron'" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="2" d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-edit" (click)="openEditModal(ecole)">
+                  <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-width="2" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path stroke-width="2" d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                  Modifier
+                </button>
+                <button class="btn-delete" (click)="confirmDelete(ecole)">
+                  <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-width="2" d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  </svg>
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr class="filieres-row" *ngIf="expandedId === ecole.id">
+            <td colspan="7">
+              <div class="filieres-panel">
+                <span class="filieres-label">Filières :</span>
+                <div class="filieres-list">
+                  <span *ngFor="let f of ecole.filieres" class="filiere-chip">{{ f }}</span>
+                  <span *ngIf="ecole.filieres.length === 0" class="no-filieres">Aucune filière renseignée</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+        <tr *ngIf="filteredEcoles.length === 0">
+          <td colspan="7" class="empty-state">
+            <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="#cbd5e1">
+              <path stroke-width="1" d="M3 21h18M9 21V7l6-4v18"/>
+            </svg>
+            <p>Aucune école trouvée</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- MODAL AJOUTER / MODIFIER -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? "Modifier l'école" : 'Ajouter une école' }}</h2>
+      <button class="modal-close" (click)="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row two-cols">
+        <div class="form-group">
+          <label>Nom de l'établissement</label>
+          <input type="text" [(ngModel)]="formData.nom" placeholder="Nom complet" />
+        </div>
+        <div class="form-group">
+          <label>Sigle</label>
+          <input type="text" [(ngModel)]="formData.sigle" placeholder="Ex: ENIT" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Université de rattachement</label>
+          <select [(ngModel)]="formData.universite">
+            <option value="">-- Choisir --</option>
+            <option>Université de Tunis El Manar</option>
+            <option>Université de Carthage</option>
+            <option>Université de Tunis</option>
+            <option>Université de la Manouba</option>
+            <option>Université de Sousse</option>
+            <option>Université de Monastir</option>
+            <option>Université de Sfax</option>
+            <option>Université de Gabès</option>
+            <option>Université de Gafsa</option>
+            <option>Université de Jendouba</option>
+            <option>Université de Zaghouan</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row two-cols">
+        <div class="form-group">
+          <label>Région</label>
+          <select [(ngModel)]="formData.region">
+            <option value="">-- Choisir --</option>
+            <option>Tunis</option><option>Ben Arous</option><option>Manouba</option>
+            <option>Ariana</option><option>Bizerte</option><option>Nabeul</option>
+            <option>Zaghouan</option><option>Béja</option><option>Jendouba</option>
+            <option>Le Kef</option><option>Sousse</option><option>Monastir</option>
+            <option>Sfax</option><option>Gabès</option><option>Gafsa</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Adresse</label>
+          <input type="text" [(ngModel)]="formData.adresse" placeholder="Adresse complète" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Filières</label>
+          <div class="filiere-input-row">
+            <input type="text" [(ngModel)]="newFiliereInput"
+              placeholder="Saisir une filière et appuyer sur Ajouter"
+              (keyup.enter)="addFiliere()" />
+            <button class="btn-add-filiere" (click)="addFiliere()">+ Ajouter</button>
+          </div>
+          <div class="filieres-chips" *ngIf="formData.filieres.length > 0">
+            <span *ngFor="let f of formData.filieres; let i = index" class="chip-edit">
+              {{ f }}
+              <button class="chip-remove" (click)="removeFiliere(i)">✕</button>
+            </span>
+          </div>
+          <div class="no-filieres-msg" *ngIf="formData.filieres.length === 0">Aucune filière ajoutée</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+      <button class="btn-save" (click)="saveEcole()">
+        {{ isEditMode ? 'Enregistrer les modifications' : 'Ajouter' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SUPPRESSION -->
+<div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+  <div class="modal-box modal-small" (click)="$event.stopPropagation()">
+    <div class="modal-header danger">
+      <h2>Confirmer la suppression</h2>
+      <button class="modal-close" (click)="cancelDelete()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="delete-warning">
+        <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="#ef4444">
+          <path stroke-width="2" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+        <p>Voulez-vous vraiment supprimer<br/>
+          <strong>{{ ecoleToDelete?.sigle }} — {{ ecoleToDelete?.nom }}</strong> ?
+        </p>
+        <p class="delete-note">Cette action est irréversible.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+      <button class="btn-danger" (click)="deleteEcole()">Supprimer</button>
+    </div>
+  </div>
+</div>

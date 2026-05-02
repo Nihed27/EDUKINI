@@ -1,0 +1,66 @@
+<div class="page-header">
+  <h1 class="page-title">Recommandations IA</h1>
+  <p class="page-sub">Basées sur votre profil — Moyenne : <strong>14.2/20</strong> · Matière forte : <strong>Algorithmique</strong></p>
+</div>
+
+<div class="ia-banner">
+  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 8v4M12 16h.01"/>
+  </svg>
+  <span>L'IA a analysé vos notes, vos matières fortes et les statistiques d'admission pour calculer votre score de compatibilité avec chaque spécialité.</span>
+</div>
+
+<div class="reco-list">
+  <div class="reco-card" *ngFor="let r of recommandations" [class]="'reco-card niveau-' + r.niveau">
+
+    <div class="reco-header">
+      <div class="reco-rang">{{ r.rang }}</div>
+      <div class="reco-title-block">
+        <div class="reco-sigle">{{ r.sigle }}</div>
+        <div class="reco-nom">{{ r.nom }}</div>
+      </div>
+      <div class="reco-score-block">
+        <div [class]="'score-circle score-' + r.niveau">{{ r.score }}%</div>
+        <span [class]="'niveau-badge niveau-' + r.niveau">
+          {{ r.niveau === 'tres_recommande' ? 'Très recommandé' :
+             r.niveau === 'recommande' ? 'Recommandé' : 'Peu recommandé' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="reco-desc">{{ r.description }}</div>
+
+    <div class="reco-raison">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2" style="flex-shrink:0;margin-top:2px">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4M12 16h.01"/>
+      </svg>
+      {{ r.raison }}
+    </div>
+
+    <div class="reco-meta">
+      <div class="meta-block">
+        <div class="meta-label">Matières clés</div>
+        <div class="tags">
+          <span class="tag" *ngFor="let m of r.matieresCles">{{ m }}</span>
+        </div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Débouchés</div>
+        <div class="tags">
+          <span class="tag green" *ngFor="let d of r.debouches">{{ d }}</span>
+        </div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Places disponibles</div>
+        <div class="places-val">{{ r.places }} places</div>
+      </div>
+    </div>
+
+    <button [class]="'choisir-btn btn-' + r.niveau" (click)="choisir(r)">
+      Choisir cette spécialité
+    </button>
+
+  </div>
+</div>
