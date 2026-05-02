@@ -7,14 +7,14 @@ import { Student } from './student.model';
 export class StudentService {
 
   private students: Student[] = [
-    { id: 1, numeroInscription: 'INS-2024-001', nom: 'Ben Ali', prenom: 'Amir', rang: 1, score: 93.50, specialiteSouhaitee: 'Informatique', typeConcours: 'prepa', filierePrepa: 'Physique Mathématique' },
-    { id: 2, numeroInscription: 'INS-2024-002', nom: 'Chaabane', prenom: 'Lina', rang: 2, score: 91.20, specialiteSouhaitee: 'Génie mécatronique', typeConcours: 'prepa', filierePrepa: 'Physique Chimie' },
-    { id: 3, numeroInscription: 'INS-2024-003', nom: 'Mansouri', prenom: 'Yassine', rang: null, score: 87.75, specialiteSouhaitee: 'Génie infotronique', typeConcours: 'specifique', filierePrepa: '' },
-    { id: 4, numeroInscription: 'INS-2024-004', nom: 'Trabelsi', prenom: 'Nour', rang: 3, score: 85.40, specialiteSouhaitee: 'Génie industriel', typeConcours: 'prepa', filierePrepa: 'Physique Techniques' },
-    { id: 5, numeroInscription: 'INS-2024-005', nom: 'Bouaziz', prenom: 'Sami', rang: null, score: 82.60, specialiteSouhaitee: 'Informatique', typeConcours: 'specifique', filierePrepa: '' },
-    { id: 6, numeroInscription: 'INS-2024-006', nom: 'Hamdi', prenom: 'Ines', rang: 4, score: 80.30, specialiteSouhaitee: 'Génie mécatronique', typeConcours: 'prepa', filierePrepa: 'Physique Mathématique' },
-    { id: 7, numeroInscription: 'INS-2024-007', nom: 'Gharbi', prenom: 'Rami', rang: null, score: 78.90, specialiteSouhaitee: 'Génie Industriel', typeConcours: 'specifique', filierePrepa: '' },
-    { id: 8, numeroInscription: 'INS-2024-008', nom: 'Ayari', prenom: 'Salma', rang: 5, score: 76.50, specialiteSouhaitee: 'Génie mécatronique', typeConcours: 'prepa', filierePrepa: 'Physique Chimie' },
+    { id: 1, nom: 'Ben Ali', prenom: 'Amir', email: 'amir@mail.com', filiere: 'Informatique', annee: '1ère Année', etablissement: 'ENICarthage' },
+    { id: 2, nom: 'Chaabane', prenom: 'Lina', email: 'lina@mail.com', filiere: 'Infotronique', annee: '1ère Année', etablissement: 'ENICarthage' },
+    { id: 3, nom: 'Mansouri', prenom: 'Yassine', email: 'yassine@mail.com', filiere: 'Mécatronique', annee: '2ème Année', etablissement: 'ENICarthage' },
+    { id: 4, nom: 'Trabelsi', prenom: 'Nour', email: 'nour@mail.com', filiere: 'Industriel', annee: '1ère Année', etablissement: 'ENICarthage' },
+    { id: 5, nom: 'Bouaziz', prenom: 'Sami', email: 'sami@mail.com', filiere: 'Informatique', annee: '3ème Année', etablissement: 'ENICarthage' },
+    { id: 6, nom: 'Hamdi', prenom: 'Ines', email: 'ines@mail.com', filiere: 'Infotronique', annee: '2ème Année', etablissement: 'ENICarthage' },
+    { id: 7, nom: 'Gharbi', prenom: 'Rami', email: 'rami@mail.com', filiere: 'Industriel', annee: '1ère Année', etablissement: 'ENICarthage' },
+    { id: 8, nom: 'Ayari', prenom: 'Salma', email: 'salma@mail.com', filiere: 'Mécatronique', annee: '3ème Année', etablissement: 'ENICarthage' },
   ];
 
   private nextId = 9;
@@ -52,7 +52,7 @@ export class StudentService {
     return this.students.filter(s =>
       s.nom.toLowerCase().includes(t) ||
       s.prenom.toLowerCase().includes(t) ||
-      s.numeroInscription.toLowerCase().includes(t)
+      s.email.toLowerCase().includes(t)
     );
   }
 }

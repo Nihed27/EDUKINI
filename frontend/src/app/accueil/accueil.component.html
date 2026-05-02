@@ -12,13 +12,13 @@
       </div>
       <div>
         <div class="profil-label">Score global</div>
-        <div class="profil-big blue">{{ scoreGlobal }}/20</div>
+        <div class="profil-big blue">{{ scoreGlobal !== '—' ? scoreGlobal + '/20' : '—' }}</div>
       </div>
     </div>
     <div class="notes-grid">
       <div class="note-card" *ngFor="let m of matieres">
         <div class="note-label">{{ m.nom }}</div>
-        <div class="note-val">{{ m.note }}/20</div>
+        <div class="note-val">{{ m.note !== null ? m.note + '/20' : '—' }}</div>
       </div>
     </div>
   </div>

@@ -20,9 +20,9 @@
       <div class="progression">
         <div class="prog-label">Progression du profil</div>
         <div class="prog-bar-bg">
-          <div class="prog-bar-fill" style="width: 80%"></div>
+          <div class="prog-bar-fill" [style.width.%]="progression"></div>
         </div>
-        <div class="prog-pct">80%</div>
+        <div class="prog-pct">{{ progression }}%</div>
       </div>
     </div>
   </div>
@@ -110,10 +110,12 @@
       <div class="infos-form-grid">
         <div class="form-group" *ngFor="let info of infosTemp">
           <label class="form-label">{{ info.label }}</label>
-      <input class="form-input" type="number" 
-       title="Note" 
-       placeholder="Ex : 14.5"
-       aria-label="Saisir la note" ... />        </div>
+          <input class="form-input" type="text"
+           [title]="info.label"
+           [placeholder]="'Saisir ' + info.label.toLowerCase()"
+           [attr.aria-label]="info.label"
+           [(ngModel)]="info.valeur" />
+        </div>
       </div>
     </div>
     <div class="modal-footer">
