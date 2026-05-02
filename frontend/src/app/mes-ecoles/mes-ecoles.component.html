@@ -33,7 +33,7 @@
           <span class="spec-chip" *ngFor="let s of e.specs.slice(0, 2)">{{ s }}</span>
           <span class="spec-chip more" *ngIf="e.specs.length > 2">+{{ e.specs.length - 2 }}</span>
         </div>
-        <button class="detail-btn" (click)="openModal(e); $event.stopPropagation()">
+        <button class="detail-btn" (click)="voirDetails(e); $event.stopPropagation()">
           Voir les détails
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

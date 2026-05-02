@@ -1,74 +1,60 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+﻿import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProfilApiService, BackendProfil } from '../services/profil-api.service';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
-  selector: 'app-accueil',
+  selector: "app-accueil",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './accueil.component.html',
-  styleUrl: './accueil.component.css'
+  templateUrl: "./accueil.component.html",
+  styleUrl: "./accueil.component.css"
 })
 export class AccueilComponent implements OnInit {
-  rang = '—';
-  scoreGlobal: string = '—';
-
-  matieres: { nom: string; note: number | null }[] = [
-    { nom: 'Mathématiques',           note: null },
-    { nom: 'Physique',                note: null },
-    { nom: 'Chimie Générale',         note: null },
-    { nom: 'Français',                note: null },
-    { nom: 'Anglais',                 note: null },
-    { nom: "Sciences de l'ingénieur", note: null },
-    { nom: 'Informatique',            note: null },
-  ];
-
-  recommandations = [
-    { filiere: 'Réseaux et télécommunications', ecole: "SUP'COM", pct: 80, places: 80,  rangMin: 150 },
-    { filiere: 'Intelligence artificielle',     ecole: 'INSAT',   pct: 80, places: 100, rangMin: 200 },
-    { filiere: 'Génie logiciel',                ecole: 'ENSIT',   pct: 75, places: 60,  rangMin: 180 },
-    { filiere: 'Génie électrique',              ecole: 'ENIT',    pct: 70, places: 90,  rangMin: 300 },
-  ];
-
+  rang = "—";
+  scoreGlobal: number | null = null;
+  matieres: any[] = [];
+  recommandations: any[] = [];
+  private apiUrl = "http://localhost:8081/api";
   constructor(
     private router: Router,
-    private profilApi: ProfilApiService,
-    private cdr: ChangeDetectorRef
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
-
-  ngOnInit(): void {
-    this.loadProfil();
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.http.get<any>(this.apiUrl + "/profil/1").subscribe({
+        next: (profil) => {
+          this.rang = profil.rangConcours + "e / 4320";
+          this.scoreGlobal = profil.moyenneGenerale;
+          this.matieres = [
+            { nom: "Mathématiques", note: profil.noteMaths },
+            { nom: "Physique", note: profil.notePhysique },
+            { nom: "Informatique", note: profil.noteInformatique },
+            { nom: "Anglais", note: profil.noteAnglais },
+            { nom: "Électronique", note: profil.noteElectronique },
+            { nom: "Réseaux", note: profil.noteReseaux }
+          ];
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error("Erreur profil:", err)
+      });
+      this.http.get<any[]>(this.apiUrl + "/recommandations/1").subscribe({
+        next: (data) => {
+          this.recommandations = data.map(r => ({
+            filiere: r.specialite,
+            ecole: r.ecole,
+            pct: r.score,
+            places: r.placesDisponibles,
+            rangMin: r.rangMinimum
+          }));
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error("Erreur recommandations:", err)
+      });
+    }
   }
-
-  loadProfil(): void {
-    this.profilApi.getAll().subscribe({
-      next: (profils) => {
-        if (profils.length > 0) {
-          const p = profils[0];
-
-          // Rang
-          this.rang = p.rang ? `${p.rang}e` : '—';
-
-          // Score
-          this.scoreGlobal = p.score ? String(p.score) : '—';
-
-          // Notes par matière
-          if (p.notes) {
-            for (const m of this.matieres) {
-              m.note = p.notes[m.nom] !== undefined ? p.notes[m.nom] : null;
-            }
-          }
-        }
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.cdr.detectChanges();
-      }
-    });
-  }
-
   postuler(r: any) {
-    this.router.navigate(['/etudiant/candidatures']);
+    this.router.navigate(["/etudiant/candidatures"]);
   }
 }

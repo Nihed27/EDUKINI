@@ -71,6 +71,8 @@ export const routes: Routes = [
       { path: 'accueil', component: AccueilComponent },
       { path: 'mes-ecoles', component: MesEcolesComponent },
       { path: 'profil', component: ProfilEtudiantComponent },
+      { path: 'enicarthage', component: EnicarthageAccueilComponent },
+      { path: 'insat', component: EnicarthageAccueilComponent }, // Redirect to a placeholder for now
     ]
   },
 
