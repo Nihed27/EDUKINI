@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 
 export interface Notification {
   id?: number;
+  titre: string;
   message: string;
-  type: 'COMPATIBILITE' | 'MATIERE' | 'RAPPEL';
+  cible: string;
   lu: boolean;
-  dateEnvoi: string;
-  etudiantId: number;
+  createdAt: string;
 }
 
 @Injectable({
@@ -17,21 +17,25 @@ export interface Notification {
 export class NotificationService {
   private apiUrl = 'http://localhost:8081/api/notifications';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getByEtudiant(etudiantId: number): Observable<Notification[]> {
-    return this.http.get<Notification[]>(`${this.apiUrl}/${etudiantId}`);
+  /** POST /api/notifications — Créer une notification (admin) */
+  creer(notification: { titre: string; message: string }): Observable<Notification> {
+    return this.http.post<Notification>(this.apiUrl, notification);
   }
 
+  /** GET /api/notifications — Récupérer toutes les notifications */
+  getAll(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(this.apiUrl);
+  }
+
+  /** PUT /api/notifications/{id}/lu — Marquer comme lue */
   marquerLu(id: number): Observable<Notification> {
     return this.http.put<Notification>(`${this.apiUrl}/${id}/lu`, {});
   }
 
-  marquerToutLu(etudiantId: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/tout-marquer-lu/${etudiantId}`, {});
-  }
-
-  supprimer(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  /** GET /api/notifications/count — Nombre de non lues */
+  countNonLues(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count`);
   }
 }

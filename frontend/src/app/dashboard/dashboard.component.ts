@@ -1,18 +1,20 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
 import { StudentService } from '../etudiants/student.service';
 import { EcoleService } from '../ecole/ecole.service';
+import { NotificationService, Notification } from '../services/notification.service';
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('admissionsChart', { static: false }) admissionsChartRef!: ElementRef;
 
@@ -21,12 +23,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   totalFilieres = 0;
   private chart: Chart | null = null;
 
+  // ── Notifications ──
+  notifOpen = false;
+  notifications: Notification[] = [];
+  newTitre = '';
+  newMessage = '';
+  sending = false;
+  private pollingInterval: any;
+
   constructor(
     private studentService: StudentService,
     private ecoleService: EcoleService,
+    private notificationService: NotificationService
   ) {}
 
-  ngOnInit(): void { this.loadStats(); }
+  ngOnInit(): void {
+    this.loadStats();
+    this.loadNotifications();
+    // Polling toutes les 30 secondes
+    this.pollingInterval = setInterval(() => this.loadNotifications(), 30000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.pollingInterval) clearInterval(this.pollingInterval);
+  }
 
   ngAfterViewInit(): void {
     if (typeof window !== 'undefined') {
@@ -41,6 +61,45 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.totalEtudiants = 800;
     this.totalEcoles = ecoles.length;
     this.totalFilieres = 4;
+  }
+
+  // ── Notifications ──
+  loadNotifications(): void {
+    this.notificationService.getAll().subscribe({
+      next: (data) => this.notifications = data,
+      error: (err) => console.error('Erreur chargement notifications', err)
+    });
+  }
+
+  toggleNotif(): void {
+    this.notifOpen = !this.notifOpen;
+  }
+
+  envoyerNotification(): void {
+    if (!this.newTitre.trim() || !this.newMessage.trim()) return;
+    this.sending = true;
+    this.notificationService.creer({ titre: this.newTitre, message: this.newMessage }).subscribe({
+      next: () => {
+        this.newTitre = '';
+        this.newMessage = '';
+        this.sending = false;
+        this.loadNotifications();
+      },
+      error: (err) => {
+        console.error('Erreur envoi notification', err);
+        this.sending = false;
+      }
+    });
+  }
+
+  formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const diffMins = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
+    if (diffMins < 1) return "À l'instant";
+    if (diffMins < 60) return 'Il y a ' + diffMins + ' min';
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return 'Il y a ' + diffHours + 'h';
+    return new Date(dateStr).toLocaleDateString('fr-FR');
   }
 
   buildChart(): void {
@@ -64,5 +123,4 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
     });
   }
-
 }

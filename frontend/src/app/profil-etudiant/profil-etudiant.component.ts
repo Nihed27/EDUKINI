@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilApiService, BackendProfil } from '../services/profil-api.service';
 import { environment } from '../../environments/environment';
-
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 interface Matiere {
   id: number;
   nom: string;
