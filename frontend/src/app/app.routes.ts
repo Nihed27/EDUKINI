@@ -12,7 +12,6 @@ import { EcolesComponent } from './ecole/ecoles.component';
 import { FilieresComponent } from './filieres/filieres';
 import { SpecialitesComponent } from './specialites/specialites';
 import { EtudiantsComponent } from './etudiants/etudiants.component';
-import { DemandesComponent } from './demandes/demandes';
 import { StatistiquesComponent } from './statistiques/statistiques';
 import { ParametresComponent } from './parametres/parametres';
 
@@ -56,7 +55,7 @@ export const routes: Routes = [
       { path: 'filieres', component: FilieresComponent },
       { path: 'specialites', component: SpecialitesComponent },
       { path: 'etudiants', component: EtudiantsComponent },
-      { path: 'demandes', component: DemandesComponent },
+      { path: 'demandes', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'statistiques', component: StatistiquesComponent },
       { path: 'parametres', component: ParametresComponent },
     ]

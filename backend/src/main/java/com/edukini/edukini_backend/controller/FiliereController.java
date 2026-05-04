@@ -1,5 +1,6 @@
 package com.edukini.edukini_backend.controller;
 
+import com.edukini.edukini_backend.dto.StudentCountsDto;
 import com.edukini.edukini_backend.model.Filiere;
 import com.edukini.edukini_backend.service.FiliereService;
 import java.util.List;
@@ -26,6 +27,11 @@ public class FiliereController {
     @GetMapping
     public List<Filiere> getAll() {
         return filiereService.findAll();
+    }
+
+    @GetMapping("/enrollment-stats")
+    public StudentCountsDto enrollmentStats() {
+        return filiereService.getStudentEnrollmentCounts();
     }
 
     @GetMapping("/{id}")

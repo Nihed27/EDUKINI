@@ -1,7 +1,9 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { NotificationService, Notification } from '../services/notification.service';
+import { AuthService, ConnectedUser } from '../services/auth.service';
+
 @Component({
   selector: "app-enicarthage-accueil",
   standalone: true,
@@ -10,11 +12,12 @@ import { NotificationService, Notification } from '../services/notification.serv
   styleUrl: "./enicarthage-accueil.component.css"
 })
 export class EnicarthageAccueilComponent implements OnInit {
-  etudiantId = 1;
+  user: ConnectedUser | null = null;
   notifOpen = false;
   notifications: any[] = [];
   ouvert: number | null = null;
   onglet: { [key: number]: string } = {};
+
   specialites = [
     {
       sigle: "GL", couleur: "blue", places: 40, duree: "3 ans",
@@ -50,20 +53,38 @@ export class EnicarthageAccueilComponent implements OnInit {
       partenaires: ["STMicroelectronics","Valeo","Leoni"]
     }
   ];
-  constructor(private router: Router, private notificationService: NotificationService) {}
-  ngOnInit() { this.loadNotifications(); }
+
+  constructor(
+    private router: Router, 
+    private notificationService: NotificationService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() { 
+    this.authService.loadConnectedProfile().subscribe();
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      if (this.user) {
+        this.loadNotifications();
+      }
+    });
+  }
+
   loadNotifications() {
-    this.notificationService.getByEtudiant(this.etudiantId).subscribe({
+    if (!this.user) return;
+    this.notificationService.getByEtudiant(this.user.id).subscribe({
       next: (data) => { this.notifications = data.map(n => this.mapNotification(n)); },
       error: (err) => console.error("Erreur notifications", err)
     });
   }
+
   private mapNotification(n: Notification) {
     let icon = "bell", color = "#f59e0b", bg = "rgba(245,158,11,0.1)";
     if (n.type === "COMPATIBILITE") { icon = "user"; color = "#2563eb"; bg = "rgba(37,99,235,0.1)"; }
     else if (n.type === "MATIERE") { icon = "monitor"; color = "#8b5cf6"; bg = "rgba(139,92,246,0.1)"; }
     return { id: n.id, unread: !n.lu, time: this.formatDate(n.dateEnvoi), msg: n.message, color, bg, icon };
   }
+
   private formatDate(dateStr: string): string {
     const diffMins = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
     if (diffMins < 60) return "Il y a " + diffMins + " minutes";
@@ -71,16 +92,21 @@ export class EnicarthageAccueilComponent implements OnInit {
     if (diffHours < 24) return "Il y a " + diffHours + " heures";
     return new Date(dateStr).toLocaleDateString();
   }
+
   get unreadCount(): number { return this.notifications.filter(n => n.unread).length; }
   toggleNotif() { this.notifOpen = !this.notifOpen; }
+  
   markRead(id: number) {
     this.notificationService.marquerLu(id).subscribe({ next: () => this.loadNotifications() });
   }
+
   clearAll() {
-    this.notificationService.marquerToutLu(this.etudiantId).subscribe({
+    if (!this.user) return;
+    this.notificationService.marquerToutLu(this.user.id).subscribe({
       next: () => { this.loadNotifications(); this.notifOpen = false; }
     });
   }
+
   toggle(i: number) { this.ouvert = this.ouvert === i ? null : i; if (!this.onglet[i]) this.onglet[i] = "programme"; }
   setOnglet(i: number, o: string) { this.onglet[i] = o; }
   navigate(path: string) { this.router.navigate([path]); }

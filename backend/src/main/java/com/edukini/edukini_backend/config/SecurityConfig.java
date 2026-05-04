@@ -36,8 +36,9 @@ public class SecurityConfig {
             .cors().and()
             .csrf().disable()
             .authorizeHttpRequests(auth -> auth
-                // Routes publiques
-                .requestMatchers("/api/auth/**", "/oauth2/**", "/login/**").permitAll()
+                // Public API for current frontend modules (admin/student forms, profiles, CRUD)
+                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/error", "/oauth2/**", "/login/**").permitAll()
                 
                 // Routes ADMIN uniquement
                 .requestMatchers("/admin/**").hasRole("ADMIN")

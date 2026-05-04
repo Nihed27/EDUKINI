@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { NotesApiService, EduNote } from '../services/notes-api.service';
+import { AuthService, ConnectedUser } from '../services/auth.service';
 
 
 @Component({
@@ -13,13 +14,14 @@ imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './enicarthage-profil.component.html',
   styleUrl: './enicarthage-profil.component.css'
 })
-export class EnicarthageProfilComponent {
+export class EnicarthageProfilComponent implements OnInit {
 
   semestre: 'S1' | 'S2' = 'S1';
 filiere = 'informatique';
 
 private GROQ_KEY = '';
-private GROQ_URL = '';
+private GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
   semestres = {
     S1: [
       {
@@ -115,8 +117,35 @@ private GROQ_URL = '';
   messageErreur = '';
 
   private iaTimer: any = null;
+  user: ConnectedUser | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private notesApi: NotesApiService, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.loadConnectedProfile().subscribe(profile => {
+      this.user = profile;
+      if (this.user) {
+        this.loadNotes();
+      }
+    });
+  }
+
+  loadNotes() {
+    if (!this.user) return;
+    this.notesApi.getNotes(this.user.id).subscribe({
+      next: (notes) => {
+        notes.forEach(n => {
+          const sKey = n.semestre === 1 ? 'S1' : 'S2';
+          const ue = this.semestres[sKey]?.find(u => u.ue === n.ueNom);
+          if (ue) {
+            const mat = ue.matieres.find(m => m.matiere === n.matiereNom);
+            if (mat) mat.note = n.note;
+          }
+        });
+      },
+      error: (err) => console.error("Erreur chargement notes", err)
+    });
+  }
 
   get notesActuelles() {
     return this.semestres[this.semestre];
@@ -261,15 +290,50 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sans markdown :
       return;
     }
 
-    this.messageSucces = `Profil ${this.semestre} sauvegardé avec succès !`;
-    setTimeout(() => this.messageSucces = '', 3000);
+    const payload: EduNote[] = [];
+    ['S1', 'S2'].forEach(s => {
+      const semestreNum = s === 'S1' ? 1 : 2;
+      this.semestres[s as 'S1'|'S2'].forEach(ue => {
+        ue.matieres.forEach(m => {
+          if (m.note !== null) {
+            payload.push({
+              etudiantId: this.user ? this.user.id : 1,
+              filiere: this.filiere,
+              semestre: semestreNum,
+              ueNom: ue.ue,
+              matiereNom: m.matiere,
+              note: m.note
+            });
+          }
+        });
+      });
+    });
+
+    this.notesApi.saveNotes(payload).subscribe({
+      next: () => {
+        this.messageSucces = `Profil sauvegardé avec succès !`;
+        setTimeout(() => this.messageSucces = '', 3000);
+      },
+      error: (err) => {
+        this.messageErreur = "Erreur de sauvegarde.";
+        console.error(err);
+      }
+    });
   }
 
   toutEffacer() {
-    this.notesActuelles.forEach(ue => ue.matieres.forEach(m => m.note = null));
-    this.iaResultat = null;
-    this.iaErreur = '';
-    clearTimeout(this.iaTimer);
+    if (!this.user) return;
+    this.notesApi.deleteNotes(this.user.id).subscribe({
+      next: () => {
+        Object.values(this.semestres).forEach(sem => sem.forEach(ue => ue.matieres.forEach(m => m.note = null)));
+        this.iaResultat = null;
+        this.iaErreur = '';
+        clearTimeout(this.iaTimer);
+      },
+      error: () => {
+        this.messageErreur = "Erreur lors de la suppression.";
+      }
+    });
   }
 
   couleurScore(score: number): string {

@@ -13,6 +13,9 @@ public class RegisterRequest {
              message = "Le mot de passe doit contenir au moins un chiffre, une majuscule, une minuscule et un caractère spécial")
     private String password;
 
+    /** Id de filière présent dans /api/filieres ; optionnel. */
+    private Long filiereId;
+
     // Getters et Setters
     public String getPrenom() { return prenom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }
@@ -25,4 +28,7 @@ public class RegisterRequest {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public Long getFiliereId() { return filiereId; }
+    public void setFiliereId(Long filiereId) { this.filiereId = filiereId; }
 }

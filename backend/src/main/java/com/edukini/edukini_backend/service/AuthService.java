@@ -2,7 +2,9 @@ package com.edukini.edukini_backend.service;
 
 import com.edukini.edukini_backend.dto.LoginRequest;
 import com.edukini.edukini_backend.dto.RegisterRequest;
+import com.edukini.edukini_backend.dto.UserPublicDto;
 import com.edukini.edukini_backend.model.User;
+import com.edukini.edukini_backend.repository.FiliereRepository;
 import com.edukini.edukini_backend.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -20,6 +22,8 @@ public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FiliereRepository filiereRepository;
     @Autowired
     private PasswordEncoder passwordEncoder; 
     @Autowired
@@ -40,11 +44,58 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("ROLE_STUDENT");
+        Long filiereId = request.getFiliereId();
+        if (filiereId != null) {
+            if (!filiereRepository.existsById(filiereId)) {
+                return "Filière invalide";
+            }
+            user.setFiliereId(filiereId);
+        }
 
         userRepository.save(user);
         return "Compte créé avec succès";
     }
     
+    public Optional<UserPublicDto> findPublicProfile(String email) {
+        if (email == null || email.isBlank()) {
+            return Optional.empty();
+        }
+        return userRepository.findByEmail(email.trim())
+                .map(u -> new UserPublicDto(
+                        u.getId(),
+                        u.getPrenom(),
+                        u.getNom(),
+                        u.getEmail(),
+                        normalizeRole(u.getRole())
+                ));
+    }
+
+    public Optional<UserPublicDto> updateProfileNames(String email, String prenom, String nom) {
+        if (email == null || email.isBlank()) {
+            return Optional.empty();
+        }
+        Optional<User> userOpt = userRepository.findByEmail(email.trim());
+        if (userOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        User user = userOpt.get();
+        if (prenom != null && !prenom.isBlank()) {
+            user.setPrenom(prenom.trim());
+        }
+        if (nom != null && !nom.isBlank()) {
+            user.setNom(nom.trim());
+        }
+        userRepository.save(user);
+        return findPublicProfile(user.getEmail());
+    }
+
+    private static String normalizeRole(String role) {
+        if (role == null || role.isBlank()) {
+            return "";
+        }
+        return role.startsWith("ROLE_") ? role.substring(5) : role;
+    }
+
     public String login(LoginRequest request) {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
         if (userOpt.isEmpty()) return "Email introuvable";

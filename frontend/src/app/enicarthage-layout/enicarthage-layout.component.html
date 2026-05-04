@@ -33,20 +33,19 @@
       
       <a routerLink="/enicarthage/recommandations" routerLinkActive="active" class="nav-item">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <polyline stroke-width="2" points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-          <polyline stroke-width="2" points="17 6 23 6 23 12"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
-        Recommandations IA
+        Spécialités
       </a>
       
        
     </nav>
 
     <div class="sidebar-footer">
-      <div class="avatar-row">
-        <div class="avatar-circle">MA</div>
+      <div class="avatar-row" *ngIf="user">
+        <div class="avatar-circle">{{ initials }}</div>
         <div>
-          <div class="avatar-name">Mohamed Ali</div>
+          <div class="avatar-name">{{ user.prenom }} {{ user.nom }}</div>
           <div class="avatar-role">1ère année ENICarthage</div>
         </div>
       </div>

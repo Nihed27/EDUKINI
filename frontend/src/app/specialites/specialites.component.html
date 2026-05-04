@@ -26,19 +26,7 @@
         <span class="stat-label">Spécialités totales</span>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon green">
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-      </div>
-      <div class="stat-info">
-        <span class="stat-value">{{ totalEtudiants }}</span>
-        <span class="stat-label">Étudiants inscrits</span>
-      </div>
-    </div>
+
     <div class="stat-card">
       <div class="stat-icon orange">
         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -149,26 +137,13 @@
 
         <div class="card-stats">
           <div class="cs-item">
-            <span class="cs-val">{{ s.nbEtudiants }}/{{ s.capacite }}</span>
-            <span class="cs-lbl">Étudiants</span>
-          </div>
-          <div class="cs-item">
-            <span class="cs-val" [style.color]="s.filiereCouleur">{{ getTaux(s) }}%</span>
-            <span class="cs-lbl">Remplissage</span>
+            <span class="cs-val">{{ s.capacite }}</span>
+            <span class="cs-lbl">Capacité</span>
           </div>
           <div class="cs-item">
             <span class="cs-val">{{ s.annee }}</span>
             <span class="cs-lbl">Année</span>
           </div>
-        </div>
-
-        <div class="progress-wrap">
-          <div class="progress-bar">
-            <div class="progress-fill"
-                 [style.width]="getTaux(s) + '%'"
-                 [style.background]="s.filiereCouleur"></div>
-          </div>
-          <span class="progress-pct">{{ getTaux(s) }}%</span>
         </div>
 
         <div class="card-actions">
@@ -382,20 +357,14 @@
 
       <p style="color:#374151;line-height:1.6;margin-bottom:1rem">{{ selectedSpec.description }}</p>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1rem">
         <div style="text-align:center;padding:.75rem;border:2px solid;border-radius:8px"
              [style.border-color]="selectedSpec.filiereCouleur">
           <div style="font-size:1.25rem;font-weight:700"
                [style.color]="selectedSpec.filiereCouleur">
-            {{ selectedSpec.nbEtudiants }}/{{ selectedSpec.capacite }}
+            {{ selectedSpec.capacite }}
           </div>
-          <div style="font-size:.75rem;color:#6b7280">Étudiants</div>
-        </div>
-        <div style="text-align:center;padding:.75rem;border:2px solid;border-radius:8px"
-             [style.border-color]="selectedSpec.filiereCouleur">
-          <div style="font-size:1.25rem;font-weight:700"
-               [style.color]="selectedSpec.filiereCouleur">{{ getTaux(selectedSpec) }}%</div>
-          <div style="font-size:.75rem;color:#6b7280">Remplissage</div>
+          <div style="font-size:.75rem;color:#6b7280">Capacité</div>
         </div>
         <div style="text-align:center;padding:.75rem;border:2px solid;border-radius:8px"
              [style.border-color]="selectedSpec.filiereCouleur">

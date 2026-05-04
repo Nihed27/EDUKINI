@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface EnrollmentStats {
+  totalEtudiants: number;
+  byFiliere: { filiereId: number; count: number }[];
+}
+
 export interface BackendFiliere {
   id?: number;
   nom: string;
@@ -25,6 +30,10 @@ export class FiliereApiService {
 
   getAll(): Observable<BackendFiliere[]> {
     return this.http.get<BackendFiliere[]>(this.baseUrl);
+  }
+
+  getEnrollmentStats(): Observable<EnrollmentStats> {
+    return this.http.get<EnrollmentStats>(`${this.baseUrl}/enrollment-stats`);
   }
 
   getById(id: number): Observable<BackendFiliere> {

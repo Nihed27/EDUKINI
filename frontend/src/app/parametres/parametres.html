@@ -21,19 +21,6 @@
       </svg>
       Configuration générale
     </div>
-    <div class="settings-nav-item" [class.active]="activeSection === 'securite'" (click)="setSection('securite')">
-      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-      Sécurité
-    </div>
-    <div class="settings-nav-item" [class.active]="activeSection === 'notifications'" (click)="setSection('notifications')">
-      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-width="2" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-        <path stroke-width="2" d="M13.73 21a2 2 0 0 1-3.46 0"/>
-      </svg>
-      Notifications
-    </div>
     <div class="settings-nav-item" [class.active]="activeSection === 'profil'" (click)="setSection('profil')">
       <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <circle cx="12" cy="8" r="4" stroke-width="2"/>
@@ -121,145 +108,6 @@
       </div>
     </ng-container>
  
-    <!-- SECURITE -->
-    <ng-container *ngIf="activeSection === 'securite'">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-header-icon orange">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#f97316">
-              <path stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="card-title">Sécurité & Accès</div>
-            <div class="card-desc">Gestion des mots de passe et authentification</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="field-row">
-            <div>
-              <div class="field-label">Double authentification (2FA)</div>
-              <div class="field-sub">Exiger un code SMS à la connexion</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" [(ngModel)]="securite.doubleAuth" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="field-row">
-            <div>
-              <div class="field-label">Expiration de session</div>
-              <div class="field-sub">Déconnexion automatique après inactivité</div>
-            </div>
-            <select class="setting-select" [(ngModel)]="securite.sessionTimeout">
-              <option value="15">15 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="60">1 heure</option>
-              <option value="120">2 heures</option>
-            </select>
-          </div>
-          <div class="field-row">
-            <div>
-              <div class="field-label">Longueur minimale du mot de passe</div>
-              <div class="field-sub">Nombre de caractères minimum</div>
-            </div>
-            <select class="setting-select" [(ngModel)]="securite.motDePasseMinLength">
-              <option value="6">6 caractères</option>
-              <option value="8">8 caractères</option>
-              <option value="10">10 caractères</option>
-              <option value="12">12 caractères</option>
-            </select>
-          </div>
-          <div class="field-row">
-            <div>
-              <div class="field-label">Historique des mots de passe</div>
-              <div class="field-sub">Empêcher la réutilisation des 5 derniers</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" [(ngModel)]="securite.historiqueMdp" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button class="btn-save" (click)="saveSecurite()">
-            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            Enregistrer
-          </button>
-        </div>
-      </div>
-    </ng-container>
- 
-    <!-- NOTIFICATIONS -->
-    <ng-container *ngIf="activeSection === 'notifications'">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-header-icon green">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#16a34a">
-              <path stroke-width="2" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-              <path stroke-width="2" d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            </svg>
-          </div>
-          <div>
-            <div class="card-title">Notifications</div>
-            <div class="card-desc">Alertes email et SMS</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="field-row">
-            <div>
-              <div class="field-label">Email — Nouvel étudiant</div>
-              <div class="field-sub">Recevoir un email à chaque inscription</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" [(ngModel)]="notifications.emailNouvelEtudiant" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="field-row">
-            <div>
-              <div class="field-label">Email — Nouvelle demande</div>
-              <div class="field-sub">Alertes pour les demandes administratives</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" [(ngModel)]="notifications.emailDemande" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="field-row">
-            <div>
-              <div class="field-label">Email — Rapport hebdomadaire</div>
-              <div class="field-sub">Statistiques envoyées chaque lundi</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" [(ngModel)]="notifications.emailStatistiques" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="field-row">
-            <div>
-              <div class="field-label">SMS — Alertes critiques</div>
-              <div class="field-sub">Notifications urgentes par SMS</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" [(ngModel)]="notifications.smsAlertes" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button class="btn-save" (click)="saveNotifications()">
-            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            Enregistrer
-          </button>
-        </div>
-      </div>
-    </ng-container>
- 
     <!-- PROFIL -->
     <ng-container *ngIf="activeSection === 'profil'">
       <div class="card">
@@ -281,21 +129,21 @@
               <div class="field-label">Prénom</div>
               <div class="field-sub">Votre prénom</div>
             </div>
-            <input type="text" class="setting-input" [(ngModel)]="profil.prenom" placeholder="ex : Mehdi" />
+            <input type="text" class="setting-input" [(ngModel)]="profil.prenom" placeholder="Votre prénom" />
           </div>
           <div class="field-row">
             <div>
               <div class="field-label">Nom</div>
               <div class="field-sub">Votre nom de famille</div>
             </div>
-            <input type="text" class="setting-input" [(ngModel)]="profil.nom" placeholder="ex : Ben Ali" />
+            <input type="text" class="setting-input" [(ngModel)]="profil.nom" placeholder="Votre nom" />
           </div>
           <div class="field-row">
             <div>
               <div class="field-label">Adresse email</div>
               <div class="field-sub">Email de connexion et de contact</div>
             </div>
-            <input type="email" class="setting-input" [(ngModel)]="profil.email" placeholder="ex : admin@edukini.tn" />
+            <input type="email" class="setting-input" [(ngModel)]="profil.email" placeholder="Email de connexion" readonly disabled />
           </div>
           <div class="field-row">
             <div>
@@ -306,6 +154,7 @@
           </div>
           
         </div>
+        <div *ngIf="profilMessage" class="card-body" style="padding-top:0;color:#059669;font-size:14px">{{ profilMessage }}</div>
         <div class="card-footer">
           <button class="btn-save" (click)="saveProfil()">
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor">

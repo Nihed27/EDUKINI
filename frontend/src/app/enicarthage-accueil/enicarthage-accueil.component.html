@@ -2,7 +2,7 @@
 <div class="top-bar">
   <div>
     <h1 class="page-title">Tableau de bord</h1>
-    <p class="page-sub">Bienvenue, Mohamed Ali — 1ère année ENICarthage</p>
+    <p class="page-sub">Bienvenue<span *ngIf="user">, {{ user.prenom }} {{ user.nom }}</span> — 1ère année ENICarthage</p>
   </div>
 
   <div class="notif-wrapper">

@@ -4,6 +4,8 @@ import com.edukini.edukini_backend.dto.RegisterRequest;
 import com.edukini.edukini_backend.dto.ResetPasswordRequest;
 import com.edukini.edukini_backend.dto.ForgotPasswordRequest;
 import com.edukini.edukini_backend.dto.LoginRequest;
+import com.edukini.edukini_backend.dto.UpdateProfileRequest;
+import com.edukini.edukini_backend.dto.UserPublicDto;
 import com.edukini.edukini_backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,24 @@ public ResponseEntity<String> login(@RequestBody LoginRequest request) {
     }
     return ResponseEntity.badRequest().body(result);
 }
+
+    /** Profil sans mot de passe, charge par email stocke cote frontend apres connexion (pas de JWT ici). */
+    @GetMapping("/profile")
+    public ResponseEntity<UserPublicDto> profile(@RequestParam String email) {
+        return authService.findPublicProfile(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<UserPublicDto> updateProfile(@RequestBody UpdateProfileRequest request) {
+        if (request.getEmail() == null || request.getEmail().isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return authService.updateProfileNames(request.getEmail(), request.getPrenom(), request.getNom())
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     // ← AJOUTE CETTE METHODE pour capturer les erreurs de validation
     @ExceptionHandler(MethodArgumentNotValidException.class)

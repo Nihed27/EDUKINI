@@ -18,7 +18,6 @@ export interface Filiere {
   duree: string;
   scoreMin: number;
   actif: boolean;
-  nbEtudiants: number;
 }
 
 @Component({
@@ -73,7 +72,6 @@ export class FilieresComponent implements OnInit {
           duree: f.duree ?? '3 ans',
           scoreMin: f.scoreMin ?? 60,
           actif: f.actif ?? true,
-          nbEtudiants: 0
         }));
         this.cdr.detectChanges();
       },
@@ -108,12 +106,7 @@ export class FilieresComponent implements OnInit {
     });
   }
 
-  get totalEtudiants(): number { return this.filieres.reduce((s, f) => s + f.nbEtudiants, 0); }
   get totalCapacite() : number { return this.filieres.reduce((s, f) => s + f.capacite, 0); }
-
-  getTauxRemplissage(f: Filiere): number {
-    return Math.round((f.nbEtudiants / f.capacite) * 100);
-  }
 
   openModal(filiere?: Filiere): void {
     this.editingFiliere  = filiere || null;

@@ -101,43 +101,45 @@
   <!-- Recommandations de spécialités -->
   <div class="section-card">
     <div class="section-header">
-      <div class="section-title">Recommandations de spécialités (IA)</div>
-      <button class="btn-calculer" (click)="calculerIA()" [disabled]="loading">
-        {{ loading ? 'Calcul en cours...' : '🚀 Calculer mes recommandations' }}
+      <div class="section-title">Recommandations d'écoles (IA Groq)</div>
+      <button class="btn-calculer" (click)="calculerIA()" [disabled]="loading" style="background: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+        {{ loading ? 'Analyse en cours...' : '🚀 Calculer mes recommandations' }}
       </button>
     </div>
     
-    <div class="recommandations-list" *ngIf="recommandations.length > 0; else noRecom">
-      <div class="recom-item" *ngFor="let r of recommandations">
+    <div *ngIf="iaErreur" style="margin-top: 16px; padding: 12px; background: #fee2e2; color: #b91c1c; border-radius: 6px; font-weight: 500; text-align: center;">
+      ⚠️ {{ iaErreur }}
+    </div>
+    
+    <div class="recommandations-list" *ngIf="recommandations.length > 0; else noRecom" style="margin-top:20px; display:flex; flex-direction:column; gap:16px;">
+      <div class="recom-item" *ngFor="let r of recommandations" style="border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
         <div class="recom-main">
-          <div class="recom-ecole">{{ r.ecole }}</div>
-          <div class="recom-spec">{{ r.specialite }}</div>
-          <div class="recom-label-badge" [ngClass]="{
-            'recom-recommande': r.label === 'Recommandé',
-            'recom-compatible': r.label === 'Compatible',
-            'recom-peu-compatible': r.label === 'Peu compatible'
-          }">
+          <div class="recom-ecole" style="font-weight:700; font-size:18px; color:#0f172a;">{{ r.ecole }}</div>
+          <div class="recom-spec" style="font-size:14px; color:#475569; margin-top:4px;">{{ r.specialite }}</div>
+          <div class="recom-label-badge" style="display:inline-block; margin-top:8px; padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600; background:#dcfce7; color:#16a34a;">
             {{ r.label }}
           </div>
         </div>
-        <div class="recom-stats">
-          <div class="recom-stat">
-            <span class="stat-label">Score</span>
-            <span class="stat-val score-high">{{ r.score }}%</span>
+        <div class="recom-stats" style="display:flex; gap:24px;">
+          <div class="recom-stat" style="display:flex; flex-direction:column; align-items:center;">
+            <span class="stat-label" style="font-size:12px; color:#64748b;">Compatibilité</span>
+            <span class="stat-val score-high" style="font-size:16px; font-weight:700; color:#2563eb;">{{ r.pct }}%</span>
           </div>
-          <div class="recom-stat">
-            <span class="stat-label">Places</span>
-            <span class="stat-val">{{ r.placesDisponibles }}</span>
+          <div class="recom-stat" style="display:flex; flex-direction:column; align-items:center;">
+            <span class="stat-label" style="font-size:12px; color:#64748b;">Places</span>
+            <span class="stat-val" style="font-size:16px; font-weight:700; color:#0f172a;">{{ r.places }}</span>
           </div>
-          <div class="recom-stat">
-            <span class="stat-label">Rang min</span>
-            <span class="stat-val">{{ r.rangMinimum }}</span>
+          <div class="recom-stat" style="display:flex; flex-direction:column; align-items:center;">
+            <span class="stat-label" style="font-size:12px; color:#64748b;">Rang min</span>
+            <span class="stat-val" style="font-size:16px; font-weight:700; color:#0f172a;">{{ r.rangMin }}</span>
           </div>
         </div>
       </div>
     </div>
     <ng-template #noRecom>
-      <div class="no-data">Complétez vos notes et cliquez sur le bouton pour obtenir vos recommandations personnalisées.</div>
+      <div class="no-data" style="padding:20px; color:#64748b; font-size:14px; text-align:center;">
+        Complétez vos notes et cliquez sur le bouton pour obtenir vos recommandations personnalisées avec l'IA LLaMA.
+      </div>
     </ng-template>
   </div>
 

@@ -36,13 +36,6 @@
         Spécialités
       </a>
 
-      <a routerLink="/admin/demandes" routerLinkActive="active" class="nav-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2"
-            d="M9 12h6M9 16h6M5 8h14M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" />
-        </svg>
-        Demandes administratives
-      </a>
       <a routerLink="/admin/statistiques" routerLinkActive="active" class="nav-item">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-width="2" d="M18 20V10M12 20V4M6 20v-6" />
@@ -61,13 +54,13 @@
 
     <div class="sidebar-footer">
       <div class="avatar-row">
-        <div class="avatar-circle">MBA</div>
+        <div class="avatar-circle">{{ initials }}</div>
         <div>
-          <div class="avatar-name">Mehdi Ben Ali</div>
-          <div class="avatar-role">Admin système</div>
+          <div class="avatar-name">{{ displayName }}</div>
+          <div class="avatar-role">{{ roleLabel }}</div>
         </div>
       </div>
-      <a routerLink="/login" class="logout-btn">
+      <a href="#" class="logout-btn" (click)="logout($event)">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
         </svg>

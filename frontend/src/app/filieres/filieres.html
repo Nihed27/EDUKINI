@@ -28,20 +28,7 @@
         <span class="stat-label">Filières totales</span>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon green">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-      </div>
-      <div class="stat-info">
-        <span class="stat-value">{{ totalEtudiants }}</span>
-        <span class="stat-label">Étudiants inscrits</span>
-      </div>
-    </div>
+
     <div class="stat-card">
       <div class="stat-icon orange">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -112,7 +99,7 @@
         </span>
       </div>
 
-      <p class="card-desc">{{ f.description }}</p>
+      <p class="card-desc">{{ f.description || 'Aucune description disponible.' }}</p>
 
       <div class="card-tags">
         <span *ngFor="let c of f.competences.slice(0,3)" class="tag"
@@ -122,8 +109,8 @@
 
       <div class="card-stats">
         <div class="cs-item">
-          <span class="cs-val">{{ f.nbEtudiants }}/{{ f.capacite }}</span>
-          <span class="cs-lbl">Étudiants</span>
+          <span class="cs-val">{{ f.capacite }}</span>
+          <span class="cs-lbl">Capacité</span>
         </div>
         <div class="cs-item">
           <span class="cs-val">{{ f.scoreMin }}/100</span>
@@ -133,15 +120,6 @@
           <span class="cs-val">{{ f.duree }}</span>
           <span class="cs-lbl">Durée</span>
         </div>
-      </div>
-
-      <div class="progress-wrap">
-        <div class="progress-bar">
-          <div class="progress-fill"
-               [style.width]="getTauxRemplissage(f) + '%'"
-               [style.background]="f.couleur"></div>
-        </div>
-        <span class="progress-pct">{{ getTauxRemplissage(f) }}%</span>
       </div>
 
       <div class="card-actions">
@@ -307,24 +285,18 @@
     </div>
     <div class="modal-body">
       <p style="color:#374151;line-height:1.6;margin-bottom:1rem">{{ selectedFiliere.description }}</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;margin-bottom:1rem">
         <div style="text-align:center;padding:0.75rem;border:2px solid;border-radius:8px;"
              [style.border-color]="selectedFiliere.couleur">
           <div style="font-size:1.25rem;font-weight:700;" [style.color]="selectedFiliere.couleur">
-            {{ selectedFiliere.nbEtudiants }}/{{ selectedFiliere.capacite }}</div>
-          <div style="font-size:0.75rem;color:#6b7280">Étudiants</div>
+            {{ selectedFiliere.capacite }}</div>
+          <div style="font-size:0.75rem;color:#6b7280">Capacité</div>
         </div>
         <div style="text-align:center;padding:0.75rem;border:2px solid;border-radius:8px;"
              [style.border-color]="selectedFiliere.couleur">
           <div style="font-size:1.25rem;font-weight:700;" [style.color]="selectedFiliere.couleur">
             {{ selectedFiliere.scoreMin }}/100</div>
           <div style="font-size:0.75rem;color:#6b7280">Score min</div>
-        </div>
-        <div style="text-align:center;padding:0.75rem;border:2px solid;border-radius:8px;"
-             [style.border-color]="selectedFiliere.couleur">
-          <div style="font-size:1.25rem;font-weight:700;" [style.color]="selectedFiliere.couleur">
-            {{ getTauxRemplissage(selectedFiliere) }}%</div>
-          <div style="font-size:0.75rem;color:#6b7280">Remplissage</div>
         </div>
       </div>
       <p style="font-size:0.75rem;font-weight:700;color:#9ca3af;text-transform:uppercase;margin-bottom:0.5rem">Débouchés</p>

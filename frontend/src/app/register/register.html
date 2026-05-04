@@ -19,6 +19,15 @@
       <input type="email" [(ngModel)]="email" placeholder="email@etudiant.tn" />
     </div>
 
+    <div class="field" *ngIf="filieresOptions.length">
+      <label>Filière</label>
+      <select class="input-select" [(ngModel)]="filiereId" name="filiere" title="Filière">
+        <option [ngValue]="null">— Choisir (recommandé) —</option>
+        <option *ngFor="let f of filieresOptions" [ngValue]="f.id">{{ f.nom }}</option>
+      </select>
+      <small class="field-hint">Associée aux effectifs dans l’admin (Filières).</small>
+    </div>
+
     <div class="field">
       <label>Mot de passe</label>
       <div class="input-eye">

@@ -28,6 +28,11 @@ public class User implements Serializable {
 
     @Column(nullable = true)
     private LocalDateTime resetTokenExpiry;
+
+    /** Filière choisie à l'inscription ; sert aux effectifs admin par filière. */
+    @Column(name = "filiere_id")
+    private Long filiereId;
+
     // Constructeur par défaut (OBLIGATOIRE pour JPA)
     public User() {}
 
@@ -54,4 +59,7 @@ public void setResetToken(String resetToken) { this.resetToken = resetToken; }
 
 public LocalDateTime getResetTokenExpiry() { return resetTokenExpiry; }
 public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) { this.resetTokenExpiry = resetTokenExpiry; }
+
+    public Long getFiliereId() { return filiereId; }
+    public void setFiliereId(Long filiereId) { this.filiereId = filiereId; }
 }

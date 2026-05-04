@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { FiliereApiService, BackendFiliere } from '../services/filiere-api.service';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register {
+export class Register implements OnInit {
   prenom = '';
   nom = '';
   email = '';
@@ -20,11 +21,25 @@ export class Register {
   showPwd2 = false;
   errorMsg = '';
   isSubmitting = false;
+  filieresOptions: BackendFiliere[] = [];
+  filiereId: number | null = null;
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private filiereApi: FiliereApiService,
   ) {}
+
+  ngOnInit(): void {
+    this.filiereApi.getAll().subscribe({
+      next: (list) => {
+        this.filieresOptions = list.filter((f) => f.id != null && f.actif !== false);
+      },
+      error: () => {
+        this.filieresOptions = [];
+      },
+    });
+  }
 
   togglePwd() { this.showPwd = !this.showPwd; }
   togglePwd2() { this.showPwd2 = !this.showPwd2; }
@@ -57,6 +72,7 @@ export class Register {
         nom: this.nom.trim(),
         email: this.email.trim().toLowerCase(),
         password: this.password,
+        ...(this.filiereId != null ? { filiereId: this.filiereId } : {}),
       })
       .subscribe({
         next: () => {

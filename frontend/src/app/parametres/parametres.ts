@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
- 
+import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-parametres',
   standalone: true,
@@ -10,9 +11,10 @@ import { RouterModule } from '@angular/router';
   templateUrl: './parametres.html',
   styleUrl: './parametres.css'
 })
-export class ParametresComponent {
+export class ParametresComponent implements OnInit {
  
   activeSection: string = 'general';
+  profilMessage = '';
  
   config = {
     langue: 'fr',
@@ -21,45 +23,70 @@ export class ParametresComponent {
     nomPlateforme: 'Edukini'
   };
  
-  securite = {
-    doubleAuth: false,
-    sessionTimeout: '30',
-    motDePasseMinLength: '8',
-    historiqueMdp: false
-  };
- 
-  notifications = {
-    emailNouvelEtudiant: true,
-    emailDemande: true,
-    emailStatistiques: false,
-    smsAlertes: false
-  };
- 
+
   profil = {
-    prenom: 'Mehdi',
-    nom: 'Ben Ali',
-    email: 'admin@edukini.tn',
+    prenom: '',
+    nom: '',
+    email: '',
     telephone: '',
     motDePasse: ''
   };
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.loadProfilFromApi();
+  }
+
+  private loadProfilFromApi(): void {
+    this.authService.loadConnectedProfile().subscribe({
+      next: (u) => {
+        if (!u) {
+          this.profil.email = this.authService.getStoredEmail() || '';
+          return;
+        }
+        this.profil.prenom = u.prenom || '';
+        this.profil.nom = u.nom || '';
+        this.profil.email = u.email || '';
+      },
+      error: () => {
+        this.profil.email = this.authService.getStoredEmail() || '';
+      }
+    });
+  }
  
   setSection(section: string): void {
     this.activeSection = section;
+    if (section === 'profil') {
+      this.loadProfilFromApi();
+    }
   }
  
   saveConfig(): void {
     alert('Configuration enregistrée avec succès !');
   }
  
-  saveSecurite(): void {
-    alert('Paramètres de sécurité enregistrés !');
-  }
- 
-  saveNotifications(): void {
-    alert('Préférences de notifications enregistrées !');
-  }
- 
+
   saveProfil(): void {
-    alert('Profil mis à jour avec succès !');
+    this.profilMessage = '';
+    if (!this.profil.prenom?.trim() || !this.profil.nom?.trim()) {
+      this.profilMessage = 'Renseignez le prénom et le nom.';
+      return;
+    }
+    if (!this.authService.getStoredEmail()) {
+      this.profilMessage = 'Session invalide: reconnectez-vous.';
+      return;
+    }
+    this.authService.saveProfileNames(this.profil.prenom.trim(), this.profil.nom.trim()).subscribe({
+      next: (u) => {
+        this.profil.prenom = u.prenom || '';
+        this.profil.nom = u.nom || '';
+        this.profilMessage = 'Profil enregistré.';
+        setTimeout(() => (this.profilMessage = ''), 4000);
+      },
+      error: () => {
+        this.profilMessage = "Impossible d'enregistrer. Vérifiez la connexion au serveur.";
+      }
+    });
   }
 }

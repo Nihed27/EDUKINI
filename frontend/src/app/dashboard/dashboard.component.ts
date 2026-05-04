@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StudentService } from '../etudiants/student.service';
 import { EcoleService } from '../ecole/ecole.service';
-import { DemandeService } from '../demandes/demande.service';
-
 Chart.register(...registerables);
 
 @Component({
@@ -21,14 +19,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   totalEtudiants = 0;
   totalEcoles = 0;
   totalFilieres = 0;
-  totalDemandesAttente = 0;
-  demandes: any[] = [];
   private chart: Chart | null = null;
 
   constructor(
     private studentService: StudentService,
     private ecoleService: EcoleService,
-    private demandeService: DemandeService
   ) {}
 
   ngOnInit(): void { this.loadStats(); }
@@ -43,37 +38,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   loadStats(): void {
     const ecoles = this.ecoleService.getAll();
-    const toutesLesDemandes = this.demandeService.getAll();
     this.totalEtudiants = 800;
     this.totalEcoles = ecoles.length;
     this.totalFilieres = 4;
-    this.totalDemandesAttente = toutesLesDemandes.filter(d => d.statut === 'en_attente').length;
-    this.demandes = toutesLesDemandes.map(d => ({
-      id: d.id,
-      numeroInscription: d.numeroInscription,
-      nom: `${d.prenomEtudiant || ''} ${d.nomEtudiant || ''}`,
-      initiales: `${d.prenomEtudiant?.[0] || ''}${d.nomEtudiant?.[0] || ''}`,
-      type: d.typeDemande,
-      statut: d.statut,
-      date: d.dateDemande,
-      commentaire: d.commentaire
-    }));
-  }
-
-  changeStatus(demande: any, newStatus: 'en_attente' | 'approuvee' | 'rejetee'): void {
-    const original = this.demandeService.getAll().find(d => d.id === demande.id);
-    if (original) {
-      const { id, ...data } = original;
-      this.demandeService.update(id, { ...data, statut: newStatus });
-      this.loadStats();
-    }
-  }
-
-  deleteDemande(id: number): void {
-    if (confirm('Supprimer cette demande ?')) {
-      this.demandeService.delete(id);
-      this.loadStats();
-    }
   }
 
   buildChart(): void {
@@ -98,18 +65,4 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getStatutLabel(statut: string): string {
-    const map: any = { en_attente: 'En attente', approuvee: 'Approuvée', rejetee: 'Rejetée' };
-    return map[statut] || statut;
-  }
-
-  getStatutClass(statut: string): string {
-    const map: any = { en_attente: 'tag-attente', approuvee: 'tag-approuvee', rejetee: 'tag-rejetee' };
-    return map[statut] || '';
-  }
-
-  getAvatarColor(initiales: string): string {
-    const colors = ['#3b82f6', '#6366f1', '#8b5cf6', '#0d9488', '#059669', '#2563eb', '#7c3aed', '#0891b2'];
-    return colors[initiales.charCodeAt(0) % colors.length];
-  }
 }

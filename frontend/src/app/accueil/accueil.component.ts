@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -23,7 +23,7 @@ export class AccueilComponent implements OnInit {
   ) {}
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.http.get<any>(this.apiUrl + "/profil/1").subscribe({
+      this.http.get<any>(this.apiUrl + "/etudiant-profil/1").subscribe({
         next: (profil) => {
           this.rang = profil.rangConcours + "e / 4320";
           this.scoreGlobal = profil.moyenneGenerale;

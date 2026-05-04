@@ -146,10 +146,8 @@ export class SpecialitesComponent implements OnInit {
   }
 
   /* ---- Stats ---- */
-  get totalEtudiants(): number { return this.specialites.reduce((s, sp) => s + sp.nbEtudiants, 0); }
   get nbActives()     : number { return this.specialites.filter(s => s.actif).length; }
 
-  getTaux(s: Specialite): number { return Math.round((s.nbEtudiants / s.capacite) * 100); }
   getFiliereById(id: number) { return this.filieres.find(f => f.id === id); }
 
   /* ---- Modal ajouter/modifier ---- */

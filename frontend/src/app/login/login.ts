@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class Login {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private zone: NgZone
+    private zone: NgZone,
+    private authService: AuthService
   ) {}
 
   togglePwd() {
@@ -46,6 +48,7 @@ login() {
   ).subscribe({
     next: (role) => {
       this.isSubmitting = false;
+      this.authService.setSessionAfterLogin(this.email, role);
       if (role === 'ADMIN') {
         this.router.navigate(['/dashboard-admin']);
       } else if (role === 'STUDENT') {

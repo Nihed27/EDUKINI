@@ -43,12 +43,13 @@
     <div class="stat-card">
       <div class="stat-icon-wrap amber">
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-width="2" d="M9 12h6M9 16h6M5 8h14M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
+          <circle cx="12" cy="8" r="4" stroke-width="2"/>
+          <path stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
       </div>
       <div class="stat-info">
-        <div class="stat-label">Demandes en attente</div>
-        <div class="stat-value amber">{{ totalDemandesAttente }}</div>
+        <div class="stat-label">Spécialités (aperçu)</div>
+        <div class="stat-value amber">—</div>
       </div>
     </div>
   </div>
@@ -67,64 +68,11 @@
 
   <div class="table-card">
     <div class="table-card-header">
-      <span class="table-card-title">Demandes administratives</span>
-      <span class="demandes-count">{{ demandes.length }} demandes</span>
+      <span class="table-card-title">Accès rapide</span>
+      <span class="demandes-count">Gestion Edukini</span>
     </div>
-    <div class="demandes-scroll">
-      <table class="demandes-table">
-        <thead>
-          <tr>
-            <th>N° Inscription</th>
-            <th>Etudiant</th>
-            <th>Type de demande</th>
-            <th>Date</th>
-            <th>Statut</th>
-            <th>Commentaire</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of demandes">
-            <td><span class="ins-badge">{{ d.numeroInscription }}</span></td>
-            <td>
-              <div class="student-cell">
-                <div class="av" [style.background]="getAvatarColor(d.initiales)">{{ d.initiales }}</div>
-                <span class="student-nom">{{ d.nom }}</span>
-              </div>
-            </td>
-            <td><span class="type-tag">{{ d.type }}</span></td>
-            <td class="td-date">{{ d.date }}</td>
-            <td>
-              <span [class]="getStatutClass(d.statut)" class="statut-tag">
-                {{ getStatutLabel(d.statut) }}
-              </span>
-            </td>
-            <td>
-              <span class="comment-text" *ngIf="d.commentaire">{{ d.commentaire }}</span>
-              <span class="dash" *ngIf="!d.commentaire">—</span>
-            </td>
-            <td>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-                <button (click)="changeStatus(d, d.statut)"
-                  style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;border:1px solid #bbf7d0;background:#f0fdf4;color:#15803d;cursor:pointer;font-size:12px;font-weight:500;">
-                  Statut
-                </button>
-                <button
-                  style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;border:1px solid #bfdbfe;background:#eff6ff;color:#2563eb;cursor:pointer;font-size:12px;font-weight:500;">
-                  Modifier
-                </button>
-                <button (click)="deleteDemande(d.id)"
-                  style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;border:1px solid #fecdd3;background:#fff1f2;color:#e11d48;cursor:pointer;font-size:12px;font-weight:500;">
-                  Supprimer
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr *ngIf="demandes.length === 0">
-            <td colspan="7" style="text-align:center;padding:40px;">Aucune demande trouvée</td>
-          </tr>
-        </tbody>
-      </table>
+    <div style="padding:24px 28px;display:flex;flex-wrap:wrap;gap:12px;color:#475569;line-height:1.5;font-size:14px;">
+      Utilise le menu pour gérer les écoles, filières, spécialités et étudiants. Les statistiques détaillées sont disponibles dans la section Statistiques.
     </div>
   </div>
 
