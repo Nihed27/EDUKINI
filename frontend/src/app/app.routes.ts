@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component'; // ← AJOUTÉ
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { ForgotPassword } from './forgot-password/forgot-password';
@@ -37,7 +38,8 @@ import { PostlicenceProgrammesComponent } from './postlicence-programmes/postlic
 import { PostlicenceProfilComponent } from './postlicence-profil/postlicence-profil.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: HomeComponent },        // ← MODIFIÉ (était redirectTo: 'login')
+  { path: 'home', component: HomeComponent },    // ← AJOUTÉ
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'forgot-password', component: ForgotPassword },
@@ -71,7 +73,7 @@ export const routes: Routes = [
       { path: 'mes-ecoles', component: MesEcolesComponent },
       { path: 'profil', component: ProfilEtudiantComponent },
       { path: 'enicarthage', component: EnicarthageAccueilComponent },
-      { path: 'insat', component: EnicarthageAccueilComponent }, // Redirect to a placeholder for now
+      { path: 'insat', component: EnicarthageAccueilComponent },
     ]
   },
 
@@ -102,7 +104,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Legacy routes (redirect old paths)
+  // Legacy routes
   { path: 'dashboard-admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: 'dashboard-etudiant', redirectTo: 'etudiant/accueil', pathMatch: 'full' },
 ];
