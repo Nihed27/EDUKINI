@@ -132,7 +132,7 @@
   <div class="chart-card">
     <div class="chart-header">
       <div>
-        <div class="chart-title">Admissions <span class="year-badge">2020 — 2024</span></div>
+        <div class="chart-title">Admissions Concours <span class="year-badge">2020 — 2024</span></div>
         <div class="chart-sub">Evolution des admissions et refus par année</div>
       </div>
     </div>
@@ -141,14 +141,32 @@
     </div>
   </div>
 
-  <div class="table-card">
-    <div class="table-card-header">
-      <span class="table-card-title">Accès rapide</span>
-      <span class="demandes-count">Gestion Edukini</span>
+  <div class="charts-grid">
+    <div class="chart-card" style="margin-top: 0;">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Admissions ENICarthage</div>
+          <div class="chart-sub">Etudiants admis par spécialité (GL, RSC, ESE)</div>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas #enicarthageAdmissionsChart></canvas>
+      </div>
     </div>
-    <div style="padding:24px 28px;display:flex;flex-wrap:wrap;gap:12px;color:#475569;line-height:1.5;font-size:14px;">
-      Utilise le menu pour gérer les écoles, filières, spécialités et étudiants. Les statistiques détaillées sont disponibles dans la section Statistiques.
+
+    <div class="chart-card" style="margin-top: 0;">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Répartition par filière</div>
+          <div class="chart-sub">Répartition des étudiants par filière d'origine</div>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas #filiereChart></canvas>
+      </div>
     </div>
   </div>
+
+
 
 </div>

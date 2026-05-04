@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 import { StudentService } from '../etudiants/student.service';
 import { EcoleService } from '../ecole/ecole.service';
@@ -17,11 +18,15 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('admissionsChart', { static: false }) admissionsChartRef!: ElementRef;
+  @ViewChild('enicarthageAdmissionsChart', { static: false }) enicarthageAdmissionsChartRef!: ElementRef;
+  @ViewChild('filiereChart', { static: false }) filiereChartRef!: ElementRef;
 
   totalEtudiants = 0;
   totalEcoles = 0;
   totalFilieres = 0;
   private chart: Chart | null = null;
+  eniChart!: Chart<'bar', number[], string>;
+  pieChart!: Chart<'bar', number[], string>;
 
   // ── Notifications ──
   notifOpen = false;
@@ -34,13 +39,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private studentService: StudentService,
     private ecoleService: EcoleService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.loadStats();
     this.loadNotifications();
-    // Polling toutes les 30 secondes
     this.pollingInterval = setInterval(() => this.loadNotifications(), 30000);
   }
 
@@ -52,6 +57,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     if (typeof window !== 'undefined') {
       setTimeout(() => {
         if (this.admissionsChartRef) this.buildChart();
+        this.buildEnicarthageChart();
+        this.buildFiliereChart();
       }, 100);
     }
   }
@@ -61,6 +68,65 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.totalEtudiants = 800;
     this.totalEcoles = ecoles.length;
     this.totalFilieres = 4;
+  }
+
+
+  buildEnicarthageChart(): void {
+    if (!this.enicarthageAdmissionsChartRef) return;
+    const ctx = this.enicarthageAdmissionsChartRef.nativeElement.getContext('2d');
+    if (this.eniChart) this.eniChart.destroy();
+
+    const labels = ['GL', 'RSC', 'ESE'];
+    const dataValues: number[] = [42, 35, 28];
+
+    const gradientBlue = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientBlue.addColorStop(0, 'rgba(37, 99, 235, 0.9)');
+    gradientBlue.addColorStop(1, 'rgba(37, 99, 235, 0.2)');
+
+    this.eniChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Admis',
+          data: dataValues,
+          backgroundColor: gradientBlue,
+          borderRadius: 8,
+          barPercentage: 0.5,
+          categoryPercentage: 0.65
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
+    });
+  }
+
+  buildFiliereChart(): void {
+    if (!this.filiereChartRef) return;
+    const ctx = this.filiereChartRef.nativeElement.getContext('2d');
+    if (this.pieChart) this.pieChart.destroy();
+
+    const labels = ['GL', 'RSC', 'ESE'];
+    const dataValues: number[] = [45, 32, 23];
+
+    const gradientTeal = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientTeal.addColorStop(0, 'rgba(13, 148, 136, 0.9)');
+    gradientTeal.addColorStop(1, 'rgba(13, 148, 136, 0.2)');
+
+    this.pieChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Étudiants',
+          data: dataValues,
+          backgroundColor: gradientTeal,
+          borderRadius: 8,
+          barPercentage: 0.5,
+          categoryPercentage: 0.65
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
+    });
   }
 
   // ── Notifications ──
