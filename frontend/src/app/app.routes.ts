@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { StatutComponent } from './statut/statut.component';
+import { HomeComponent } from './home/home.component';
+import { DashboardEtudiantComponent } from './dashboard-etudiant/dashboard-etudiant';
 
 // Admin
 import { LayoutComponent } from './layout/layout.component';
@@ -35,7 +37,9 @@ import { PostlicenceDetailComponent } from './postlicence-detail/postlicence-det
 import { PostlicenceProgrammesComponent } from './postlicence-programmes/postlicence-programmes.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // Landing page (public)
+  { path: '', component: HomeComponent },
+
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'statut', component: StatutComponent },
@@ -67,7 +71,7 @@ export const routes: Routes = [
       { path: 'mes-ecoles', component: MesEcolesComponent },
       { path: 'profil', component: ProfilEtudiantComponent },
       { path: 'enicarthage', component: EnicarthageAccueilComponent },
-      { path: 'insat', component: EnicarthageAccueilComponent }, // Redirect to a placeholder for now
+      { path: 'insat', component: EnicarthageAccueilComponent },
     ]
   },
 
@@ -97,7 +101,9 @@ export const routes: Routes = [
     ]
   },
 
+  // Dashboard étudiant (standalone)
+  { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
+
   // Legacy routes (redirect old paths)
   { path: 'dashboard-admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
-  { path: 'dashboard-etudiant', redirectTo: 'etudiant/accueil', pathMatch: 'full' },
 ];

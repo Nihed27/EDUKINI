@@ -1,0 +1,288 @@
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a routerLink="/" class="nav-logo" id="nav-logo">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+      </div>
+      <span class="logo-text">EDUKINI</span>
+    </a>
+
+    <div class="nav-links" [class.open]="mobileMenuOpen">
+      <a routerLink="/" class="nav-link active" id="nav-accueil">Accueil</a>
+      <a href="#about" class="nav-link" id="nav-apropos">À propos</a>
+      <a href="#ecoles" class="nav-link" id="nav-ecoles">Écoles</a>
+      <a href="#contact" class="nav-link" id="nav-contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a routerLink="/login" class="btn-nav btn-login" id="btn-login">Se connecter</a>
+      <a routerLink="/register" class="btn-nav btn-signup" id="btn-signup">S'inscrire</a>
+    </div>
+
+    <button class="hamburger" (click)="toggleMobileMenu()" id="btn-hamburger" aria-label="Menu">
+      <span [class.active]="mobileMenuOpen"></span>
+      <span [class.active]="mobileMenuOpen"></span>
+      <span [class.active]="mobileMenuOpen"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero" id="hero-section">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="hero-grid-overlay"></div>
+  </div>
+
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-badge" id="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        PLATEFORME D'ORIENTATION ÉTUDIANTE
+      </div>
+
+      <h1 class="hero-title" id="hero-title">
+        Bienvenue sur
+        <span class="title-highlight">EDUKINI</span>
+      </h1>
+
+      <p class="hero-subtitle" id="hero-subtitle">
+        La plateforme officielle d'orientation et de gestion des candidatures
+        pour les étudiants tunisiens vers les grandes écoles d'ingénieurs.
+      </p>
+
+      <div class="hero-cta">
+        <a routerLink="/register" class="btn-cta btn-primary" id="btn-cta-register">
+          Créer un compte
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a routerLink="/login" class="btn-cta btn-outline" id="btn-cta-login">
+          J'ai déjà un compte
+        </a>
+      </div>
+
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <div class="trust-avatar" style="background: linear-gradient(135deg, #1a73e8, #4fc3f7);">A</div>
+          <div class="trust-avatar" style="background: linear-gradient(135deg, #34a853, #81c784);">S</div>
+          <div class="trust-avatar" style="background: linear-gradient(135deg, #f9ab00, #ffcc80);">M</div>
+          <div class="trust-avatar" style="background: linear-gradient(135deg, #ea4335, #ef9a9a);">K</div>
+        </div>
+        <span class="trust-text">+800 étudiants inscrits cette année</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="floating-card card-1">
+          <div class="fc-icon" style="background: linear-gradient(135deg, #1a73e8, #4fc3f7);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/>
+            </svg>
+          </div>
+          <div class="fc-text">
+            <div class="fc-label">Orientation IA</div>
+            <div class="fc-value">Recommandations personnalisées</div>
+          </div>
+        </div>
+        <div class="floating-card card-2">
+          <div class="fc-icon" style="background: linear-gradient(135deg, #34a853, #81c784);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <div class="fc-text">
+            <div class="fc-label">Candidatures</div>
+            <div class="fc-value">Suivi en temps réel</div>
+          </div>
+        </div>
+        <div class="floating-card card-3">
+          <div class="fc-icon" style="background: linear-gradient(135deg, #f9ab00, #ffcc80);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M12 20V10"/>
+              <path d="M18 20V4"/>
+              <path d="M6 20v-4"/>
+            </svg>
+          </div>
+          <div class="fc-text">
+            <div class="fc-label">Statistiques</div>
+            <div class="fc-value">Analyses détaillées</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STATS SECTION ==================== -->
+<section class="stats-section" id="stats-section">
+  <div class="stats-container">
+    <div class="stat-card" id="stat-enicarthage">
+      <div class="stat-icon-box" style="background: linear-gradient(135deg, #1a73e8, #4fc3f7);">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18M9 21V7l6-4v18"/>
+          <path d="M9 10h1M9 14h1M14 10h1M14 14h1"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value-text">ENICarthage</div>
+        <div class="stat-label-text">ÉTUDIANTS</div>
+      </div>
+      <div class="stat-shine"></div>
+    </div>
+
+    <div class="stat-card" id="stat-securite">
+      <div class="stat-icon-box" style="background: linear-gradient(135deg, #34a853, #81c784);">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value-text">JWT + SSL</div>
+        <div class="stat-label-text">PLATEFORME SÉCURISÉE</div>
+      </div>
+      <div class="stat-shine"></div>
+    </div>
+
+    <div class="stat-card" id="stat-universite">
+      <div class="stat-icon-box" style="background: linear-gradient(135deg, #f9ab00, #ffcc80);">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value-text">Carthage</div>
+        <div class="stat-label-text">UNIVERSITÉ</div>
+      </div>
+      <div class="stat-shine"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FEATURES SECTION ==================== -->
+<section class="features-section" id="about">
+  <div class="features-container">
+    <div class="section-header">
+      <div class="section-badge">FONCTIONNALITÉS</div>
+      <h2 class="section-title">Tout ce dont vous avez besoin</h2>
+      <p class="section-subtitle">
+        EDUKINI simplifie votre parcours d'orientation avec des outils intelligents et modernes.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" id="feature-ia">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #eff6ff, #dbeafe);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2">
+            <path d="M12 2a4 4 0 0 1 4 4c0 1.5-.8 2.8-2 3.5v1h-4v-1C8.8 8.8 8 7.5 8 6a4 4 0 0 1 4-4z"/>
+            <path d="M10 10.5v2.5h4v-2.5"/>
+            <path d="M10 15h4"/>
+            <path d="M11 15v3"/>
+            <path d="M13 15v3"/>
+            <circle cx="12" cy="21" r="1"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Intelligence Artificielle</h3>
+        <p class="feature-desc">Recommandations personnalisées basées sur vos notes, votre rang et vos préférences académiques.</p>
+      </div>
+
+      <div class="feature-card" id="feature-candidatures">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #f0fdf4, #dcfce7);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#34a853" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Gestion des Candidatures</h3>
+        <p class="feature-desc">Postulez en ligne, suivez vos candidatures en temps réel et recevez des notifications instantanées.</p>
+      </div>
+
+      <div class="feature-card" id="feature-securite">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #fefce8, #fef9c3);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f9ab00" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            <circle cx="12" cy="16" r="1"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Sécurité Avancée</h3>
+        <p class="feature-desc">Vos données sont protégées par un chiffrement JWT et SSL de bout en bout.</p>
+      </div>
+
+      <div class="feature-card" id="feature-stats">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #fef2f2, #fecaca);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea4335" stroke-width="2">
+            <path d="M18 20V10"/>
+            <path d="M12 20V4"/>
+            <path d="M6 20v-6"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Statistiques Détaillées</h3>
+        <p class="feature-desc">Accédez à des analyses complètes sur les écoles, les filières et les taux d'admission.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer" id="contact">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+          </div>
+          <span>EDUKINI</span>
+        </div>
+        <p class="footer-desc">
+          La plateforme officielle d'orientation pour les étudiants tunisiens vers les grandes écoles d'ingénieurs.
+        </p>
+      </div>
+      <div class="footer-links-group">
+        <h4>Plateforme</h4>
+        <a href="#">Accueil</a>
+        <a href="#">À propos</a>
+        <a href="#">Écoles</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Ressources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">FAQ</a>
+        <a href="#">Support</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Contact</h4>
+        <a href="#">contact&#64;edukini.tn</a>
+        <a href="#">+216 71 000 000</a>
+        <a href="#">Tunis, Tunisie</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 EDUKINI. Tous droits réservés. Université de Carthage.</p>
+    </div>
+  </div>
+</footer>

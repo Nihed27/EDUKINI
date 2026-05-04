@@ -25,6 +25,6 @@ export class Login {
   }
 
   goAdmin() {
-    this.router.navigate(['/dashboard-admin']);
+    this.router.navigate(['/admin/dashboard']);
   }
 }

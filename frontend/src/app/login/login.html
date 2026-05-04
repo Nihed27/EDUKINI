@@ -1,15 +1,30 @@
-<div class="page">
-  <div class="card">
-    <div class="logo">Edukini</div>
-    <div class="subtitle">Orientation intelligente des ingénieurs</div>
+<div class="login-page">
+  <div class="login-bg-shapes">
+    <div class="lg-shape lg-shape-1"></div>
+    <div class="lg-shape lg-shape-2"></div>
+  </div>
+
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+      </div>
+      <span class="login-logo-text">EDUKINI</span>
+    </div>
+    <div class="login-subtitle">Orientation intelligente des ingénieurs</div>
 
     <div class="field">
+      <label class="field-label">Email</label>
       <input type="email" [(ngModel)]="email" placeholder="email@etudiant.tn" />
     </div>
 
     <div class="field">
+      <label class="field-label">Mot de passe</label>
       <input [type]="showPwd ? 'text' : 'password'" [(ngModel)]="password" placeholder="Mot de passe" />
-<button class="eye-btn" (click)="togglePwd()" title="Afficher/masquer le mot de passe">
+      <button class="eye-btn" (click)="togglePwd()" title="Afficher/masquer le mot de passe">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path *ngIf="!showPwd" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
           <circle *ngIf="!showPwd" cx="12" cy="12" r="3"/>
@@ -36,8 +51,11 @@
       </button>
     </div>
 
-    <div class="forgot" style="margin-top: 10px;">
-  Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    <div class="login-footer">
+      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    </div>
+    <div class="login-home-link">
+      <a routerLink="/">← Retour à l'accueil</a>
     </div>
   </div>
 </div>
