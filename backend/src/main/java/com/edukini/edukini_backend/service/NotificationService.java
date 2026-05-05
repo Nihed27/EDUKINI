@@ -14,27 +14,37 @@ public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public List<Notification> getByEtudiant(Long etudiantId) {
-        return notificationRepository.findByEtudiantId(etudiantId);
+    /**
+     * Créer une notification (envoyée par l'admin)
+     */
+    public Notification creer(Notification notification) {
+        return notificationRepository.save(notification);
     }
 
+    /**
+     * Récupérer toutes les notifications (triées par date décroissante)
+     */
+    public List<Notification> getAll() {
+        return notificationRepository.findByCibleOrderByCreatedAtDesc("ENICARTHAGE");
+    }
+
+    /**
+     * Marquer une notification comme lue
+     */
     public Notification marquerLu(Long id) {
-        Optional<Notification> notificationOpt = notificationRepository.findById(id);
-        if (notificationOpt.isPresent()) {
-            Notification notification = notificationOpt.get();
+        Optional<Notification> opt = notificationRepository.findById(id);
+        if (opt.isPresent()) {
+            Notification notification = opt.get();
             notification.setLu(true);
             return notificationRepository.save(notification);
         }
         return null;
     }
 
-    public void marquerToutLu(Long etudiantId) {
-        List<Notification> notifications = notificationRepository.findByEtudiantId(etudiantId);
-        notifications.forEach(n -> n.setLu(true));
-        notificationRepository.saveAll(notifications);
-    }
-
-    public void supprimer(Long id) {
-        notificationRepository.deleteById(id);
+    /**
+     * Compter les notifications non lues
+     */
+    public long countNonLues() {
+        return notificationRepository.countByCibleAndLuFalse("ENICARTHAGE");
     }
 }

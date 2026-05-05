@@ -11,43 +11,50 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String titre;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String message;
 
-    @Enumerated(EnumType.STRING)
-    private NotificationType type;
+    @Column(length = 50)
+    private String cible = "ENICARTHAGE";
 
-    private boolean lu;
+    private boolean lu = false;
 
-    private LocalDateTime dateEnvoi;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    private Long etudiantId;
-
-    public Notification() {}
-
-    public Notification(Long id, String message, NotificationType type, boolean lu, LocalDateTime dateEnvoi, Long etudiantId) {
-        this.id = id;
-        this.message = message;
-        this.type = type;
-        this.lu = lu;
-        this.dateEnvoi = dateEnvoi;
-        this.etudiantId = etudiantId;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 
+    // ── Constructeurs ──
+    public Notification() {}
+
+    public Notification(String titre, String message, String cible) {
+        this.titre = titre;
+        this.message = message;
+        this.cible = cible;
+    }
+
+    // ── Getters & Setters ──
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getTitre() { return titre; }
+    public void setTitre(String titre) { this.titre = titre; }
 
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
 
-    public NotificationType getType() { return type; }
-    public void setType(NotificationType type) { this.type = type; }
+    public String getCible() { return cible; }
+    public void setCible(String cible) { this.cible = cible; }
 
     public boolean isLu() { return lu; }
     public void setLu(boolean lu) { this.lu = lu; }
 
-    public LocalDateTime getDateEnvoi() { return dateEnvoi; }
-    public void setDateEnvoi(LocalDateTime dateEnvoi) { this.dateEnvoi = dateEnvoi; }
-
-    public Long getEtudiantId() { return etudiantId; }
-    public void setEtudiantId(Long etudiantId) { this.etudiantId = etudiantId; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

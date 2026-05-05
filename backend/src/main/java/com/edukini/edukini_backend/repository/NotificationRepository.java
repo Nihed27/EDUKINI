@@ -8,5 +8,10 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    List<Notification> findByEtudiantId(Long etudiantId);
+
+    // Récupérer les notifications par cible (ex: "ENICARTHAGE"), triées par date desc
+    List<Notification> findByCibleOrderByCreatedAtDesc(String cible);
+
+    // Compter les notifications non lues pour une cible
+    long countByCibleAndLuFalse(String cible);
 }
