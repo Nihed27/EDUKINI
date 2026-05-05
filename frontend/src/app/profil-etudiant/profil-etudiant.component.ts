@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http'
 import { ProfilApiService, BackendProfil } from '../services/profil-api.service';
 import { AuthService, ConnectedUser } from '../services/auth.service';
 import { environment } from '../../environments/environment';
-
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 interface Matiere {
   id: number;
   nom: string;

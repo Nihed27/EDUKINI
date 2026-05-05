@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { NotificationService, Notification } from '../services/notification.service';
@@ -11,12 +11,13 @@ import { AuthService, ConnectedUser } from '../services/auth.service';
   templateUrl: "./enicarthage-accueil.component.html",
   styleUrl: "./enicarthage-accueil.component.css"
 })
-export class EnicarthageAccueilComponent implements OnInit {
+export class EnicarthageAccueilComponent implements OnInit, OnDestroy {
   user: ConnectedUser | null = null;
   notifOpen = false;
-  notifications: any[] = [];
+  notifications: Notification[] = [];
   ouvert: number | null = null;
   onglet: { [key: number]: string } = {};
+  private pollingInterval: any;
 
   specialites = [
     {
@@ -55,56 +56,66 @@ export class EnicarthageAccueilComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private notificationService: NotificationService,
     private authService: AuthService
   ) {}
 
-  ngOnInit() { 
+  ngOnInit() {
     this.authService.loadConnectedProfile().subscribe();
     this.authService.user$.subscribe(user => {
       this.user = user;
-      if (this.user) {
-        this.loadNotifications();
-      }
     });
+    this.loadNotifications();
+    // Polling toutes les 30 secondes
+    this.pollingInterval = setInterval(() => this.loadNotifications(), 30000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.pollingInterval) clearInterval(this.pollingInterval);
   }
 
   loadNotifications() {
-    if (!this.user) return;
-    this.notificationService.getByEtudiant(this.user.id).subscribe({
-      next: (data) => { this.notifications = data.map(n => this.mapNotification(n)); },
+    this.notificationService.getAll().subscribe({
+      next: (data) => { this.notifications = data; },
       error: (err) => console.error("Erreur notifications", err)
     });
   }
 
-  private mapNotification(n: Notification) {
-    let icon = "bell", color = "#f59e0b", bg = "rgba(245,158,11,0.1)";
-    if (n.type === "COMPATIBILITE") { icon = "user"; color = "#2563eb"; bg = "rgba(37,99,235,0.1)"; }
-    else if (n.type === "MATIERE") { icon = "monitor"; color = "#8b5cf6"; bg = "rgba(139,92,246,0.1)"; }
-    return { id: n.id, unread: !n.lu, time: this.formatDate(n.dateEnvoi), msg: n.message, color, bg, icon };
+  get unreadCount(): number {
+    return this.notifications.filter(n => !n.lu).length;
   }
 
-  private formatDate(dateStr: string): string {
-    const diffMins = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
-    if (diffMins < 60) return "Il y a " + diffMins + " minutes";
-    const diffHours = Math.floor(diffMins / 60);
-    if (diffHours < 24) return "Il y a " + diffHours + " heures";
-    return new Date(dateStr).toLocaleDateString();
-  }
-
-  get unreadCount(): number { return this.notifications.filter(n => n.unread).length; }
   toggleNotif() { this.notifOpen = !this.notifOpen; }
-  
+
   markRead(id: number) {
-    this.notificationService.marquerLu(id).subscribe({ next: () => this.loadNotifications() });
+    this.notificationService.marquerLu(id).subscribe({
+      next: () => this.loadNotifications()
+    });
   }
 
   clearAll() {
-    if (!this.user) return;
-    this.notificationService.marquerToutLu(this.user.id).subscribe({
-      next: () => { this.loadNotifications(); this.notifOpen = false; }
+    // Marquer toutes les notifications non lues comme lues
+    const unread = this.notifications.filter(n => !n.lu);
+    unread.forEach(n => {
+      if (n.id) {
+        this.notificationService.marquerLu(n.id).subscribe();
+      }
     });
+    setTimeout(() => {
+      this.loadNotifications();
+      this.notifOpen = false;
+    }, 500);
+  }
+
+  formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const diffMins = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
+    if (diffMins < 1) return "À l'instant";
+    if (diffMins < 60) return "Il y a " + diffMins + " min";
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return "Il y a " + diffHours + "h";
+    return new Date(dateStr).toLocaleDateString('fr-FR');
   }
 
   toggle(i: number) { this.ouvert = this.ouvert === i ? null : i; if (!this.onglet[i]) this.onglet[i] = "programme"; }

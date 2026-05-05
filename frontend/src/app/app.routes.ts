@@ -13,7 +13,6 @@ import { EcolesComponent } from './ecole/ecoles.component';
 import { FilieresComponent } from './filieres/filieres';
 import { SpecialitesComponent } from './specialites/specialites';
 import { EtudiantsComponent } from './etudiants/etudiants.component';
-import { StatistiquesComponent } from './statistiques/statistiques';
 import { ParametresComponent } from './parametres/parametres';
 
 // Etudiant (concours)
@@ -58,7 +57,6 @@ export const routes: Routes = [
       { path: 'specialites', component: SpecialitesComponent },
       { path: 'etudiants', component: EtudiantsComponent },
       { path: 'demandes', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'statistiques', component: StatistiquesComponent },
       { path: 'parametres', component: ParametresComponent },
     ]
   },
