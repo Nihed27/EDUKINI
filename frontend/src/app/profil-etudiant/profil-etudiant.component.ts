@@ -1,11 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProfilApiService, BackendProfil } from '../services/profil-api.service';
 import { AuthService, ConnectedUser } from '../services/auth.service';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 interface Matiere {
   id: number;
   nom: string;
@@ -22,7 +21,7 @@ interface InfoPersonnelle {
 @Component({
   selector: 'app-profil-etudiant',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './profil-etudiant.component.html',
   styleUrl: './profil-etudiant.component.css'
 })
