@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { ProfilApiService, BackendProfil } from '../services/profil-api.service';
+import { AuthService, ConnectedUser } from '../services/auth.service';
 import { environment } from '../../environments/environment';
 
 interface Matiere {
@@ -27,6 +29,9 @@ interface InfoPersonnelle {
 export class ProfilEtudiantComponent implements OnInit {
 
   profilId: number | null = null;
+  user: ConnectedUser | null = null;
+  etudiantId: number | null = null;
+  saveMessage: string = '';
   loading = false;
   iaErreur = '';
   recommandations: any[] = [];
@@ -85,12 +90,21 @@ export class ProfilEtudiantComponent implements OnInit {
 
   constructor(
     private profilApi: ProfilApiService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.loadProfil();
+    this.authService.loadConnectedProfile().subscribe({
+      next: (profile) => {
+        this.user = profile;
+        if (this.user) {
+          this.etudiantId = this.user.id;
+          this.loadProfil();
+        }
+      }
+    });
   }
 
   // ===================== PROGRESSION =====================
@@ -126,16 +140,18 @@ export class ProfilEtudiantComponent implements OnInit {
 
   // ===================== CHARGEMENT DU PROFIL =====================
   loadProfil(): void {
-    this.profilApi.getAll().subscribe({
-      next: (profils) => {
-        if (profils.length > 0) {
-          const p = profils[0];
+    if (this.etudiantId === null || this.etudiantId === undefined) return;
+    this.profilApi.getByEtudiantId(this.etudiantId).subscribe({
+      next: (p) => {
+        if (p) {
+          console.log("Profil chargé:", p);
           this.profilId = p.id ?? null;
           this.applyProfilData(p);
         }
         this.cdr.detectChanges();
       },
-      error: () => {
+      error: (err) => {
+        console.warn("Aucun profil trouvé pour cet étudiant, affichage vide.");
         this.cdr.detectChanges();
       }
     });
@@ -149,8 +165,8 @@ export class ProfilEtudiantComponent implements OnInit {
     this.setInfoValue('nomPrepa', p.nomPrepa ?? '');
     this.setInfoValue('telephone', p.telephone ?? '');
 
-    this.scoreEtudiant = p.score ? String(p.score) : '';
-    this.rangEtudiant = p.rang ? String(p.rang) : '';
+    this.scoreEtudiant = (p.score !== null && p.score !== undefined) ? String(p.score) : '';
+    this.rangEtudiant = (p.rang !== null && p.rang !== undefined) ? String(p.rang) : '';
     this.filiereSelectionnee = p.filiere ?? '';
 
     if (p.notes) {
@@ -193,9 +209,15 @@ export class ProfilEtudiantComponent implements OnInit {
     return notesMap;
   }
 
-  // ===================== SAUVEGARDE =====================
-  private saveProfil(): void {
+  // ===================== SAUVEGARDE MANUELLE =====================
+  public saveProfil(): void {
+    if (!this.etudiantId) {
+      this.saveMessage = "Veuillez vous connecter.";
+      return;
+    }
+
     const payload: BackendProfil = {
+      etudiantId: this.etudiantId,
       nom: this.getInfoValue('nom'),
       prenom: this.getInfoValue('prenom'),
       email: this.getInfoValue('email'),
@@ -208,20 +230,24 @@ export class ProfilEtudiantComponent implements OnInit {
       notes: this.buildNotesMap()
     };
 
-    if (this.profilId !== null) {
-      // Update existant
-      this.profilApi.update(this.profilId, payload).subscribe({
-        next: () => this.cdr.detectChanges()
-      });
-    } else {
-      // Créer nouveau profil
-      this.profilApi.create(payload).subscribe({
-        next: (created) => {
-          this.profilId = created.id ?? null;
-          this.cdr.detectChanges();
-        }
-      });
-    }
+    const obs = (this.profilId !== null)
+      ? this.profilApi.updateByEtudiantId(this.etudiantId, payload)
+      : this.profilApi.create(payload);
+
+    obs.subscribe({
+      next: (res) => {
+        console.log("Sauvegarde réussie:", res);
+        this.profilId = res.id ?? this.profilId;
+        this.saveMessage = "Profil enregistré avec succès ! ✔️";
+        this.cdr.detectChanges();
+        setTimeout(() => { this.saveMessage = ''; this.cdr.detectChanges(); }, 3000);
+      },
+      error: (err) => {
+        console.error("Erreur sauvegarde:", err);
+        this.saveMessage = "Erreur lors de la sauvegarde.";
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   // ===================== INFOS PERSONNELLES =====================
@@ -238,7 +264,7 @@ export class ProfilEtudiantComponent implements OnInit {
   validerInfos() {
     this.infos = this.infosTemp.map(info => ({ ...info }));
     this.fermerInfosModal();
-    this.saveProfil();
+    // Plus de sauvegarde auto
   }
 
   // ===================== MATIÈRES =====================
@@ -262,7 +288,7 @@ export class ProfilEtudiantComponent implements OnInit {
   validerScore() {
     this.scoreEtudiant = this.formScoreValue.trim();
     this.fermerScoreModal();
-    this.saveProfil();
+    // Plus de sauvegarde auto
   }
 
   // ===================== RANG =====================
@@ -278,7 +304,7 @@ export class ProfilEtudiantComponent implements OnInit {
   validerRang() {
     this.rangEtudiant = this.formRangValue.trim();
     this.fermerRangModal();
-    this.saveProfil();
+    // Plus de sauvegarde auto
   }
 
   // ===================== NOTES MODAL =====================
@@ -309,12 +335,12 @@ export class ProfilEtudiantComponent implements OnInit {
     }
     this.showModal = false;
     this.matiereSelectionnee = null;
-    this.saveProfil();
+    // Plus de sauvegarde auto
   }
 
   supprimerNote(m: Matiere) {
     m.note = null;
-    this.saveProfil();
+    // Plus de sauvegarde auto
   }
 
   // ===================== IA GROQ =====================
@@ -370,7 +396,7 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sous forme de ta
         'Authorization': `Bearer ${this.GROQ_KEY}`
       })
     }).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         try {
           const text = res.choices?.[0]?.message?.content || '';
           const clean = text.replace(/\`\`\`json|\`\`\`/g, '').trim();
@@ -384,7 +410,7 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sous forme de ta
         this.loading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error("Erreur requête Groq", err);
         this.iaErreur = "Erreur de connexion à l'IA Groq : " + (err.message || err.statusText || "Vérifiez la console.");
         this.loading = false;

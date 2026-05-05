@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RecommandationIaService, ProfilCandidat, RecommandationResult, RecommandationProgramme } from '../services/recommandation-ia.service';
 import { ProfilCandidatApiService, BackendProfilCandidat } from '../services/profil-candidat-api.service';
+import { AuthService, ConnectedUser } from '../services/auth.service';
 
 interface ConditionCheck {
   label: string;
@@ -18,7 +19,8 @@ interface ConditionCheck {
 })
 export class PostlicenceProfilComponent implements OnInit {
 
-  etudiantId: number = 1;
+  etudiantId: number | null = null;
+  user: ConnectedUser | null = null;
   profilExiste = false;
   saveMessage = '';
 
@@ -51,15 +53,25 @@ export class PostlicenceProfilComponent implements OnInit {
   constructor(
     private iaService: RecommandationIaService,
     private profilApi: ProfilCandidatApiService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.loadFromBackend();
+    this.authService.loadConnectedProfile().subscribe({
+      next: (profile) => {
+        this.user = profile;
+        if (this.user) {
+          this.etudiantId = this.user.id;
+          this.loadFromBackend();
+        }
+      }
+    });
   }
 
   // ======= PERSISTANCE BACKEND =======
   private loadFromBackend(): void {
+    if (!this.etudiantId) return;
     this.profilApi.getByEtudiantId(this.etudiantId).subscribe({
       next: (data) => {
         this.profilExiste = true;
@@ -83,6 +95,11 @@ export class PostlicenceProfilComponent implements OnInit {
   }
 
   sauvegarder(): void {
+    if (!this.etudiantId) {
+      this.saveMessage = "Veuillez vous connecter.";
+      return;
+    }
+
     const payload: BackendProfilCandidat = {
       etudiantId: this.etudiantId,
       licence: this.profil.licence,

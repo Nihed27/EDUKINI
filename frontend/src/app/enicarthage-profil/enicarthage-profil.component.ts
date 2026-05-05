@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { NotesApiService, EduNote } from '../services/notes-api.service';
 import { AuthService, ConnectedUser } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class EnicarthageProfilComponent implements OnInit {
   semestre: 'S1' | 'S2' = 'S1';
 filiere = 'informatique';
 
-private GROQ_KEY = '';
+private GROQ_KEY = environment.groqApiKey;
 private GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
   semestres = {
@@ -119,14 +120,22 @@ private GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
   private iaTimer: any = null;
   user: ConnectedUser | null = null;
 
-  constructor(private http: HttpClient, private notesApi: NotesApiService, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient, 
+    private notesApi: NotesApiService, 
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.authService.loadConnectedProfile().subscribe(profile => {
-      this.user = profile;
-      if (this.user) {
-        this.loadNotes();
-      }
+    this.authService.loadConnectedProfile().subscribe({
+      next: (profile) => {
+        this.user = profile;
+        if (this.user) {
+          this.loadNotes();
+        }
+      },
+      error: (err) => console.error("Erreur profil:", err)
     });
   }
 
@@ -136,12 +145,19 @@ private GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
       next: (notes) => {
         notes.forEach(n => {
           const sKey = n.semestre === 1 ? 'S1' : 'S2';
-          const ue = this.semestres[sKey]?.find(u => u.ue === n.ueNom);
+          // Normalisation pour ignorer les différences de tirets/espaces/majuscules
+          const normalize = (s: string) => s ? s.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+          
+          const ue = this.semestres[sKey]?.find(u => normalize(u.ue) === normalize(n.ueNom));
           if (ue) {
-            const mat = ue.matieres.find(m => m.matiere === n.matiereNom);
-            if (mat) mat.note = n.note;
+            const mat = ue.matieres.find(m => normalize(m.matiere) === normalize(n.matiereNom));
+            if (mat) {
+              mat.note = n.note;
+            }
           }
         });
+        // On force Angular à rafraîchir la vue avec les nouvelles notes
+        this.cdr.detectChanges();
       },
       error: (err) => console.error("Erreur chargement notes", err)
     });
@@ -280,15 +296,11 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sans markdown :
 }
 
   sauvegarder() {
-    this.messageErreur = '';
-    const invalides = this.notesActuelles
-      .flatMap(ue => ue.matieres)
-      .filter(m => m.note !== null && (m.note < 0 || m.note > 20));
-
-    if (invalides.length > 0) {
-      this.messageErreur = 'Certaines notes sont invalides (0–20 requis).';
+    if (!this.user) {
+      this.messageErreur = "Veuillez vous connecter pour sauvegarder.";
       return;
     }
+    this.messageErreur = '';
 
     const payload: EduNote[] = [];
     ['S1', 'S2'].forEach(s => {
@@ -297,7 +309,7 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sans markdown :
         ue.matieres.forEach(m => {
           if (m.note !== null) {
             payload.push({
-              etudiantId: this.user ? this.user.id : 1,
+              etudiantId: this.user!.id,
               filiere: this.filiere,
               semestre: semestreNum,
               ueNom: ue.ue,
@@ -309,13 +321,27 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sans markdown :
       });
     });
 
-    this.notesApi.saveNotes(payload).subscribe({
+    if (payload.length === 0) {
+      this.messageErreur = "Aucune note à sauvegarder.";
+      return;
+    }
+
+    // On vide l'ancien profil en base pour cet utilisateur avant de sauvegarder le nouveau
+    this.notesApi.deleteNotes(this.user.id).subscribe({
       next: () => {
-        this.messageSucces = `Profil sauvegardé avec succès !`;
-        setTimeout(() => this.messageSucces = '', 3000);
+        this.notesApi.saveNotes(payload).subscribe({
+          next: () => {
+            this.messageSucces = `Profil sauvegardé avec succès !`;
+            setTimeout(() => this.messageSucces = '', 3000);
+          },
+          error: (err) => {
+            this.messageErreur = "Erreur de sauvegarde des notes.";
+            console.error(err);
+          }
+        });
       },
       error: (err) => {
-        this.messageErreur = "Erreur de sauvegarde.";
+        this.messageErreur = "Erreur de mise à jour.";
         console.error(err);
       }
     });

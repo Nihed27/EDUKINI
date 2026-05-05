@@ -21,6 +21,11 @@ public class ProfilService {
         return profilRepository.findById(id);
     }
 
+    public Optional<Profil> findByEtudiantId(Long etudiantId) {
+        List<Profil> results = profilRepository.findByEtudiantIdOrderByIdDesc(etudiantId);
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+    }
+
     public Profil save(Profil profil) {
         return profilRepository.save(profil);
     }

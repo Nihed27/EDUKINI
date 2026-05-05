@@ -19,6 +19,7 @@ public class Profil {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long etudiantId;
     private String nom;
     private String prenom;
     private String email;
@@ -43,6 +44,9 @@ public class Profil {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public Long getEtudiantId() { return etudiantId; }
+    public void setEtudiantId(Long etudiantId) { this.etudiantId = etudiantId; }
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }

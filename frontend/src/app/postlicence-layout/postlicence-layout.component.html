@@ -43,9 +43,9 @@
 
     <div class="sidebar-footer">
       <div class="avatar-row">
-        <div class="avatar-circle">ET</div>
+        <div class="avatar-circle">{{ initials }}</div>
         <div>
-          <div class="avatar-name">Étudiant</div>
+          <div class="avatar-name">{{ user ? user.prenom + ' ' + user.nom : 'Étudiant' }}</div>
           <div class="avatar-role">Post-Licence ENICarthage</div>
         </div>
       </div>

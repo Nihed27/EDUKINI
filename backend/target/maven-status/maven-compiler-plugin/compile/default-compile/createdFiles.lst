@@ -16,7 +16,6 @@ com\edukini\edukini_backend\repository\ProfilRepository.class
 com\edukini\edukini_backend\controller\UserController.class
 com\edukini\edukini_backend\config\OAuth2LoginSuccessHandler.class
 com\edukini\edukini_backend\dto\LoginRequest.class
-com\edukini\edukini_backend\service\AuthService.class
 com\edukini\edukini_backend\model\Profil.class
 com\edukini\edukini_backend\service\ProfilService.class
 com\edukini\edukini_backend\dto\RegisterRequest.class
